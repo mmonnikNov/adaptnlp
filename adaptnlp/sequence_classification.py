@@ -16,6 +16,7 @@ class EasySequenceClassifier:
             text: Union[List[Sentence], Sentence, List[str], str],
             model_name_or_path: str = "en-sentiment",
             mini_batch_size: int = 32,
+            **kwargs,
     ) -> List[Sentence]:
         """ Tags a text sequence with labels the sequence classification models have been trained on
 
@@ -29,12 +30,13 @@ class EasySequenceClassifier:
             self.sequence_classifiers[model_name_or_path] = TextClassifier.load(model_name_or_path)
 
         classifier = self.sequence_classifiers[model_name_or_path]
-        return classifier.predict(sentences=text, mini_batch_size=mini_batch_size, use_tokenizer=True)
+        return classifier.predict(sentences=text, mini_batch_size=mini_batch_size, use_tokenizer=True, **kwargs)
 
     def tag_all(
             self,
             text: Union[List[Sentence], Sentence, List[str], str],
             mini_batch_size: int = 32,
+            **kwargs,
     ) -> List[Sentence]:
         """ Tags text with all labels from all sequence classification models
 
@@ -44,5 +46,6 @@ class EasySequenceClassifier:
         """
         sentences = text
         for tagger_name in self.sequence_classifiers.keys():
-            sentences = self.tag_text(sentences, model_name_or_path=tagger_name, mini_batch_size=mini_batch_size)
+            sentences = self.tag_text(sentences, model_name_or_path=tagger_name, mini_batch_size=mini_batch_size,
+                                      **kwargs)
         return sentences
