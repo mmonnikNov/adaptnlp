@@ -4,4 +4,4 @@ WORKDIR /adaptnlp
 
 COPY . /adaptnlp
 
-RUN pip3 install -e .
+RUN pip3 --no-cache-dir install -e .
