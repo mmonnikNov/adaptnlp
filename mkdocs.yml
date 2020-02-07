@@ -1,0 +1,39 @@
+site_name: AdaptNLP 
+site_description: AdaptNLP - An easy to use Natural Language Processing library and framework for predicting, training, fine-tuning, and serving up state-of-the-art NLP models.
+site_url: https://github.com/Novetta/adaptnlp
+
+theme:
+    name: 'material'
+    palette:
+        primary: 'blue'
+        accent: 'black'
+    logo: 'img/icon-white.svg'
+    favicon: 'img/favicon.png'
+
+repo_name: Novetta/adaptnlp
+repo_url: https://github.com/Novetta/adaptnlp
+edit_uri: ''
+
+nav:
+    - AdaptNLP: 'index.md'
+    - Tutorial - User Guide:
+        - Tutorial - User Guide - Intro: 'tutorial/index.md'
+        - Token Tagging: 'tutorial/token-tagging.md'
+        - Sequence Classification: 'tutorial/sequence-classification.md'
+        - Embeddings: 'tutorial/embeddings.md'
+        - Question Answering: 'tutorial/question-answering.md'
+    - Advanced - User Guide:
+        - Training Sequence Classification: 'tutorial/training_sequence_classification.md'
+        - Fine Tuning Language Model: 'tutorial/fine-tuning-language-model.md'
+        - Custom LM for Sequence Classification: 'tutorial/custom-LMM-for-sequence-classification.md'
+    - Deployment: 'deployment.md'
+
+markdown_extensions:
+    - toc:
+        permalink: true
+    - markdown.extensions.codehilite:
+        guess_lang: false
+    - admonition
+    - codehilite
+    - extra
+
