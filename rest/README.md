@@ -7,7 +7,7 @@ The docker image of AdaptNLP is built with the `achangnovetta/adaptnlp:latest` i
 
 To build and run the rest services by running one of the following methods in this directory:
 
-#####1.
+####1.
 Specify the pretrained models you want to use for the endpoints.  This can be one of Flair's pretrained models or your own
 custom trained models with a path pointing to the model.  (The model must be in this directory)
 ```
@@ -21,7 +21,7 @@ To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA
 docker run -itp 5000:5000 --gpus all adaptnlp-rest:latest bash
 ```
 
-#####2.
+####2.
 If you'd like to specify the models as environment variables in docker post-build, run the below instead:
 ```
 docker build -t adaptnlp-rest:latest .
@@ -49,4 +49,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 5000
 
 ```
 
+## SwaggerUI
+
+Access SwaggerUI console by going to `localhost:5000/docs` after deploying
 
