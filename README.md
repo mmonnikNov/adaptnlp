@@ -2,6 +2,7 @@
 
 [![CircleCI](https://img.shields.io/circleci/build/github/Novetta/adaptnlp/master?token=c19c48a56cf6010fed1a63a9bae86acc72e91c24)](https://circleci.com/gh/Novetta/adaptnlp)
 [![PyPI version](https://badge.fury.io/py/adaptnlp.svg)](https://badge.fury.io/py/adaptnlp)
+[![License](https://img.shields.io/github/license/novetta/adaptnlp)](https://github.com/Novetta/adaptnlp/blob/master/LICENSE)
 
 A high level framework and library for running, training, and deploying state-of-the-art Natural Language Processing (NLP) models
 for end to end tasks.
