@@ -41,7 +41,7 @@ async def initialize_nlp_task_modules():
 
 
 ######################
-### NovettaNLP API ###
+### AdaptNLP API ###
 ######################
 @app.get("/")
 async def root():
