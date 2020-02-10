@@ -16,7 +16,7 @@ setup(
     packages=find_packages(),
     keywords=["NLP", "flair", "Natural Language Processing", "Machine Learning", "ML", "torch", "pytorch", "NER"],
     install_requires=install_requires,
-    license="Apache",
+    license="Apache 2.0",
     description="AdaptNLP: A Natural Language Processing Library and Framework",
     include_package_data=True,
     zip_safe=True
