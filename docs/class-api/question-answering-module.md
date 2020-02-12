@@ -1,0 +1,3 @@
+::: adaptnlp.EasyQuestionAnswering
+    :docstring:
+    :members:   

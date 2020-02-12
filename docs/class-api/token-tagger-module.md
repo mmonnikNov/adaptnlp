@@ -1,0 +1,4 @@
+::: adaptnlp.EasyTokenTagger
+    :docstring:
+    :members:   
+    

@@ -1,0 +1,4 @@
+::: adaptnlp.EasySequenceClassifier
+    :docstring:
+    :members:   
+    

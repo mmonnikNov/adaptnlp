@@ -119,9 +119,9 @@ class EasyWordEmbeddings:
     ) -> List[Sentence]:
         """ Produces embeddings for text
 
-        :param text: Text input, it can be a string or any of Flair's `Sentence` input formats
-        :param model_name_or_path: The hosted model name key or model path
-        :return: A list of Flair's `Sentence`s
+        * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
+        * **model_name_or_path** - The hosted model name key or model path
+        **return** - A list of Flair's `Sentence`s
         """
         # Convert into sentences
         if isinstance(text, str):
@@ -158,9 +158,9 @@ class EasyWordEmbeddings:
     ) -> List[Sentence]:
         """Embeds text with all embedding models loaded
 
-        :param text: Text input, it can be a string or any of Flair's `Sentence` input formats
-        :param model_names_or_paths: A variable input of model names or paths to embed
-        :return: A list of Flair's `Sentence`s
+        * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
+        * **model_names_or_paths** -  A variable input of model names or paths to embed
+        **return** - A list of Flair's `Sentence`s
         """
         # Convert into sentences
         if isinstance(text, str):
@@ -186,7 +186,7 @@ class EasyStackedEmbeddings:
     def __init__(self, *embeddings: str):
         '''
 
-        :param embeddings: Strings specifying the embeddings you want to stack
+        * **embeddings** Strings specifying the embeddings you want to stack
         '''
         print("May need a couple moments to instantiate...")
         self.embedding_stack = []
@@ -217,8 +217,8 @@ class EasyStackedEmbeddings:
     ) -> List[Sentence]:
         """ Stacked embeddings
 
-        :param text: Text input, it can be a string or any of Flair's `Sentence` input formats
-        :return: A list of Flair's `Sentence`s
+        * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
+        **return** A list of Flair's `Sentence`s
         """
         # Convert into sentences
         if isinstance(text, str):
@@ -261,9 +261,9 @@ class EasyDocumentEmbeddings():
     ):
         '''
 
-        :param embeddings: A variable number of strings referring to model names or paths
-        :param methods: A list of strings to specify which document embeddings to use i.e. ["rnn", "pool"] (avoids unncessary loading of models if only using one)
-        :param configs: A dictionary of configurations for flair's rnn and pool document embeddings
+        * **embeddings** - A variable number of strings referring to model names or paths
+        * **methods** - A list of strings to specify which document embeddings to use i.e. ["rnn", "pool"] (avoids unncessary loading of models if only using one)
+        * **configs** - A dictionary of configurations for flair's rnn and pool document embeddings
         '''
         print("May need a couple moments to instantiate...")
         self.embedding_stack = []
@@ -308,8 +308,8 @@ class EasyDocumentEmbeddings():
     ) -> List[Sentence]:
         """ Stacked embeddings
 
-        :param text: Text input, it can be a string or any of Flair's `Sentence` input formats
-        :return: A list of Flair's `Sentence`s
+        * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
+        **return** - A list of Flair's `Sentence`s
         """
         if isinstance(text, str):
             sentences = [Sentence(text)]
@@ -328,8 +328,8 @@ class EasyDocumentEmbeddings():
     ) -> List[Sentence]:
         """ Stacked embeddings
 
-        :param text: Text input, it can be a string or any of Flair's `Sentence` input formats
-        :return: A list of Flair's `Sentence`s
+        * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
+        **return** - A list of Flair's `Sentence`s
         """
         if isinstance(text, str):
             sentences = [Sentence(text)]

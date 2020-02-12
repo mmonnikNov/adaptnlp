@@ -20,11 +20,12 @@ class EasyTokenTagger:
     ) -> List[Sentence]:
         """ Tags tokens with labels the token classification models have been trained on
 
-        :param text: Text input, it can be a string or any of Flair's `Sentence` input formats
-        :param model_name_or_path: The hosted model name key or model path
-        :param mini_batch_size: The mini batch size for running inference
-        :param kwargs: Variable arguments for Flair's SequenceTagger.predict() method
-        :return: A list of Flair's `Sentence`s
+        * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
+        * **model_name_or_path** - The hosted model name key or model path
+        * **mini_batch_size** - The mini batch size for running inference
+        * **kwargs** - Variable arguments for Flair's SequenceTagger.predict() method
+
+        **return** - A list of Flair's `Sentence`s
         """
         # Load Sequence Tagger Model and Pytorch Module into tagger dict
         if not self.token_taggers[model_name_or_path]:
@@ -41,10 +42,10 @@ class EasyTokenTagger:
     ) -> List[Sentence]:
         """ Tags tokens with all labels from all token classification models
 
-        :param text: Text input, it can be a string or any of Flair's `Sentence` input formats
-        :param mini_batch_size: The mini batch size for running inference
-        :param kwargs: Variable arguments for Flair's SequenceTagger.predict() method
-        :return: A list of Flair's `Sentence`s
+        * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
+        * **mini_batch_size** - The mini batch size for running inference
+        * **kwargs** - Variable arguments for Flair's SequenceTagger.predict() method
+        **return** A list of Flair's `Sentence`s
         """
         if len(self.token_taggers) == 0:
             print("No token classification models loaded...")

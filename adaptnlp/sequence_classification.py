@@ -20,10 +20,10 @@ class EasySequenceClassifier:
     ) -> List[Sentence]:
         """ Tags a text sequence with labels the sequence classification models have been trained on
 
-        :param text: Text input, it can be a string or any of Flair's `Sentence` input formats
-        :param model_name_or_path: The hosted model name key or model path
-        :param mini_batch_size: The mini batch size for running inference
-        :return: A list of Flair's `Sentence`s
+        * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
+        * **model_name_or_path** - The hosted model name key or model path
+        * **mini_batch_size** - The mini batch size for running inference
+        **return** A list of Flair's `Sentence`s
         """
         # Load Text Classifier Model and Pytorch Module into tagger dict
         if not self.sequence_classifiers[model_name_or_path]:
@@ -40,9 +40,9 @@ class EasySequenceClassifier:
     ) -> List[Sentence]:
         """ Tags text with all labels from all sequence classification models
 
-        :param text: Text input, it can be a string or any of Flair's `Sentence` input formats
-        :param mini_batch_size: The mini batch size for running inference
-        :return: A list of Flair's `Sentence`s
+        * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
+        * **mini_batch_size** - The mini batch size for running inference
+        * **return** - A list of Flair's `Sentence`s
         """
         sentences = text
         for tagger_name in self.sequence_classifiers.keys():

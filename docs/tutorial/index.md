@@ -1,43 +1,31 @@
-<p>
-    <br>
-    <img src="https://raw.githubusercontent.com/novetta/adaptnlp/master/docs/img/NovettaAdaptNLPlogo-400px.png" width="400"/>
-    <br>
-</p>
+This tutorial section goes over the NLP capabilities available through AdaptNLP and how to use them.
 
-[![CircleCI](https://img.shields.io/circleci/build/github/Novetta/adaptnlp/master?token=c19c48a56cf6010fed1a63a9bae86acc72e91c24)](https://circleci.com/gh/Novetta/adaptnlp)
-[![PyPI version](https://badge.fury.io/py/adaptnlp.svg)](https://badge.fury.io/py/adaptnlp)
-[![License](https://img.shields.io/github/license/novetta/adaptnlp)](https://github.com/Novetta/adaptnlp/blob/master/LICENSE)
+You should ideally follow the tutorials along with the provided notebooks in the `tutorials` directory at the top
+level of the AdaptNLP library.
 
-A high level framework and library for running, training, and deploying state-of-the-art Natural Language Processing (NLP) models
-for end to end tasks.
+You could also run the code snippets in these tutorials straight through the python interpreter as well.
 
-AdaptNLP is built atop Zalando Research's Flair and Hugging Face's Transformers library.
+## Install and Setup
 
-[Documentation](https://adaptnlp-documentation.s3.amazonaws.com/index.html)
+You will first need to install AdaptNLP with Python 3.6+ using the following command:
 
-## Quick Start
-
-#### Requirements and Installation
-
-##### Virtual Environment
-To avoid dependency clustering and issues, it would be wise to install AdaptNLP in a virtual environment.
-To start a new python 3.6+ virtual environment, run this command:
-
-```
-python -m venv <name_of_venv_directory>
-```
-
-##### AdaptNLP Install
-
-Install using pip in your virtual environment:
 ```
 pip install adaptnlp
 ```
 
+AdaptNLP is largely built on top of Flair, Transformers, and PyTorch, and dependencies will be handled on install.
 
-#### Examples and General Use
+AdaptNLP can be used with or without GPUs.  AdaptNLP will automatically make use of GPU VRAM in environment with
+CUAD-compatible NVIDIA GPUs and NVIDIA drivers installed.  GPU-less environments will run AdaptNLP modules fine as well.
 
-Once you have installed AdaptNLP, here are a few examples of what you can run with AdaptNLP modules:
+
+## Overview of NLP Capabilities
+
+An overview of some of the AdaptNLP capabilities via. code snippets.
+
+A good way to make sure AdaptNLP is installed correctly is by running each of these code snippets.
+
+Note this may take a while if models have not already been downloaded.
 
 ##### Named Entity Recognition with `EasyTokenTagger`
 
@@ -75,6 +63,24 @@ for sentence in sentences:
     print(sentence.labels)
 
 ```
+
+##### Language Model Embeddings `EasyWordEmbeddings`
+```python
+from adaptnlp import EasyWordEmbeddings
+
+## Example Text
+example_text = "Albert Einstein used to work at Novetta."
+
+## Load the embeddings module and embed the tokens within the text
+embeddings = EasyWordEmbeddings()
+sentences = embeddings.embed_text(example_text, model_name_or_path="gpt2")
+
+# Iterate through tokens in the sentence to access embeddings
+for sentence in sentences:
+    for token in sentence:
+        print(token.get_embedding())
+```
+
 
 ##### Span-based Question Answering `EasyQuestionAnswering`
 
@@ -148,60 +154,3 @@ finetuner.freeze()
 finetuner.train_one_cycle(output_dir="Path/to/output/directory", learning_rate=learning_rate)
 
 ```
-
-## Tutorials
-
-Look in the [tutorials](tutorials) directory for a quick introduction to the library and it's very simple
-and straight forward use cases:
-
-  1. Token Classification: NER, POS, Chunk, and Frame Tagging
-  2. Sequence Classification: Sentiment
-  3. Embeddings: Transformer Embeddings e.g. BERT, XLM, GPT2, XLNet, alBERTa
-  4. Custom Fine-Tuning and Training with Transformer Models
-  
-Checkout the documentation for more information.
-  
-## REST Service 
-
-We use FastAPI for standing up endpoints for serving state-of-the-art NLP models with AdaptNLP.
-
-The [REST](rest) directory contains more detail on deploying a REST API locally or with docker in a very easy and
-fast way.
-  
-## Docker
-
-#### Pull and Run AdaptNLP Immediately
-Simply run an image with AdaptNLP installed from source in developer mode by running:
-```
-docker run -it --rm achangnovetta/adaptnlp:latest
-```
-Run an image with AdaptNLP running on GPUs if you have nvidia drivers and nvidia-docker 19.03+ installed:
-```
-docker run -it --rm --gpus all achangnovetta/adaptnlp:latest
-```
-
-#### Build
-Build docker image and run container with the following commands in the directory of the Dockerfile
-to create a container with adaptnlp installed and ready to go
-
-Note: A container with GPUs enabled requires Docker version 19.03+ and nvida-docker installed
-```
-docker build -t achangnovetta/adaptnlp:latest .
-docker run -it --rm achangnovetta/adaptnlp:latest
-```
-If you want to use CUDA compatible GPUs 
-```
-docker run -it --rm --gpus all achangnovetta/adaptnlp:latest
-```
-
-## Contact
-
-Please contact the author Andrew Chang at achang@novetta.com with questions or comments regarding AdaptNLP.
-
-## License
-
-This project is licensed under the terms of the Apache 2.0 license.
- 
-
-
-

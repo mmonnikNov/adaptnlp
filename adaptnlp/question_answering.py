@@ -20,11 +20,11 @@ class EasyQuestionAnswering:
         ''' Predicts top_n answer spans of query in regards to context
 
 
-        :param query: The question
-        :param context: The context of which the question is asking
-        :param top_n: The top n answers returned
+        * **query** - The question
+        * **context** - The context of which the question is asking
+        * **top_n** - The top n answers returned
 
-        :return: Either a list of string answers or a dict of the results
+        **return** - Either a list of string answers or a dict of the results
         '''
 
         self._load_bert_qa() if not self.bert_qa else None
