@@ -7,7 +7,7 @@ theme:
   palette:
     primary: '800'
     accent: 'black'
-  logo: "img/favicon.ico"
+  logo: "img/NovettaAdaptNLP-mark-dark-100px.png"
   favicon: 'img/favicon.ico'
 
 use_directory_urls: false
