@@ -13,7 +13,7 @@ for end to end tasks.
 
 AdaptNLP is built atop Zalando Research's Flair and Hugging Face's Transformers library.
 
-[Documentation](https://adaptnlp-documentation.s3.amazonaws.com/index.html)
+**[Full Guides and API Documentation](https://adaptnlp-documentation.s3.amazonaws.com/index.html)**
 
 ## Quick Start
 
@@ -151,13 +151,21 @@ finetuner.train_one_cycle(output_dir="Path/to/output/directory", learning_rate=l
 
 ## Tutorials
 
-Look in the [tutorials](tutorials) directory for a quick introduction to the library and it's very simple
+Look in the [Tutorials](tutorials) directory for a quick introduction to the library and its very simple
 and straight forward use cases:
 
   1. Token Classification: NER, POS, Chunk, and Frame Tagging
+      - colab - [token_tagging.ipynb](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/1.%20Token%20Classification/token_tagging.ipynb)
   2. Sequence Classification: Sentiment
-  3. Embeddings: Transformer Embeddings e.g. BERT, XLM, GPT2, XLNet, alBERTa
-  4. Custom Fine-Tuning and Training with Transformer Models
+      - colab - [sequence_classification.ipynb](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/2.%20Sequence%20Classification/sequence_classification.ipynb)
+  3. Embeddings: Transformer Embeddings e.g. BERT, XLM, GPT2, XLNet, roBERTa, ALBERT
+      - colab - [embeddings.ipynb](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/3.%20Embeddings/embeddings.ipynb)
+  4. Question Answering: Span-based Question Answering Model
+      - colab - [question_answering.ipynb](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/4.%20Question%20Answering/question_answering.ipynb)
+  5. Custom Fine-Tuning and Training with Transformer Models
+      - colab -
+        - [sequence_classification_training.ipynb](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/5.%20Finetuning%20and%20Training%20(Advanced)/sequence_classification_training.ipynb)
+        - [fine_tuning.ipynb](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/5.%20Finetuning%20and%20Training%20(Advanced)/fine_tuning.ipynb)
   
 Checkout the documentation for more information.
   
