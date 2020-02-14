@@ -6,7 +6,16 @@ from flair.models import TextClassifier
 
 
 class EasySequenceClassifier:
-    """ Sequence level classification models"""
+    """ Sequence level classification models
+
+    Usage:
+
+    ```python
+    >>> classifier = EasySequenceClassifier()
+    >>> classifier.tag_text(text="text you want to label", model_name_or_path="en-sentiment")
+    ```
+
+    """
 
     def __init__(self):
         self.sequence_classifiers: Dict[TextClassifier] = defaultdict(bool)
@@ -23,7 +32,8 @@ class EasySequenceClassifier:
         * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
         * **model_name_or_path** - The hosted model name key or model path
         * **mini_batch_size** - The mini batch size for running inference
-        **return** A list of Flair's `Sentence`s
+        * **\**kwargs** - (Optional) Keyword Arguments for Flair's `TextClassifier.predict()` method params
+        **return** A list of Flair's `Sentence`'s
         """
         # Load Text Classifier Model and Pytorch Module into tagger dict
         if not self.sequence_classifiers[model_name_or_path]:
@@ -42,7 +52,8 @@ class EasySequenceClassifier:
 
         * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
         * **mini_batch_size** - The mini batch size for running inference
-        * **return** - A list of Flair's `Sentence`s
+        * **\**kwargs** - (Optional) Keyword Arguments for Flair's `TextClassifier.predict()` method params
+        * **return** - A list of Flair's `Sentence`'s
         """
         sentences = text
         for tagger_name in self.sequence_classifiers.keys():

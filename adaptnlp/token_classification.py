@@ -6,7 +6,15 @@ from flair.models import SequenceTagger
 
 
 class EasyTokenTagger:
-    """ Token level classification models"""
+    """ Token level classification models
+
+    Usage:
+
+    ```python
+    >>> tagger = adaptnlp.EasyTokenTagger()
+    >>> tagger.tag_text(text="text you want to tag", model_name_or_path="ner-ontonotes")
+    ```
+    """
 
     def __init__(self):
         self.token_taggers: Dict[SequenceTagger] = defaultdict(bool)
@@ -23,9 +31,8 @@ class EasyTokenTagger:
         * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
         * **model_name_or_path** - The hosted model name key or model path
         * **mini_batch_size** - The mini batch size for running inference
-        * **kwargs** - Variable arguments for Flair's SequenceTagger.predict() method
-
-        **return** - A list of Flair's `Sentence`s
+        * **\**kwargs** - Keyword arguments for Flair's `SequenceTagger.predict()` method
+        **return** - A list of Flair's `Sentence`'s
         """
         # Load Sequence Tagger Model and Pytorch Module into tagger dict
         if not self.token_taggers[model_name_or_path]:
@@ -44,8 +51,8 @@ class EasyTokenTagger:
 
         * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
         * **mini_batch_size** - The mini batch size for running inference
-        * **kwargs** - Variable arguments for Flair's SequenceTagger.predict() method
-        **return** A list of Flair's `Sentence`s
+        * **\**kwargs** - Keyword arguments for Flair's `SequenceTagger.predict()` method
+        **return** A list of Flair's `Sentence`'s
         """
         if len(self.token_taggers) == 0:
             print("No token classification models loaded...")

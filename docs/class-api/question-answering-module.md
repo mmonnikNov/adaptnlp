@@ -1,3 +1,5 @@
+## `EasyQuestionAnswering`
+
 ::: adaptnlp.EasyQuestionAnswering
     :docstring:
-    :members:   
+    :members: predict_qa

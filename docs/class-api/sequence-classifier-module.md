@@ -1,4 +1,6 @@
+## `EasySequenceClassifier`
+
 ::: adaptnlp.EasySequenceClassifier
     :docstring:
-    :members:   
+    :members: tag_text tag_all
     
