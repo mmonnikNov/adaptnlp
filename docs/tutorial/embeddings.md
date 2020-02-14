@@ -43,6 +43,8 @@ Below is an example of producing word embeddings from OpenAI's GPT2 language mod
 
 
 ```python
+from adaptnlp import EasyWordEmbeddings
+
 example_text = "This is Albert.  My last name is Einstein.  I like physics and atoms."
 
 # Instantiate embeddings tagger
@@ -68,6 +70,8 @@ Below is an example of producing stacked word embeddings from the BERT base case
 models.  `EasyStackedEmbeddings` take in a variable number of key shortcut names to pre-trained language models.
 
 ```python
+from adaptnlp import EasyStackedEmbeddings
+
 # Instantiate stacked embeddings tagger
 embeddings = EasyStackedEmbeddings("bert-base-cased", "xlnet-base-cased")
 
@@ -93,6 +97,8 @@ cased language models.  We also show the embeddings you get using the pool or RN
 
 
 ```python
+from adaptnlp import EasyDocumentEmbeddings
+
 # Instantiate document embedder with stacked embeddings
 embeddings = EasyDocumentEmbeddings("bert-base-cased", "xlnet-base-cased")
 
