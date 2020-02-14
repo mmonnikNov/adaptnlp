@@ -135,7 +135,37 @@ class TextDataset(Dataset):
 
 
 class LMFineTuner:
+    """
+     A Language Model Fine Tuner object you can set language model configurations and then train and evaluate
 
+    Usage:
+
+    ```python
+    >>> finetuner = adaptnlp.LMFineTuner()
+    >>> finetuner.train()
+    ```
+
+    **Parameters:**
+
+    * **train_data_file** - The input training data file (a text file).
+    * **eval_data_file** - An optional input evaluation data file to evaluate the perplexity on (a text file).
+    * **model_type** - The model architecture to be trained or fine-tuned.
+    * **model_name_or_path** - The model checkpoint for weights initialization. Leave None if you want to train a model from scratch.
+    * **mlm** - Train with masked-language modeling loss instead of language modeling.
+    * **mlm_probability** - Ratio of tokens to mask for masked language modeling loss
+    * **config_name** - Optional Transformers pretrained config name or path if not the same as model_name_or_path. If both are None, initialize a new config.
+    * **tokenizer_name** - Optional Transformers pretrained tokenizer name or path if not the same as model_name_or_path. If both are None, initialize a new tokenizer.
+    * **cache_dir** - Optional directory to store the pre-trained models downloaded from s3 (If None, will go to default dir)
+    * **block_size** - Optional input sequence length after tokenization.
+                        The training dataset will be truncated in block of this size for training."
+                        `-1` will default to the model max input length for single sentence inputs (take into account special tokens).
+    * **no_cuda** - Avoid using CUDA when available
+    * **overwrite_cache** - Overwrite the cached training and evaluation sets
+    * **seed** - random seed for initialization
+    * **fp16** - Whether to use 16-bit (mixed) precision (through NVIDIA apex) instead of 32-bit
+    * **fp16_opt_level** - For fp16: Apex AMP optimization level selected in ['00', 'O1', 'O2', and 'O3'].
+    * **local_rank** - For distributed training: local_rank
+    """
     def __init__(
             self,
             train_data_file: str,
@@ -155,28 +185,7 @@ class LMFineTuner:
             fp16_opt_level: str = "01",
             local_rank: int = -1,
     ):
-        """
-        Instantiates a Language ModelFineTuner object with a flair formatted corpus path and language model configurations
 
-        # TODO params
-
-        :param train_data_file:
-        :param eval_data_file:
-        :param model_type:
-        :param model_name_or_path:
-        :param mlm:
-        :param mlm_probability:
-        :param config_name:
-        :param tokenizer_name:
-        :param cache_dir:
-        :param block_size:
-        :param no_cuda:
-        :param overwrite_cache:
-        :param seed:
-        :param fp16:
-        :param fp16_opt_level:
-        :param local_rank:
-        """
         self.train_data_file = train_data_file
         self.eval_data_file = eval_data_file
         self.model_type = model_type
@@ -245,7 +254,7 @@ class LMFineTuner:
             bool(self.local_rank != -1),
             self.fp16,
         )
-        # self._set_seed()
+        self._set_seed()
 
         # Load pretrained model and tokenizer
         if self.local_rank not in [-1, 0]:
@@ -311,26 +320,25 @@ class LMFineTuner:
             use_tensorboard: bool = False,
     ) -> None:
         """
-        # TODO params
 
-        :param output_dir:
-        :param should_continue:
-        :param overwrite_output_dir:
-        :param evaluate_during_training:
-        :param per_gpu_train_batch_size:
-        :param gradient_accumulation_steps:
-        :param learning_rate:
-        :param weight_decay:
-        :param adam_epsilon:
-        :param max_grad_norm:
-        :param num_train_epochs:
-        :param max_steps:
-        :param warmup_steps:
-        :param logging_steps:
-        :param save_steps:
-        :param save_total_limit:
-        :param use_tensorboard:
-        :return:
+        * **output_dir** - The output directory where the model predictions and checkpoints will be written.
+        * **should_continue** - Whether to continue training from latest checkpoint in `output_dir`
+        * **overwrite_output_dir** - Overwrite the content of output directory `output_dir`
+        * **evaluate_during_training** - Run evaluation during training at each `logging_step`.
+        * **per_gpu_train_batch_size** - Batch size per GPU/CPU for training. (If `evaluate_during_training` is True, this is also the eval batch size
+        * **gradient_accumulation_steps** - Number of updates steps to accumulate before performing a backward/update pass
+        * **learning_rate** - The initial learning rate for Adam optimizer.
+        * **weight_decay** - Weight decay if we apply some.
+        * **adam_epsilon** - Epsilon for Adam optimizer.
+        * **max_grad_norm** - Max gradient norm. Duh
+        * **num_train_epochs** - Total number of training epochs to perform.
+        * **max_steps** - If > 0: set total number of training steps to perform. Override `num_train_epochs`.
+        * **warmup_steps** - Linear warmup over warmup_steps.
+        * **logging_steps** - Number of steps until logging occurs.
+        * **save_steps** - Number of steps until checkpoint is saved in `output_dir`
+        * **save_total_limit** - Limit the total amount of checkpoints, delete the older checkpoints in the `output_dir`, does not delete by default
+        * **use_tensorboard** - Only useable if tensorboard is installed
+        **return** - None
         """
         # Check to overwrite
         if (
@@ -614,26 +622,25 @@ class LMFineTuner:
             use_tensorboard: bool = False,
     ) -> None:
         """
-        # TODO params
 
-        :param output_dir:
-        :param should_continue:
-        :param overwrite_output_dir:
-        :param evaluate_during_training:
-        :param per_gpu_train_batch_size:
-        :param gradient_accumulation_steps:
-        :param learning_rate:
-        :param weight_decay:
-        :param adam_epsilon:
-        :param max_grad_norm:
-        :param num_train_epochs:
-        :param max_steps:
-        :param warmup_steps:
-        :param logging_steps:
-        :param save_steps:
-        :param save_total_limit:
-        :param use_tensorboard:
-        :return:
+        * **output_dir** - The output directory where the model predictions and checkpoints will be written.
+        * **should_continue** - Whether to continue training from latest checkpoint in `output_dir`
+        * **overwrite_output_dir** - Overwrite the content of output directory `output_dir`
+        * **evaluate_during_training** - Run evaluation during training at each `logging_step`.
+        * **per_gpu_train_batch_size** - Batch size per GPU/CPU for training. (If `evaluate_during_training` is True, this is also the eval batch size
+        * **gradient_accumulation_steps** - Number of updates steps to accumulate before performing a backward/update pass
+        * **learning_rate** - The initial learning rate for Adam optimizer.
+        * **weight_decay** - Weight decay if we apply some.
+        * **adam_epsilon** - Epsilon for Adam optimizer.
+        * **max_grad_norm** - Max gradient norm. Duh
+        * **num_train_epochs** - Total number of training epochs to perform.
+        * **max_steps** - If > 0: set total number of training steps to perform. Override `num_train_epochs`.
+        * **warmup_steps** - Linear warmup over warmup_steps.
+        * **logging_steps** - Number of steps until logging occurs.
+        * **save_steps** - Number of steps until checkpoint is saved in `output_dir`
+        * **save_total_limit** - Limit the total amount of checkpoints, delete the older checkpoints in the `output_dir`, does not delete by default
+        * **use_tensorboard** - Only useable if tensorboard is installed
+        **return** - None
         """
         # Check to overwrite
         if (
@@ -783,7 +790,7 @@ class LMFineTuner:
         train_iterator = trange(
             epochs_trained, int(num_train_epochs), desc="Epoch", disable=self.local_rank not in [-1, 0]
         )
-        # self._set_seed()  # Added here for reproducibility
+        self._set_seed()  # Added here for reproducibility
         for _ in train_iterator:
             epoch_iterator = tqdm(train_dataloader, desc="Iteration", disable=self.local_rank not in [-1, 0])
             for step, batch in enumerate(epoch_iterator):
@@ -902,11 +909,9 @@ class LMFineTuner:
             per_gpu_eval_batch_size: int = 4,
     ) -> dict:
         """
-        # TODO params
-
-        :param output_dir:
-        :param per_gpu_eval_batch_size:
-        :return:
+        * **output_dir** - The output directory where the model predictions and checkpoints will be written.
+        * **per_gpu_eval_batch_size** - Batch size per GPU/CPU for evaluation.
+        **return** - Results in a dictionary
         """
         # Evaluation
         results = {}
@@ -939,12 +944,10 @@ class LMFineTuner:
 
     ) -> dict:
         """
-        # TODO params
-
-        :param output_dir:
-        :param per_gpu_eval_batch_size:
-        :param prefix:
-        :return:
+        * **output_dir** - The output directory where the model predictions and checkpoints will be written.
+        * **per_gpu_eval_batch_size** - Batch size per GPU/CPU for evaluation.
+        * **prefix** - Prefix of checkpoint i.e. "checkpoint-50"
+        **return** - Results in a dictionary
         """
         # Loop to handle MNLI double evaluation (matched, mis-matched)
         eval_output_dir = output_dir
@@ -1066,12 +1069,6 @@ class LMFineTuner:
             self,
             inputs: torch.Tensor
     ) -> Tuple[torch.Tensor, torch.Tensor]:
-        """
-        # TODO params
-
-        :param inputs:
-        :return:
-        """
         """ Prepare masked tokens inputs/labels for masked language modeling: 80% MASK, 10% random, 10% original. """
         labels = inputs.clone()
         # We sample a few tokens in each sequence for masked-LM training (with probability args.mlm_probability defaults to 0.15 in Bert/RoBERTa)
@@ -1100,7 +1097,7 @@ class LMFineTuner:
 
     def find_learning_rate(
             self,
-            base_path: Union[Path, str],
+            output_dir: Union[Path, str],
             file_name: str = "learning_rate.tsv",
             start_learning_rate: float = 1e-7,
             end_learning_rate: float = 10,
@@ -1113,27 +1110,30 @@ class LMFineTuner:
             **kwargs,
     ) -> float:
         """
-        # TODO params
+        Uses Leslie's cyclical learning rate finding method to generate and save the loss x learning rate plot
 
-        :param base_path:
-        :param file_name:
-        :param start_learning_rate:
-        :param end_learning_rate:
-        :param iterations:
-        :param mini_batch_size:
-        :param stop_early:
-        :param smoothing_factor:
-        :param adam_epsilon:
-        :param weight_decay:
-        :param kwargs:
-        :return:
+        This method returns a suggested learning rate using the static method `LMFineTuner.suggest_learning_rate()`
+        which is implicitly run in this method.
+
+        * **output_dir** - Path to dir for learning rate file to be saved
+        * **file_name** - Name of learning rate .tsv file
+        * **start_learning_rate** - Initial learning rate to start cyclical learning rate finder method
+        * **end_learning_rate** - End learning rate to stop exponential increase of the learning rate
+        * **iterations** - Number of optimizer iterations for the ExpAnnealLR scheduler
+        * **mini_batch_size** - Batch size for dataloader
+        * **stop_early** - Bool for stopping early once loss diverges
+        * **smoothing_factor** - Smoothing factor on moving average of losses
+        * **adam_epsilon** - Epsilon for Adam optimizer.
+        * **weight_decay** - Weight decay if we apply some.
+        * **kwargs** - Additional keyword arguments for the Adam optimizer
+        **return** - Learning rate as a float
         """
         best_loss = None
         moving_avg_loss = 0
 
         # cast string to Path
-        if type(base_path) is str:
-            base_path = Path(base_path)
+        if type(output_dir) is str:
+            output_dir = Path(output_dir)
         from flair.training_utils import (init_output_file,
                                           init_output_file,
                                           WeightExtractor,
@@ -1142,7 +1142,7 @@ class LMFineTuner:
                                           Result,
                                           store_embeddings,
                                           )
-        learning_rate_tsv = init_output_file(base_path, file_name)
+        learning_rate_tsv = init_output_file(output_dir, file_name)
 
         with open(learning_rate_tsv, "a") as f:
             f.write("ITERATION\tTIMESTAMP\tLEARNING_RATE\tTRAIN_LOSS\n")
@@ -1247,12 +1247,12 @@ class LMFineTuner:
             lr_tsv = list(csv.reader(lr_f, delimiter="\t"))
         losses = np.array([float(row[-1]) for row in lr_tsv[1:]])
         lrs = np.array([float(row[-2]) for row in lr_tsv[1:]])
-        lr_to_use = self._find_appropriate_lr(losses, lrs)
+        lr_to_use = self.suggest_learning_rate(losses, lrs)
         print(f"Recommended Learning Rate {lr_to_use}")
         return lr_to_use
 
-    def _find_appropriate_lr(
-            self,
+    @staticmethod
+    def suggest_learning_rate(
             losses: np.array,
             lrs: np.array,
             lr_diff: int = 30,
@@ -1260,14 +1260,14 @@ class LMFineTuner:
             adjust_value: float = 1
     ) -> float:
         """
-        # TODO Params
+        Attempts to find the optimal learning rate using a interval slide rule approach with the cyclical learning rate method
 
-        :param losses:
-        :param lrs:
-        :param lr_diff:
-        :param loss_threshold:
-        :param adjust_value:
-        :return:
+        * **losses** - Numpy array of losses
+        * **lrs** - Numpy array of exponentially increasing learning rates (must match dim of `losses`)
+        * **lr_diff** - Learning rate Interval of slide ruler
+        * **loss_threshold** - Threshold of loss difference on interval where the sliding stops
+        * **adjust_value** - Coefficient for adjustment
+        **return** - the optimal learning rate as a float
         """
         # Get loss values and their corresponding gradients, and get lr values
         assert (lr_diff < len(losses))
@@ -1290,7 +1290,7 @@ class LMFineTuner:
     def freeze_to(self, n: int) -> None:
         """Freeze first n layers of model
 
-        :param n: Starting from initial layer, freeze all layers up to nth layer inclusively
+        * **n** - Starting from initial layer, freeze all layers up to nth layer inclusively
         """
         layers = list(self.model.parameters())
         # Freeze up to n layers
@@ -1300,7 +1300,7 @@ class LMFineTuner:
             param.requires_grad = True
 
     def freeze(self) -> None:
-        """Freeze last classifcation layer group only
+        """Freeze last classification layer group only
         """
         layers_len = len(list(self.model.cls.parameters()))
         self.freeze_to(-layers_len)

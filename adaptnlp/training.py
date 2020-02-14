@@ -16,6 +16,23 @@ from flair.visual.training_curves import Plotter
 
 
 class SequenceClassifierTrainer:
+    """Sequence Classifier Trainer
+
+    Usage:
+
+    ```python
+    >>> sc_trainer = SequenceClassifierTrainer(corpus="/Path/to/data/dir")
+    ```
+
+    **Parameters:**
+
+    * **corpus** - A flair corpus data model or `Path`/string to a directory with train.csv/test.csv/dev.csv
+    * **encoder** - A `EasyDocumentEmbeddings` object if training with a flair prediction head or `Path`/string if training with Transformer's prediction models
+    * **column_name_map** - Required if corpus is not a `Corpus` object, it's a dictionary specifying the indices of the text and label columns of the csv i.e. {1:"text",2:"label"}
+    * **corpus_in_memory** - Boolean for whether to store corpus embeddings in memory
+    * **predictive_head** - For now either "flair" or "transformers" for the prediction head
+    * **\**kwargs** - Keyword arguments for Flair's `TextClassifier` model class
+    """
 
     def __init__(
             self,
@@ -26,14 +43,6 @@ class SequenceClassifierTrainer:
             predictive_head: str = "flair",
             **kwargs,
     ):
-        """Sequence Classifier Trainer
-    
-        :param corpus: A flair corpus data model or `Path`/string to a directory with train.csv/test.csv/dev.csv
-        :param encoder: A `EasyDocumentEmbeddings` object if training with a flair prediction head or `Path`/string if training with Transformer's prediction models
-        :param column_name_map: Required if corpus is not a `Corpus` object, it's a dictionary specifying the indices of the text and label columns of the csv i.e. {1:"text",2:"label"}
-        :param corpus_in_memory: Boolean for whether to store corpus embeddings in memory
-        :param predictive_head: For now either "flair" or "transformers" for the prediction head
-        """
         if isinstance(corpus, Corpus):
             self.corpus = corpus
         else:
@@ -105,19 +114,18 @@ class SequenceClassifierTrainer:
             max_epochs: int = 150,
             plot_weights: bool = False,
             **kwargs,
-    ):
+    ) -> None:
         """
+        Train the Sequence Classifier
 
-        # TODO params
-
-        :param output_dir:
-        :param learning_rate:
-        :param mini_batch_size:
-        :param anneal_factor:
-        :param patience:
-        :param max_epochs:
-        :param plot_weights:
-        :param kwargs:
+        * **output_dir** - The output directory where the model predictions and checkpoints will be written.
+        * **learning_rate** - The initial learning rate
+        * **mini_batch_size** - Batch size for the dataloader
+        * **anneal_factor** - The factor by which the learning rate is annealed
+        * **patience** - Patience is the number of epochs with no improvement the Trainer waits until annealing the learning rate
+        * **max_epochs** - Maximum number of epochs to train. Terminates training if this number is surpassed.
+        * **plot_weights** - Bool to plot weights or not
+        * **kwargs** - Keyword arguments for the rest of Flair's `Trainer.train()` hyperparameters
         """
         if isinstance(output_dir, str):
             output_dir = Path(output_dir)
@@ -141,6 +149,7 @@ class SequenceClassifierTrainer:
     def find_learning_rate(
             self,
             output_dir: Union[Path, str],
+            file_name: str = "learning_rate.tsv",
             start_learning_rate: float = 1e-8,
             end_learning_rate: float = 10,
             iterations: int = 100,
@@ -151,22 +160,27 @@ class SequenceClassifierTrainer:
             **kwargs,
     ) -> float:
         """
-        # TODO params
+        Uses Leslie's cyclical learning rate finding method to generate and save the loss x learning rate plot
 
-        :param output_dir:
-        :param start_learning_rate:
-        :param end_learning_rate:
-        :param iterations:
-        :param mini_batch_size:
-        :param stop_early:
-        :param smoothing_factor:
-        :param plot_learning_rate:
-        :param kwargs:
-        :return:
+        This method returns a suggested learning rate using the static method `LMFineTuner.suggest_learning_rate()`
+        which is implicitly run in this method.
+
+        * **output_dir** - Path to dir for learning rate file to be saved
+        * **file_name** - Name of learning rate .tsv file
+        * **start_learning_rate** - Initial learning rate to start cyclical learning rate finder method
+        * **end_learning_rate** - End learning rate to stop exponential increase of the learning rate
+        * **iterations** - Number of optimizer iterations for the ExpAnnealLR scheduler
+        * **mini_batch_size** - Batch size for dataloader
+        * **stop_early** - Bool for stopping early once loss diverges
+        * **smoothing_factor** - Smoothing factor on moving average of losses
+        * **adam_epsilon** - Epsilon for Adam optimizer.
+        * **weight_decay** - Weight decay if we apply some.
+        * **kwargs** - Additional keyword arguments for the Adam optimizer
+        **return** - Learning rate as a float
         """
         # 7. find learning rate
         learning_rate_tsv = self.trainer.find_learning_rate(base_path=output_dir,
-                                                            file_name='learning_rate.tsv',
+                                                            file_name=file_name,
                                                             start_learning_rate=start_learning_rate,
                                                             end_learning_rate=end_learning_rate,
                                                             iterations=iterations,
@@ -186,18 +200,29 @@ class SequenceClassifierTrainer:
             lr_tsv = list(csv.reader(lr_f, delimiter="\t"))
         losses = np.array([float(row[-1]) for row in lr_tsv[1:]])
         lrs = np.array([float(row[-2]) for row in lr_tsv[1:]])
-        lr_to_use = self._find_appropriate_lr(losses, lrs, **kwargs)
+        lr_to_use = self.suggested_learning_rate(losses, lrs, **kwargs)
         print(f"Recommended Learning Rate {lr_to_use}")
         return lr_to_use
 
-    def _find_appropriate_lr(
-            self,
+    @staticmethod
+    def suggested_learning_rate(
             losses: np.array,
             lrs: np.array,
             lr_diff: int = 15,
             loss_threshold: float = .2,
             adjust_value: float = 1,
     ) -> float:
+        # This seems redundant unless we can make this configured for each trainer/finetuner
+        """
+        Attempts to find the optimal learning rate using a interval slide rule approach with the cyclical learning rate method
+
+        * **losses** - Numpy array of losses
+        * **lrs** - Numpy array of exponentially increasing learning rates (must match dim of `losses`)
+        * **lr_diff** - Learning rate Interval of slide ruler
+        * **loss_threshold** - Threshold of loss difference on interval where the sliding stops
+        * **adjust_value** - Coefficient for adjustment
+        **return** - the optimal learning rate as a float
+        """
         # Get loss values and their corresponding gradients, and get lr values
         assert (lr_diff < len(losses))
         loss_grad = np.gradient(losses)

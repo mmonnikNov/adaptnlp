@@ -10,15 +10,15 @@ language models provided by Huggingface's Transformers library.
 
 Below are the available transformers language models for fine-tuning with `LMFineTuner`
 
-| Transformer Model|
-| -------------    |
-| ALBERT |
-| DistilBERT |
-| BERT |
-| CamemBERT |
-| RoBERTa |
-| GPT |
-| GPT2 |
+| Transformer Model| Model Type/Architecture String Key|
+| ------------- | ----------------------  |
+| ALBERT | "albert" |
+| DistilBERT | "distilbert" |
+| BERT | "bert" |
+| CamemBERT | "camembert" |
+| RoBERTa | "roberta" |
+| GPT | "gpt" |
+| GPT2 | "gpt2" |
 
 You can fine-tune on any transformers language models with the above architecture in Huggingface's Transformers
 library.  Key shortcut names are located [here](https://huggingface.co/transformers/pretrained_models.html).
