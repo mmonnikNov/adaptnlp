@@ -13,7 +13,7 @@ for end to end tasks.
 
 AdaptNLP is built atop Zalando Research's Flair and Hugging Face's Transformers library.
 
-**[Full Tutorials and API Documentation](https://adaptnlp-documentation.s3.amazonaws.com/index.html)**
+**[Full Guides and API Documentation](https://adaptnlp-documentation.s3.amazonaws.com/index.html)**
 
 ## Quick Start
 
@@ -151,7 +151,7 @@ finetuner.train_one_cycle(output_dir="Path/to/output/directory", learning_rate=l
 
 ## Tutorials
 
-Look in the [Tutorials](tutorials) directory for a quick introduction to the library and it's very simple
+Look in the [Tutorials](tutorials) directory for a quick introduction to the library and its very simple
 and straight forward use cases:
 
   1. Token Classification: NER, POS, Chunk, and Frame Tagging
