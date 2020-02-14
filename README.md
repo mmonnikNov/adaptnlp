@@ -1,6 +1,6 @@
 <p>
     <br>
-    <img src="https://raw.githubusercontent.com/novetta/adaptnlp/master/docs/img/NovettaAdaptNLPlogo-400.png" width="400"/>
+    <img src="https://raw.githubusercontent.com/novetta/adaptnlp/master/docs/img/NovettaAdaptNLPlogo-400px.png" width="400"/>
     </br>
 </p>
 

@@ -1,7 +1,7 @@
 <p>
     <br>
     <img src="https://raw.githubusercontent.com/novetta/adaptnlp/master/docs/img/NovettaAdaptNLPlogo-400px.png" width="400"/>
-    <br>
+    </br>
 </p>
 
 [![CircleCI](https://img.shields.io/circleci/build/github/Novetta/adaptnlp/master?token=c19c48a56cf6010fed1a63a9bae86acc72e91c24)](https://circleci.com/gh/Novetta/adaptnlp)
