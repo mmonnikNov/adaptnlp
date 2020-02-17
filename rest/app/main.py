@@ -48,7 +48,7 @@ async def initialize_nlp_task_modules():
     _SEQUENCE_CLASSIFIER.tag_text(
         text="", model_name_or_path=_SEQUENCE_CLASSIFICATION_MODEL
     )
-    _QA_MODEL.predict_bert_qa(
+    _QA_MODEL.predict_qa(
         "",
         "______________________________________________________________________________",
     )
@@ -91,7 +91,7 @@ async def question_answering(qa_request: QuestionAnsweringRequest):
     query = qa_request.query
     context = qa_request.context
     top_n = qa_request.top_n
-    best_answer, best_n_answers = _QA_MODEL.predict_bert_qa(
+    best_answer, best_n_answers = _QA_MODEL.predict_qa(
         query=query, context=context, n_best_size=top_n
     )
     payload = QuestionAnsweringResponse(
