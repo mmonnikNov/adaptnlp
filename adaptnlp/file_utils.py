@@ -97,7 +97,9 @@ def cached_path(url_or_filename: Union[str, Path], cache_dir: str = None) -> str
         raise FileNotFoundError("file {} not found".format(url_or_filename))
     else:
         # Something unknown
-        raise ValueError("unable to parse {} as a URL or as a local path".format(url_or_filename))
+        raise ValueError(
+            "unable to parse {} as a URL or as a local path".format(url_or_filename)
+        )
 
 
 def is_url_or_existing_file(url_or_filename: Union[str, Path, None]) -> bool:

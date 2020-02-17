@@ -3,7 +3,9 @@ import click
 from . import __version__
 
 
-@click.group(help="AdaptNLP: an easy and flexible NLP library for SOTA of the art NLP tasks")
+@click.group(
+    help="AdaptNLP: an easy and flexible NLP library for SOTA of the art NLP tasks"
+)
 @click.version_option(version=__version__)
 def _main() -> None:
     pass
