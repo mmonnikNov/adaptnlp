@@ -2,18 +2,20 @@ from typing import List, Dict, Union
 from collections import defaultdict
 
 from flair.data import Sentence
-from flair.embeddings import (Embeddings,
-                              WordEmbeddings,
-                              StackedEmbeddings,
-                              FlairEmbeddings,
-                              BertEmbeddings,
-                              DocumentPoolEmbeddings,
-                              DocumentRNNEmbeddings,
-                              OpenAIGPT2Embeddings,
-                              XLNetEmbeddings,
-                              XLMEmbeddings,
-                              RoBERTaEmbeddings,
-                              MuseCrosslingualEmbeddings)
+from flair.embeddings import (
+    Embeddings,
+    # WordEmbeddings,
+    StackedEmbeddings,
+    FlairEmbeddings,
+    BertEmbeddings,
+    DocumentPoolEmbeddings,
+    DocumentRNNEmbeddings,
+    OpenAIGPT2Embeddings,
+    XLNetEmbeddings,
+    XLMEmbeddings,
+    RoBERTaEmbeddings,
+    # MuseCrosslingualEmbeddings,
+)
 
 FLAIR_PRETRAINED_MODEL_NAMES = {
     "multi-forward",
@@ -120,9 +122,9 @@ class EasyWordEmbeddings:
         self.models: Dict[Embeddings] = defaultdict(bool)
 
     def embed_text(
-            self,
-            text: Union[List[Sentence], Sentence, List[str], str],
-            model_name_or_path: str = "bert-base-cased",
+        self,
+        text: Union[List[Sentence], Sentence, List[str], str],
+        model_name_or_path: str = "bert-base-cased",
     ) -> List[Sentence]:
         """ Produces embeddings for text
 
@@ -145,23 +147,30 @@ class EasyWordEmbeddings:
             elif "roberta" in model_name_or_path:
                 self.models[model_name_or_path] = RoBERTaEmbeddings(model_name_or_path)
             elif "gpt2" in model_name_or_path:
-                self.models[model_name_or_path] = OpenAIGPT2Embeddings(model_name_or_path)
+                self.models[model_name_or_path] = OpenAIGPT2Embeddings(
+                    model_name_or_path
+                )
             elif "xlnet" in model_name_or_path:
                 self.models[model_name_or_path] = XLNetEmbeddings(model_name_or_path)
             elif "xlm" in model_name_or_path:
                 self.models[model_name_or_path] = XLMEmbeddings(model_name_or_path)
-            elif "flair" in model_name_or_path or model_name_or_path in FLAIR_PRETRAINED_MODEL_NAMES:
+            elif (
+                "flair" in model_name_or_path
+                or model_name_or_path in FLAIR_PRETRAINED_MODEL_NAMES
+            ):
                 self.models[model_name_or_path] = FlairEmbeddings(model_name_or_path)
             else:
-                print(f"Corresponding flair embedding module not found for {model_name_or_path}")
+                print(
+                    f"Corresponding flair embedding module not found for {model_name_or_path}"
+                )
                 return Sentence("")
         embedding = self.models[model_name_or_path]
         return embedding.embed(sentences)
 
     def embed_all(
-            self,
-            text: Union[List[Sentence], Sentence, List[str], str],
-            *model_names_or_paths: str,
+        self,
+        text: Union[List[Sentence], Sentence, List[str], str],
+        *model_names_or_paths: str,
     ) -> List[Sentence]:
         """Embeds text with all embedding models loaded
 
@@ -179,10 +188,14 @@ class EasyWordEmbeddings:
 
         if model_names_or_paths:
             for embedding_name in model_names_or_paths:
-                sentences = self.embed_text(sentences, model_name_or_path=embedding_name)
+                sentences = self.embed_text(
+                    sentences, model_name_or_path=embedding_name
+                )
         else:
             for embedding_name in self.models.keys():
-                sentences = self.embed_text(sentences, model_name_or_path=embedding_name)
+                sentences = self.embed_text(
+                    sentences, model_name_or_path=embedding_name
+                )
         return sentences
 
 
@@ -197,7 +210,7 @@ class EasyStackedEmbeddings:
 
     **Parameters:**
 
-    * **\*embeddings** - Non-keyword variable number of strings specifying the embeddings you want to stack
+    * **&ast;embeddings** - Non-keyword variable number of strings specifying the embeddings you want to stack
     """
 
     def __init__(self, *embeddings: str):
@@ -216,17 +229,21 @@ class EasyStackedEmbeddings:
                 self.embedding_stack.append(XLNetEmbeddings(model_name_or_path))
             elif "xlm" in model_name_or_path:
                 self.embedding_stack.append(XLMEmbeddings(model_name_or_path))
-            elif "flair" in model_name_or_path or model_name_or_path in FLAIR_PRETRAINED_MODEL_NAMES:
+            elif (
+                "flair" in model_name_or_path
+                or model_name_or_path in FLAIR_PRETRAINED_MODEL_NAMES
+            ):
                 self.embedding_stack.append(FlairEmbeddings(model_name_or_path))
             else:
-                print(f"Corresponding flair embedding module not found for {model_name_or_path}")
+                print(
+                    f"Corresponding flair embedding module not found for {model_name_or_path}"
+                )
 
-        assert (len(self.embedding_stack) != 0)
+        assert len(self.embedding_stack) != 0
         self.stacked_embeddings = StackedEmbeddings(embeddings=self.embedding_stack)
 
     def embed_text(
-            self,
-            text: Union[List[Sentence], Sentence, List[str], str],
+        self, text: Union[List[Sentence], Sentence, List[str], str],
     ) -> List[Sentence]:
         """ Stacked embeddings
 
@@ -248,7 +265,7 @@ class EasyStackedEmbeddings:
         return sentences
 
 
-class EasyDocumentEmbeddings():
+class EasyDocumentEmbeddings:
     """ Document Embeddings generated by pool and rnn methods applied to the word embeddings of text
 
     Usage:
@@ -259,7 +276,7 @@ class EasyDocumentEmbeddings():
 
     **Parameters:**
 
-    * **\*embeddings** - Non-keyword variable number of strings referring to model names or paths
+    * **&ast;embeddings** - Non-keyword variable number of strings referring to model names or paths
     * **methods** - A list of strings to specify which document embeddings to use i.e. ["rnn", "pool"] (avoids unncessary loading of models if only using one)
     * **configs** - A dictionary of configurations for flair's rnn and pool document embeddings
     ```python
@@ -282,32 +299,35 @@ class EasyDocumentEmbeddings():
     __allowed_configs = ("pool_configs", "rnn_configs")
 
     def __init__(
-            self,
-            *embeddings: str,
-            methods: List[str] = ["rnn", "pool"],
-            configs: Dict = {"pool_configs": {"fine_tune_mode": "linear", "pooling": "mean", },
-                             "rnn_configs": {"hidden_size": 512,
-                                             "rnn_layers": 1,
-                                             "reproject_words": True,
-                                             "reproject_words_dimension": 256,
-                                             "bidirectional": False,
-                                             "dropout": 0.5,
-                                             "word_dropout": 0.0,
-                                             "locked_dropout": 0.0,
-                                             "rnn_type": "GRU",
-                                             "fine_tune": True, },
-                             },
+        self,
+        *embeddings: str,
+        methods: List[str] = ["rnn", "pool"],
+        configs: Dict = {
+            "pool_configs": {"fine_tune_mode": "linear", "pooling": "mean"},
+            "rnn_configs": {
+                "hidden_size": 512,
+                "rnn_layers": 1,
+                "reproject_words": True,
+                "reproject_words_dimension": 256,
+                "bidirectional": False,
+                "dropout": 0.5,
+                "word_dropout": 0.0,
+                "locked_dropout": 0.0,
+                "rnn_type": "GRU",
+                "fine_tune": True,
+            },
+        },
     ):
         print("May need a couple moments to instantiate...")
         self.embedding_stack = []
 
         # Check methods
         for m in methods:
-            assert (m in self.__class__.__allowed_methods)
+            assert m in self.__class__.__allowed_methods
 
         # Set configs for pooling and rnn parameters
         for k, v in configs.items():
-            assert (k in self.__class__.__allowed_configs)
+            assert k in self.__class__.__allowed_configs
             setattr(self, k, v)
 
         # Load correct Embeddings module
@@ -322,22 +342,30 @@ class EasyDocumentEmbeddings():
                 self.embedding_stack.append(XLNetEmbeddings(model_name_or_path))
             elif "xlm" in model_name_or_path:
                 self.embedding_stack.append(XLMEmbeddings(model_name_or_path))
-            elif "flair" in model_name_or_path or model_name_or_path in FLAIR_PRETRAINED_MODEL_NAMES:
+            elif (
+                "flair" in model_name_or_path
+                or model_name_or_path in FLAIR_PRETRAINED_MODEL_NAMES
+            ):
                 self.embedding_stack.append(FlairEmbeddings(model_name_or_path))
             else:
-                print(f"Corresponding flair embedding module not found for {model_name_or_path}")
+                print(
+                    f"Corresponding flair embedding module not found for {model_name_or_path}"
+                )
 
-        assert (len(self.embedding_stack) != 0)
+        assert len(self.embedding_stack) != 0
         if "pool" in methods:
-            self.pool_embeddings = DocumentPoolEmbeddings(self.embedding_stack, **self.pool_configs)
+            self.pool_embeddings = DocumentPoolEmbeddings(
+                self.embedding_stack, **self.pool_configs
+            )
             print("Pooled embedding loaded")
         if "rnn" in methods:
-            self.rnn_embeddings = DocumentRNNEmbeddings(self.embedding_stack, **self.rnn_configs)
+            self.rnn_embeddings = DocumentRNNEmbeddings(
+                self.embedding_stack, **self.rnn_configs
+            )
             print("RNN embeddings loaded")
 
     def embed_pool(
-            self,
-            text: Union[List[Sentence], Sentence, List[str], str],
+        self, text: Union[List[Sentence], Sentence, List[str], str],
     ) -> List[Sentence]:
         """ Stacked embeddings
 
@@ -357,8 +385,7 @@ class EasyDocumentEmbeddings():
         return sentences
 
     def embed_rnn(
-            self,
-            text: Union[List[Sentence], Sentence, List[str], str],
+        self, text: Union[List[Sentence], Sentence, List[str], str],
     ) -> List[Sentence]:
         """ Stacked embeddings
 

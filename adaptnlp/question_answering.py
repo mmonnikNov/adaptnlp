@@ -24,36 +24,39 @@ class EasyQuestionAnswering:
 
     # QA Models
     # Soon to be deprecated
-    def predict_bert_qa(self, query: str, context: str, n_best_size: int = 20) -> Tuple[str, List[OrderedDict]]:
-        ''' Predicts top_n answer spans of query in regards to context
+    def predict_bert_qa(
+        self, query: str, context: str, n_best_size: int = 20
+    ) -> Tuple[str, List[OrderedDict]]:
+        """ Predicts top_n answer spans of query in regards to context
 
 
         * **query** - The question
         * **context** - The context of which the question is asking
-        * **top_n** - The top n answers returned
+        * **n_best_size** - The top n answers returned
 
         **return** - Either a list of string answers or a dict of the results
-        '''
+        """
 
         self._load_bert_qa() if not self.bert_qa else None
-        return self.bert_qa.predict(query=query, context=context, n_best_size=n_best_size)
+        return self.bert_qa.predict(
+            query=query, context=context, n_best_size=n_best_size
+        )
 
     # TODO: Temporary Placeholder
     def predict_qa(
-            self,
-            query: str,
-            context: str,
-            n_best_size: int = 20,
+        self, query: str, context: str, n_best_size: int = 20,
     ) -> Tuple[str, List[OrderedDict]]:
-        ''' Predicts top_n answer spans of query in regards to context
+        """ Predicts top_n answer spans of query in regards to context
 
 
         * **query** - The question
         * **context** - The context of which the question is asking
-        * **top_n** - The top n answers returned
+        * **n_best_size** - The top n answers returned
 
         **return** - Either a list of string answers or a dict of the results
-        '''
+        """
 
         self._load_bert_qa() if not self.bert_qa else None
-        return self.bert_qa.predict(query=query, context=context, n_best_size=n_best_size)
+        return self.bert_qa.predict(
+            query=query, context=context, n_best_size=n_best_size
+        )
