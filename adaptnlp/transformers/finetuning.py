@@ -86,6 +86,11 @@ class TextDataset(Dataset):
         block_size: int = 512,
     ):
         assert os.path.isfile(file_path)
+
+        block_size = block_size - (
+            tokenizer.max_len - tokenizer.max_len_single_sentence
+        )
+
         directory, filename = os.path.split(file_path)
         cached_features_file = os.path.join(
             directory, model_type + "_cached_lm_" + str(block_size) + "_" + filename
@@ -1343,6 +1348,12 @@ class LMFineTuner:
 
     def mask_tokens(self, inputs: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
         """ Prepare masked tokens inputs/labels for masked language modeling: 80% MASK, 10% random, 10% original. """
+
+        if self.tokenizer.mask_token is None:
+            raise ValueError(
+                "This tokenizer does not have a mask token which is necessary for masked language modeling. Set `mlm` param as False"
+            )
+
         labels = inputs.clone()
         # We sample a few tokens in each sequence for masked-LM training (with probability args.mlm_probability defaults to 0.15 in Bert/RoBERTa)
         probability_matrix = torch.full(labels.shape, self.mlm_probability)
