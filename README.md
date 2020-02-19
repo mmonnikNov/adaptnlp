@@ -1,19 +1,48 @@
-<p>
-    <br>
-    <img src="https://raw.githubusercontent.com/novetta/adaptnlp/master/docs/img/NovettaAdaptNLPlogo-400px.png" width="400"/>
-    </br>
+<p align="center">
+    <a href="https://github.com/Novetta/adaptnlp"> <img src="https://raw.githubusercontent.com/novetta/adaptnlp/master/docs/img/NovettaAdaptNLPlogo-400px.png" width="400"/></a>
 </p>
 
-[![CircleCI](https://img.shields.io/circleci/build/github/Novetta/adaptnlp/master?token=c19c48a56cf6010fed1a63a9bae86acc72e91c24)](https://circleci.com/gh/Novetta/adaptnlp)
-[![PyPI version](https://badge.fury.io/py/adaptnlp.svg)](https://badge.fury.io/py/adaptnlp)
-[![License](https://img.shields.io/github/license/novetta/adaptnlp)](https://github.com/Novetta/adaptnlp/blob/master/LICENSE)
+<p align="center">
+<strong> A high level framework and library for running, training, and deploying state-of-the-art Natural Language Processing (NLP) models for end to end tasks.</strong>
+</p>
+<p align="center">
+    <a href="https://circleci.com/gh/Novetta/adaptnlp">
+        <img src="https://img.shields.io/circleci/build/github/Novetta/adaptnlp/master?token=c19c48a56cf6010fed1a63a9bae86acc72e91c24">
+    </a>
+    <a href="https://badge.fury.io/py/adaptnlp">
+        <img src="https://badge.fury.io/py/adaptnlp.svg">
+    </a>
+    <a href="https://github.com/Novetta/adaptnlp/blob/master/LICENSE">
+        <img src="https://img.shields.io/github/license/novetta/adaptnlp">
+    </a>
+</p>
 
-A high level framework and library for running, training, and deploying state-of-the-art Natural Language Processing (NLP) models
-for end to end tasks.
 
-AdaptNLP is built atop Zalando Research's Flair and Hugging Face's Transformers library.
+AdaptNLP allows users ranging from beginner python coders to experienced machine learning engineers to leverage
+state-of-the-art NLP models and training techniques in one easy-to-use python package.
 
-**[Full Guides and API Documentation](https://adaptnlp-documentation.s3.amazonaws.com/index.html)**
+Built atop Zalando Research's Flair and Hugging Face's Transformers library, AdaptNLP provides Machine
+Learning Researchers and Scientists a modular and **adaptive** approach to a variety of NLP tasks with an
+**Easy** API for training, inference, and deploying NLP-based microservices.
+
+**Key Features**
+  - **[Full Guides and API Documentation](https://adaptnlp-documentation.s3.amazonaws.com/index.html)**
+  - [Tutorial](https://github.com/Novetta/adaptnlp/tree/master/tutorials) Jupyter/Google Colab Notebooks
+  - Unified API for NLP Tasks with SOTA Pretrained Models (Adaptable with Flair and Transformer's Models)
+    - Token Tagging 
+    - Sequence Classification
+    - Embeddings
+    - Question Answering
+    - <em> More in development </em>
+  - Training and Fine-tuning Interface
+    - Jeremy's **[ULM-FIT](https://arxiv.org/abs/1801.06146)** approach for transfer learning in NLP
+    -  Fine-tuning Transformer's language models and task-specific predictive heads like Flair's `SequenceClassifier`
+  - [Rapid NLP Model Deployment](https://github.com/Novetta/adaptnlp/tree/master/rest) with Sebastián's [FastAPI](https://github.com/tiangolo/fastapi) Framework
+    - Containerized FastAPI app
+    - Immediately deploy any custom trained Flair or AdaptNLP model
+  - Dockerizing AdaptNLP with GPUs
+    - Easily build and run AdaptNLP containers leveraging NVIDIA GPUs with Docker
+
 
 ## Quick Start
 
@@ -173,7 +202,7 @@ Checkout the documentation for more information.
 
 We use FastAPI for standing up endpoints for serving state-of-the-art NLP models with AdaptNLP.
 
-The [REST](rest) directory contains more detail on deploying a REST API locally or with docker in a very easy and
+The [REST](https://github.com/Novetta/adaptnlp/tree/master/rest) directory contains more detail on deploying a REST API locally or with docker in a very easy and
 fast way.
   
 ## Docker
