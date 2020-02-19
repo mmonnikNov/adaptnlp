@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.6
-    resource_class: xlarge
+    resource_class: medium
     working_directory: ~/adaptnlp
     steps:
       - checkout
