@@ -26,6 +26,7 @@ Learning Researchers and Scientists a modular and **adaptive** approach to a var
 **Easy** API for training, inference, and deploying NLP-based microservices.
 
 **Key Features**
+
   - **[Full Guides and API Documentation](https://adaptnlp-documentation.s3.amazonaws.com/index.html)**
   - [Tutorial](https://github.com/Novetta/adaptnlp/tree/master/tutorials) Jupyter/Google Colab Notebooks
   - Unified API for NLP Tasks with SOTA Pretrained Models (Adaptable with Flair and Transformer's Models)
@@ -40,7 +41,7 @@ Learning Researchers and Scientists a modular and **adaptive** approach to a var
   - [Rapid NLP Model Deployment](https://github.com/Novetta/adaptnlp/tree/master/rest) with Sebastián's [FastAPI](https://github.com/tiangolo/fastapi) Framework
     - Containerized FastAPI app
     - Immediately deploy any custom trained Flair or AdaptNLP model
-  - Dockerizing AdaptNLP with GPUs
+  - [Dockerizing AdaptNLP with GPUs](https://hub.docker.com/r/achangnovetta/adaptnlp)
     - Easily build and run AdaptNLP containers leveraging NVIDIA GPUs with Docker
 
 
