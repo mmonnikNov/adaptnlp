@@ -22,6 +22,7 @@ jobs:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
+      - run: pip install -e .
       - run:
           name: run tests
           command: |
