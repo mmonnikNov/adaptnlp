@@ -118,7 +118,7 @@ top_n = 5
 
 ## Load the QA module and run inference on results 
 qa = EasyQuestionAnswering()
-best_answer, best_n_answers = qa.predict_bert_qa(query=query, context=context, n_best_size=top_n)
+best_answer, best_n_answers = qa.predict_qa(query=query, context=context, n_best_size=top_n)
 
 ## Output top answer as well as top 5 answers
 print(best_answer)
