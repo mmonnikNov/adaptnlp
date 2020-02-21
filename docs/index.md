@@ -213,6 +213,10 @@ fast way.
 
 AdaptNLP official docker images are up on [Docker Hub](https://hub.docker.com/r/achangnovetta/adaptnlp).
 
+Images have AdaptNLP installed from source in developer mode with tutorial notebooks available.
+ 
+Images can build with GPU support if NVIDA-Docker is correctly installed.
+
 #### Pull and Run AdaptNLP Immediately
 Simply run an image with AdaptNLP installed from source in developer mode by running:
 ```
