@@ -51,10 +51,11 @@ Learning Researchers and Scientists a modular and **adaptive** approach to a var
 
 ##### Virtual Environment
 To avoid dependency clustering and issues, it would be wise to install AdaptNLP in a virtual environment.
-To start a new python 3.6+ virtual environment, run this command:
+To create a new python 3.6+ virtual environment, run this command and then activate it however your operating
+system specifies:
 
 ```
-python -m venv <name_of_venv_directory>
+python -m venv venv-adaptnlp
 ```
 
 ##### AdaptNLP Install
