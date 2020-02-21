@@ -203,10 +203,14 @@ Checkout the documentation for more information.
 
 We use FastAPI for standing up endpoints for serving state-of-the-art NLP models with AdaptNLP.
 
+![Swagger Example](https://raw.githubusercontent.com/novetta/adaptnlp/master/docs/img/fastapi-docs.png)
+
 The [REST](https://github.com/Novetta/adaptnlp/tree/master/rest) directory contains more detail on deploying a REST API locally or with docker in a very easy and
 fast way.
   
 ## Docker
+
+AdaptNLP official docker images are up on [Docker Hub](https://hub.docker.com/r/achangnovetta/adaptnlp).
 
 #### Pull and Run AdaptNLP Immediately
 Simply run an image with AdaptNLP installed from source in developer mode by running:
@@ -219,6 +223,7 @@ docker run -it --rm --gpus all achangnovetta/adaptnlp:latest
 ```
 
 #### Build
+
 Build docker image and run container with the following commands in the directory of the Dockerfile
 to create a container with adaptnlp installed and ready to go
 
