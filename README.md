@@ -141,7 +141,7 @@ doc_embeddings = EasyDocumentEmbeddings(model_name_or_path="bert-base-cased", me
 sc_trainer = SequenceClassifierTrainer(corpus=corpus, encoder=doc_embeddings, column_name_map={0: "text", 1:"label"})
 
 # Find Learning Rate
-learning_rate = sc_trainer.find_learning_rate(output_dir-OUTPUT_DIR)
+learning_rate = sc_trainer.find_learning_rate(output_dir=OUTPUT_DIR)
 
 # Train Using Flair's Sequence Classification Head
 sc_trainer.train(output_dir=OUTPUT_DIR, learning_rate=learning_rate, max_epochs=150)
