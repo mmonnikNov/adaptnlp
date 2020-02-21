@@ -51,10 +51,11 @@ Learning Researchers and Scientists a modular and **adaptive** approach to a var
 
 ##### Virtual Environment
 To avoid dependency clustering and issues, it would be wise to install AdaptNLP in a virtual environment.
-To start a new python 3.6+ virtual environment, run this command:
+To create a new python 3.6+ virtual environment, run this command and then activate it however your operating
+system specifies:
 
 ```
-python -m venv <name_of_venv_directory>
+python -m venv venv-adaptnlp
 ```
 
 ##### AdaptNLP Install
@@ -203,10 +204,18 @@ Checkout the documentation for more information.
 
 We use FastAPI for standing up endpoints for serving state-of-the-art NLP models with AdaptNLP.
 
+![Swagger Example](https://raw.githubusercontent.com/novetta/adaptnlp/master/docs/img/fastapi-docs.png)
+
 The [REST](https://github.com/Novetta/adaptnlp/tree/master/rest) directory contains more detail on deploying a REST API locally or with docker in a very easy and
 fast way.
   
 ## Docker
+
+AdaptNLP official docker images are up on [Docker Hub](https://hub.docker.com/r/achangnovetta/adaptnlp).
+
+Images have AdaptNLP installed from source in developer mode with tutorial notebooks available.
+ 
+Images can build with GPU support if NVIDA-Docker is correctly installed.
 
 #### Pull and Run AdaptNLP Immediately
 Simply run an image with AdaptNLP installed from source in developer mode by running:
@@ -219,6 +228,7 @@ docker run -it --rm --gpus all achangnovetta/adaptnlp:latest
 ```
 
 #### Build
+
 Build docker image and run container with the following commands in the directory of the Dockerfile
 to create a container with adaptnlp installed and ready to go
 
