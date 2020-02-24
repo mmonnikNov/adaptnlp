@@ -194,7 +194,7 @@ class LMFineTuner:
         overwrite_cache: bool = False,
         seed: int = 42,
         fp16: bool = False,
-        fp16_opt_level: str = "01",
+        fp16_opt_level: str = "O1",
         local_rank: int = -1,
     ):
 

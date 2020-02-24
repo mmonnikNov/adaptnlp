@@ -68,7 +68,7 @@ ft_configs = {
               "overwrite_cache": False,
               "seed": 42,
               "fp16": False,
-              "fp16_opt_level": "01",
+              "fp16_opt_level": "O1",
               "local_rank": -1,
              }
 finetuner = LMFineTuner(**ft_configs)
