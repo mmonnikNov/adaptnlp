@@ -23,6 +23,7 @@ import random
 import re
 import shutil
 import csv
+import copy
 from typing import Tuple
 from pathlib import Path
 
@@ -393,8 +394,11 @@ class LMFineTuner:
                 self.model_name_or_path = sorted_checkpoints[-1]
                 self._initial_setup()
 
+        # Get locals for training args
+        init_locals = copy.deepcopy(locals())
+        init_locals.pop("self")
+
         # Start logger
-        init_locals = locals()
         logger.info("Training/evaluation parameters %s", str(locals()))
 
         ##############
@@ -810,8 +814,11 @@ class LMFineTuner:
                 self.model_name_or_path = sorted_checkpoints[-1]
                 self._initial_setup()
 
+        # Get locals for training args
+        init_locals = copy.deepcopy(locals())
+        init_locals.pop("self")
+
         # Start logger
-        init_locals = locals()
         logger.info("Training/evaluation parameters %s", str(locals()))
 
         ##############
