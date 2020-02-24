@@ -23,6 +23,7 @@ import random
 import re
 import shutil
 import csv
+import copy
 from typing import Tuple
 from pathlib import Path
 
@@ -173,7 +174,7 @@ class LMFineTuner:
     * **overwrite_cache** - Overwrite the cached training and evaluation sets
     * **seed** - random seed for initialization
     * **fp16** - Whether to use 16-bit (mixed) precision (through NVIDIA apex) instead of 32-bit
-    * **fp16_opt_level** - For fp16: Apex AMP optimization level selected in ['00', 'O1', 'O2', and 'O3'].
+    * **fp16_opt_level** - For fp16: Apex AMP optimization level selected in ['O0', 'O1', 'O2', and 'O3'].
     * **local_rank** - For distributed training: local_rank
     """
 
@@ -193,7 +194,7 @@ class LMFineTuner:
         overwrite_cache: bool = False,
         seed: int = 42,
         fp16: bool = False,
-        fp16_opt_level: str = "01",
+        fp16_opt_level: str = "O1",
         local_rank: int = -1,
     ):
 
@@ -393,8 +394,11 @@ class LMFineTuner:
                 self.model_name_or_path = sorted_checkpoints[-1]
                 self._initial_setup()
 
+        # Get locals for training args
+        init_locals = copy.deepcopy(locals())
+        init_locals.pop("self")
+
         # Start logger
-        init_locals = locals()
         logger.info("Training/evaluation parameters %s", str(locals()))
 
         ##############
@@ -810,8 +814,11 @@ class LMFineTuner:
                 self.model_name_or_path = sorted_checkpoints[-1]
                 self._initial_setup()
 
+        # Get locals for training args
+        init_locals = copy.deepcopy(locals())
+        init_locals.pop("self")
+
         # Start logger
-        init_locals = locals()
         logger.info("Training/evaluation parameters %s", str(locals()))
 
         ##############
