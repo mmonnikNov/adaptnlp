@@ -174,7 +174,7 @@ class LMFineTuner:
     * **overwrite_cache** - Overwrite the cached training and evaluation sets
     * **seed** - random seed for initialization
     * **fp16** - Whether to use 16-bit (mixed) precision (through NVIDIA apex) instead of 32-bit
-    * **fp16_opt_level** - For fp16: Apex AMP optimization level selected in ['00', 'O1', 'O2', and 'O3'].
+    * **fp16_opt_level** - For fp16: Apex AMP optimization level selected in ['O0', 'O1', 'O2', and 'O3'].
     * **local_rank** - For distributed training: local_rank
     """
 
