@@ -52,4 +52,4 @@ workflows:
   build_and_test:
     jobs:
       - cache_and_run_tests
-      - deploy_doc: *workflow_filters
+      - deploy_doc
