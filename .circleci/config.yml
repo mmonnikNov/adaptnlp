@@ -43,7 +43,7 @@ jobs:
       - run:
           name: install mkdocs an deploy to gh-pages
           command: |
-            python -m mkdocs gh-deploy -m "Deployed {sha} with MkDocs version: {version} [ci skip]"
+            python -m mkdocs gh-deploy -m "[skip ci] Deployed {sha} with MkDocs version: {version}"
 
 workflow_filters: &workflow_filters
   filters:
