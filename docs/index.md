@@ -27,7 +27,7 @@ Learning Researchers and Scientists a modular and **adaptive** approach to a var
 
 **Key Features**
 
-  - **[Full Guides and API Documentation](https://adaptnlp-documentation.s3.amazonaws.com/index.html)**
+  - **[Full Guides and API Documentation](https://novetta.github.io/adaptnlp)**
   - [Tutorial](https://github.com/Novetta/adaptnlp/tree/master/tutorials) Jupyter/Google Colab Notebooks
   - Unified API for NLP Tasks with SOTA Pretrained Models (Adaptable with Flair and Transformer's Models)
     - Token Tagging 
