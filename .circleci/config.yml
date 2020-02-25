@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  cache_and_run_tests:
     docker:
       - image: circleci/python:3.6
     resource_class: medium
@@ -23,8 +23,33 @@ jobs:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
-      - run: pip install -e .
+      - run: pip install .
       - run:
           name: run tests
           command: |
             python3 -m pytest
+  deploy_doc:
+    docker:
+      - image: circleci/python:3.6
+    working_directory: ~/adaptnlp
+    steps:
+      - checkout
+      - run: pip install .
+      - run: pip install -r docs/requirements.txt
+      - run:
+          name: install mkdocs an deploy to gh-pages
+          command: |
+            python -m mkdocs gh-deploy
+
+workflow_filters: &workflow_filters
+  filters:
+    branches:
+      only:
+        - master
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - cache_and_run_tests
+      - deploy_doc: *workflow_filters
