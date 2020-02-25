@@ -7,7 +7,7 @@
 </p>
 <p align="center">
     <a href="https://circleci.com/gh/Novetta/adaptnlp">
-        <img src="https://img.shields.io/circleci/build/github/Novetta/adaptnlp/master?token=c19c48a56cf6010fed1a63a9bae86acc72e91c24">
+        <img src="https://img.shields.io/circleci/build/github/Novetta/adaptnlp/master">
     </a>
     <a href="https://badge.fury.io/py/adaptnlp">
         <img src="https://badge.fury.io/py/adaptnlp.svg">
