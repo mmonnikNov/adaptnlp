@@ -34,6 +34,9 @@ jobs:
     working_directory: ~/adaptnlp
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "68:a9:55:59:6b:69:2c:b9:35:ec:7d:4b:01:aa:b6:33"
       - run: pip install .
       - run: pip install -r docs/requirements.txt
       - run:
