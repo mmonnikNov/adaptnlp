@@ -110,7 +110,7 @@ for sen in sentences:
 ```
 
 Here are some additional tag_types that support some of Flair's pre-trained token taggers:
-##### German Models
+
 | tag_type | Description |
 | -------------    | ------------- |
 | 'ner' | For Named Entity Recognition tagged text |
