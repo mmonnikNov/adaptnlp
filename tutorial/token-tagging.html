@@ -346,6 +346,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#german-models_1" class="md-nav__link">
+    German Models
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -664,6 +671,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#german-models_1" class="md-nav__link">
+    German Models
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -964,6 +978,31 @@ and they can be found <a href="https://github.com/flairNLP/flair/blob/master/res
 </code></pre></div>
 
 
+<p>Here are some additional tag_types that support some of Flair's pre-trained token taggers:</p>
+<h5 id="german-models_1">German Models<a class="headerlink" href="#german-models_1" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th>tag_type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>'ner'</td>
+<td>For Named Entity Recognition tagged text</td>
+</tr>
+<tr>
+<td>'pos'</td>
+<td>For Parts of Speech tagged text</td>
+</tr>
+<tr>
+<td>'np'</td>
+<td>For Syntactic Chunking tagged text</td>
+</tr>
+</tbody>
+</table>
+<p>NOTE: You can add your own tag_types when running the sequence classifier trainer in AdaptNLP.</p>
 <h3 id="tagging-with-tag_alltext-str-model_name_or_path-str-kwargs">Tagging with <code>tag_all(text: str, model_name_or_path: str, **kwargs)</code><a class="headerlink" href="#tagging-with-tag_alltext-str-model_name_or_path-str-kwargs" title="Permanent link">&para;</a></h3>
 <p>As you tag text with multiple pretrained token tagging models, your tagger will have multiple models loaded...memory
 permitting.</p>
@@ -987,11 +1026,11 @@ tagger.  See an example below:</p>
 <p>Now we can see below that you get a list of Flair sentences tagged with the "ner-ontonotes" AND "pos" model:</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;List entities tagged:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;List entities tagged:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">sen</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">sen</span><span class="o">.</span><span class="n">get_spans</span><span class="p">(</span><span class="s2">&quot;pos&quot;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">sen</span><span class="o">.</span><span class="n">get_spans</span><span class="p">(</span><span class="n">tag_type</span><span class="o">=</span><span class="s2">&quot;pos&quot;</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">sen</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">sen</span><span class="o">.</span><span class="n">get_spans</span><span class="p">(</span><span class="s2">&quot;ner&quot;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">sen</span><span class="o">.</span><span class="n">get_spans</span><span class="p">(</span><span class="n">tag_type</span><span class="o">=</span><span class="s2">&quot;ner&quot;</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
 </code></pre></div>
                 
