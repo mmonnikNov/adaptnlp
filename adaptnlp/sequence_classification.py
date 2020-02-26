@@ -32,7 +32,7 @@ class EasySequenceClassifier:
         * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
         * **model_name_or_path** - The hosted model name key or model path
         * **mini_batch_size** - The mini batch size for running inference
-        * **&ast;*ast;kwargs** - (Optional) Keyword Arguments for Flair's `TextClassifier.predict()` method params
+        * **&ast;&ast;kwargs** - (Optional) Keyword Arguments for Flair's `TextClassifier.predict()` method params
         **return** A list of Flair's `Sentence`'s
         """
         # Load Text Classifier Model and Pytorch Module into tagger dict
