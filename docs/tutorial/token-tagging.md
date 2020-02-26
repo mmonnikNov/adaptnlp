@@ -109,6 +109,15 @@ for sen in sentences:
         print(entity)
 ```
 
+Here are some additional tag_types that support some of Flair's pre-trained token taggers:
+##### German Models
+| tag_type | Description |
+| -------------    | ------------- |
+| 'ner' | For Named Entity Recognition tagged text |
+| 'pos' | For Parts of Speech tagged text |
+| 'np' | For Syntactic Chunking tagged text |
+
+NOTE: You can add your own tag_types when running the sequence classifier trainer in AdaptNLP.
 
 ### Tagging with `tag_all(text: str, model_name_or_path: str, **kwargs)`
 
@@ -139,11 +148,11 @@ Now we can see below that you get a list of Flair sentences tagged with the "ner
 ```python
 print("List entities tagged:\n")print("List entities tagged:\n")
 for sen in sentences:
-    for entity in sen.get_spans("pos"):
+    for entity in sen.get_spans(tag_type="pos"):
         print(entity)
         
 for sen in sentences:
-    for entity in sen.get_spans("ner"):
+    for entity in sen.get_spans(tag_type="ner"):
         print(entity)
 ```
 
