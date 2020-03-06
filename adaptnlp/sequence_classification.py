@@ -227,7 +227,7 @@ class FlairSequenceClassifier(AdaptiveModel):
 
 
 class EasySequenceClassifier:
-    """ Sequence level classification models
+    """ Sequence classification models
 
     Usage:
 
@@ -250,8 +250,8 @@ class EasySequenceClassifier:
     ) -> List[Sentence]:
         """ Tags a text sequence with labels the sequence classification models have been trained on
 
-        * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
-        * **model_name_or_path** - The hosted model name key or model path
+        * **text** - String, list of strings, `Sentence`, or list of `Sentence`s to be classified
+        * **model_name_or_path** - The model name key or model path
         * **mini_batch_size** - The mini batch size for running inference
         * **&ast;&ast;kwargs** - (Optional) Keyword Arguments for Flair's `TextClassifier.predict()` method params
         **return** A list of Flair's `Sentence`'s
