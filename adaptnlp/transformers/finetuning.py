@@ -253,7 +253,7 @@ class LMFineTuner:
             device = torch.device(
                 "cuda" if torch.cuda.is_available() and not self.no_cuda else "cpu"
             )
-            self.n_gpu = torch.cuda.device_count()
+            self.n_gpu = 0 if self.no_cuda else torch.cuda.device_count()
         else:  # Initializes the distributed backend which will take care of sychronizing nodes/GPUs
             torch.cuda.set_device(self.local_rank)
             device = torch.device("cuda", self.local_rank)
@@ -1602,6 +1602,7 @@ class LMFineTuner:
         # Set the local min lr as -1 to signify if threshold is too low
         r_idx = -1
         l_idx = r_idx - lr_diff
+        local_min_lr = lrs[l_idx]
         while (l_idx >= -len(losses)) and (
             abs(loss_grad[r_idx] - loss_grad[l_idx]) > loss_threshold
         ):

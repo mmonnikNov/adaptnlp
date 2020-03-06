@@ -242,6 +242,7 @@ class SequenceClassifierTrainer:
         # Set the local min lr as -1 to signify if threshold is too low
         r_idx = -1
         l_idx = r_idx - lr_diff
+        local_min_lr = lrs[l_idx]
         while (l_idx >= -len(losses)) and (
             abs(loss_grad[r_idx] - loss_grad[l_idx]) > loss_threshold
         ):
