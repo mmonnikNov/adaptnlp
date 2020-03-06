@@ -77,7 +77,7 @@
   
     
     
-    <body dir="ltr" data-md-color-primary="800" data-md-color-accent="black">
+    <body dir="ltr" data-md-color-primary="800" data-md-color-accent="green">
   
     <svg class="md-svg">
       <defs>
@@ -581,7 +581,7 @@
                 <h2 id="easysequenceclassifier"><code>EasySequenceClassifier</code><a class="headerlink" href="#easysequenceclassifier" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>adaptnlp.<strong>EasySequenceClassifier</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Sequence level classification models</p>
+<div class="autodoc-docstring"><p>Sequence classification models</p>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">classifier</span> <span class="o">=</span> <span class="n">EasySequenceClassifier</span><span class="p">()</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">classifier</span><span class="o">.</span><span class="n">tag_text</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;text you want to label&quot;</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;en-sentiment&quot;</span><span class="p">)</span>
@@ -590,8 +590,8 @@
 <div class="autodoc-signature"><code><strong>tag_text</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">self</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">text</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">model_name_or_path='en-sentiment'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">mini_batch_size=32</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">**kwargs</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Tags a text sequence with labels the sequence classification models have been trained on</p>
 <ul>
-<li><strong>text</strong> - Text input, it can be a string or any of Flair's <code>Sentence</code> input formats</li>
-<li><strong>model_name_or_path</strong> - The hosted model name key or model path</li>
+<li><strong>text</strong> - String, list of strings, <code>Sentence</code>, or list of <code>Sentence</code>s to be classified</li>
+<li><strong>model_name_or_path</strong> - The model name key or model path</li>
 <li><strong>mini_batch_size</strong> - The mini batch size for running inference</li>
 <li><strong>&ast;&ast;kwargs</strong> - (Optional) Keyword Arguments for Flair's <code>TextClassifier.predict()</code> method params
 <strong>return</strong> A list of Flair's <code>Sentence</code>'s</li>
@@ -603,6 +603,63 @@
 <li><strong>mini_batch_size</strong> - The mini batch size for running inference</li>
 <li><strong>&ast;&ast;kwargs</strong> - (Optional) Keyword Arguments for Flair's <code>TextClassifier.predict()</code> method params</li>
 <li><strong>return</strong> - A list of Flair's <code>Sentence</code>'s</li>
+</ul></div>
+</div>
+</div>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>adaptnlp.<strong>FlairSequenceClassifier</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">model_name_or_path</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Adaptive Model for Flair's Sequence Classifier...very basic</p>
+<p>Usage:</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">classifier</span> <span class="o">=</span> <span class="n">FlairSequenceClassifier</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en-sentiment&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Example text&quot;</span><span class="p">,</span> <span class="n">mini_batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>model_name_or_path</strong> - A key string of one of Flair's pre-trained Sequence Classifier Model</li>
+</ul></div>
+<div class="autodoc-members">
+<div class="autodoc-signature"><code><strong>load</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">model_name_or_path</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Class method for loading a constructing this classifier</p>
+<ul>
+<li><strong>model_name_or_path</strong> - A key string of one of Flair's pre-trained Sequence Classifier Model</li>
+</ul></div>
+<div class="autodoc-signature"><code><strong>predict</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">self</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">text</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">mini_batch_size=32</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">use_tokenizer=True</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">**kwargs</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Predict method for running inference using the pre-trained sequence classifier model</p>
+<ul>
+<li><strong>text</strong> - String, list of strings, sentences, or list of sentences to run inference on</li>
+<li><strong>mini_batch_size</strong> - Mini batch size</li>
+<li><strong>&ast;&ast;kwargs</strong>(Optional) - Optional arguments for the Flair classifier</li>
+</ul></div>
+</div>
+</div>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>adaptnlp.<strong>TransformersSequenceClassifier</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">tokenizer</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">model</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Adaptive model for Transformer's Sequence Classification Model</p>
+<p>Usage:</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">classifier</span> <span class="o">=</span> <span class="n">TransformersSequenceClassifier</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;transformers-sc-model&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Example text&quot;</span><span class="p">,</span> <span class="n">mini_batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>tokenizer</strong> - A tokenizer object from Huggingface's transformers (TODO)and tokenizers</li>
+<li><strong>model</strong> - A transformers Sequence Classsifciation model</li>
+</ul></div>
+<div class="autodoc-members">
+<div class="autodoc-signature"><code><strong>load</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">model_name_or_path</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Class method for loading and constructing this classifier</p>
+<ul>
+<li><strong>model_name_or_path</strong> - A key string of one of Transformer's pre-trained Sequence Classifier Model</li>
+</ul></div>
+<div class="autodoc-signature"><code><strong>predict</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">self</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">text</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">mini_batch_size=32</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">use_tokenizer=True</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">**kwargs</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Predict method for running inference using the pre-trained sequence classifier model</p>
+<ul>
+<li><strong>text</strong> - String, list of strings, sentences, or list of sentences to run inference on</li>
+<li><strong>mini_batch_size</strong> - Mini batch size</li>
+<li><strong>&ast;&ast;kwargs</strong>(Optional) - Optional arguments for the Transformers classifier</li>
 </ul></div>
 </div>
 </div>

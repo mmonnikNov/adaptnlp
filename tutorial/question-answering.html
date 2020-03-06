@@ -77,7 +77,7 @@
   
     
     
-    <body dir="ltr" data-md-color-primary="800" data-md-color-accent="black">
+    <body dir="ltr" data-md-color-primary="800" data-md-color-accent="green">
   
     <svg class="md-svg">
       <defs>
@@ -336,6 +336,19 @@
     Getting Started with EasyQuestionAnswering
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#running-inference-with-predict_qaquery-unionliststr-str-context-unionliststr-str-n_best_size-int-mini_batch_size-int-model_name_or_path-str-kwargs" class="md-nav__link">
+    Running inference with predict_qa(query: Union[List[str], str], context: Union[List[str], str], n_best_size: int, mini_batch_size: int, model_name_or_path: str, **kwargs)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
       
@@ -557,6 +570,19 @@
     Getting Started with EasyQuestionAnswering
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#running-inference-with-predict_qaquery-unionliststr-str-context-unionliststr-str-n_best_size-int-mini_batch_size-int-model_name_or_path-str-kwargs" class="md-nav__link">
+    Running inference with predict_qa(query: Union[List[str], str], context: Union[List[str], str], n_best_size: int, mini_batch_size: int, model_name_or_path: str, **kwargs)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
       
@@ -589,10 +615,9 @@ from unstructured text using state-of-the-art question answering models.</p>
 <p>You can use <code>EasyQuestionAnswering</code> to run span-based question answering models.</p>
 <p>Providing a context and query, we get an output of top <code>n_best_size</code> answer predictions along with token span indices 
 and probability scores.</p>
+<p>We'll first get started by importing the <code>EasyQuestionAnswering</code> class from AdaptNLP.</p>
+<p>After that, we set some example text that we'll use further down and then instantiate the QA model.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasyQuestionAnswering</span>
-
-<span class="n">qa_model</span> <span class="o">=</span> <span class="n">EasyQuestionAnswering</span><span class="p">()</span>
-
 
 <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Amazon.com, Inc.[6] (/ˈæməzɒn/), is an American multinational technology company based in Seattle, </span>
 <span class="s2">Washington that focuses on e-commerce, cloud computing, digital streaming, and artificial intelligence. </span>
@@ -610,13 +635,48 @@ and probability scores.</p>
 <span class="s2">subscribers worldwide</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
-<span class="n">top_prediction</span><span class="p">,</span> <span class="n">all_nbest_json</span> <span class="o">=</span> <span class="n">qa_model</span><span class="o">.</span><span class="n">predict_bert_qa</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;What does Amazon do?&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">n_best_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">qa_model</span> <span class="o">=</span> <span class="n">EasyQuestionAnswering</span><span class="p">()</span>
+</code></pre></div>
+
+
+<h3 id="running-inference-with-predict_qaquery-unionliststr-str-context-unionliststr-str-n_best_size-int-mini_batch_size-int-model_name_or_path-str-kwargs">Running inference with <code>predict_qa(query: Union[List[str], str], context: Union[List[str], str], n_best_size: int, mini_batch_size: int, model_name_or_path: str, **kwargs)</code><a class="headerlink" href="#running-inference-with-predict_qaquery-unionliststr-str-context-unionliststr-str-n_best_size-int-mini_batch_size-int-model_name_or_path-str-kwargs" title="Permanent link">&para;</a></h3>
+<p>Now that we have the question answering model instantiated, we can run inference using the built-in <code>predict_qa</code> method.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can set <code>model_name_or_path</code> to any of Transformer's pretrained question answering models.
+Transformers models are located at <a href="https://huggingface.co/models">https://huggingface.co/models</a>.  You can also pass in
+the path of a custom trained Transformers <code>xxxForQuestionAnswering</code> model.</p>
+</div>
+<p>Here is an example of running inference on Transformer's DistilBERT QA model fine-tuned on SQUAD:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">top_prediction</span><span class="p">,</span> <span class="n">all_nbest_json</span> <span class="o">=</span> <span class="n">qa_model</span><span class="o">.</span><span class="n">predict_qa</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;What does Amazon do?&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">n_best_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">mini_batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;distilbert-base-uncased-distilled-squad&quot;</span><span class="p">)</span>
 
 
 <span class="nb">print</span><span class="p">(</span><span class="n">top_prediction</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">all_nbest_json</span><span class="p">)</span>
 </code></pre></div>
+
+
+<p>We can do the same thing but now more question/context pairs!</p>
+<div class="codehilite"><pre><span></span><code><span class="n">questions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;What does Amazon do?&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;What happened July 5, 1994?&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;How much did Amazon acquire Whole Foods for?&quot;</span><span class="p">]</span>
+
+<span class="n">top_prediction</span><span class="p">,</span> <span class="n">all_nbest_json</span> <span class="o">=</span> <span class="n">qa_model</span><span class="o">.</span><span class="n">predict_qa</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">questions</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">[</span><span class="n">text</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_best_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">mini_batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;distilbert-base-uncased-distilled-squad&quot;</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">top_prediction</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">all_nbest_json</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Check out <code>TransformersQuestionAnswering</code> for a more in-depth look into the additional parameters you can pass into
+the <code>EasyQuestionAnswering.predict_qa</code> method.
+XLNET and XLM models will be supported in the near future.</p>
+</div>
                 
                   
                 

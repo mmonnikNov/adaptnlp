@@ -77,7 +77,7 @@
   
     
     
-    <body dir="ltr" data-md-color-primary="800" data-md-color-accent="black">
+    <body dir="ltr" data-md-color-primary="800" data-md-color-accent="green">
   
     <svg class="md-svg">
       <defs>
@@ -936,7 +936,7 @@ system specifies:</p>
 
 <span class="c1">## Load the sequence classifier module and classify sequence of text with the english sentiment model </span>
 <span class="n">classifier</span> <span class="o">=</span> <span class="n">EasySequenceClassifier</span><span class="p">()</span>
-<span class="n">sentences</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">tag_text</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">example_text</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;en-sentiment&quot;</span><span class="p">)</span>
+<span class="n">sentences</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">tag_text</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">example_text</span><span class="p">,</span> <span class="n">mini_batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;en-sentiment&quot;</span><span class="p">)</span>
 
 <span class="c1">## Output labeled text results in Flair&#39;s Sentence object model</span>
 <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
@@ -954,7 +954,7 @@ system specifies:</p>
 
 <span class="c1">## Load the QA module and run inference on results </span>
 <span class="n">qa</span> <span class="o">=</span> <span class="n">EasyQuestionAnswering</span><span class="p">()</span>
-<span class="n">best_answer</span><span class="p">,</span> <span class="n">best_n_answers</span> <span class="o">=</span> <span class="n">qa</span><span class="o">.</span><span class="n">predict_qa</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span> <span class="n">n_best_size</span><span class="o">=</span><span class="n">top_n</span><span class="p">)</span>
+<span class="n">best_answer</span><span class="p">,</span> <span class="n">best_n_answers</span> <span class="o">=</span> <span class="n">qa</span><span class="o">.</span><span class="n">predict_qa</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span> <span class="n">n_best_size</span><span class="o">=</span><span class="n">top_n</span><span class="p">,</span> <span class="n">mini_batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;distilbert-base-uncased-distilled-squad&quot;</span><span class="p">)</span>
 
 <span class="c1">## Output top answer as well as top 5 answers</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">best_answer</span><span class="p">)</span>
@@ -1018,32 +1018,35 @@ system specifies:</p>
 <p>Look in the <a href="tutorials">Tutorials</a> directory for a quick introduction to the library and its very simple
 and straight forward use cases:</p>
 <ol>
-<li>Token Classification: NER, POS, Chunk, and Frame Tagging<ul>
-<li>colab - <a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/1.%20Token%20Classification/token_tagging.ipynb">token_tagging.ipynb</a></li>
+<li><a href="tutorials/1.%20Token%20Classification">Token Classification: NER, POS, Chunk, and Frame Tagging</a><ul>
+<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/1.%20Token%20Classification/token_tagging.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
 </ul>
 </li>
-<li>Sequence Classification: Sentiment<ul>
-<li>colab - <a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/2.%20Sequence%20Classification/sequence_classification.ipynb">sequence_classification.ipynb</a></li>
+<li><a href="tutorials/2.%20Sequence%20Classification">Sequence Classification: Sentiment</a><ul>
+<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/2.%20Sequence%20Classification/sequence_classification.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
 </ul>
 </li>
-<li>Embeddings: Transformer Embeddings e.g. BERT, XLM, GPT2, XLNet, roBERTa, ALBERT<ul>
-<li>colab - <a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/3.%20Embeddings/embeddings.ipynb">embeddings.ipynb</a></li>
+<li><a href="tutorials/3.%20Embeddings">Embeddings: Transformer Embeddings e.g. BERT, XLM, GPT2, XLNet, roBERTa, ALBERT</a><ul>
+<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/3.%20Embeddings/embeddings.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
 </ul>
 </li>
-<li>Question Answering: Span-based Question Answering Model<ul>
-<li>colab - <a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/4.%20Question%20Answering/question_answering.ipynb">question_answering.ipynb</a></li>
+<li><a href="tutorials/4.%20Question%20Answering">Question Answering: Span-based Question Answering Model</a><ul>
+<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/4.%20Question%20Answering/question_answering.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
 </ul>
 </li>
-<li>Custom Fine-Tuning and Training with Transformer Models<ul>
-<li>colab -<ul>
-<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/5.%20Finetuning%20and%20Training%20(Advanced)/sequence_classification_training.ipynb">sequence_classification_training.ipynb</a></li>
-<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/5.%20Finetuning%20and%20Training%20(Advanced)/fine_tuning.ipynb">fine_tuning.ipynb</a></li>
+<li><a href="tutorials/5.%20Finetuning%20and%20Training%20(Advanced)">Custom Fine-Tuning and Training with Transformer Models</a><ul>
+<li>Training a Sequence Classifier<ul>
+<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/5.%20Finetuning%20and%20Training%20(Advanced)/sequence_classification_training.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
+</ul>
+</li>
+<li>Fine-tuning a Transformers Language Model<ul>
+<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/5.%20Finetuning%20and%20Training%20(Advanced)/fine_tuning.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ol>
-<p>Checkout the documentation for more information.</p>
+<p>Checkout the <a href="https://novetta.github.io/adaptnlp">documentation</a> for more information.</p>
 <h2 id="rest-service">REST Service<a class="headerlink" href="#rest-service" title="Permanent link">&para;</a></h2>
 <p>We use FastAPI for standing up endpoints for serving state-of-the-art NLP models with AdaptNLP.</p>
 <p><img alt="Swagger Example" src="https://raw.githubusercontent.com/novetta/adaptnlp/master/docs/img/fastapi-docs.png" /></p>
@@ -1080,6 +1083,8 @@ docker run -it --rm achangnovetta/adaptnlp:latest
 
 <h2 id="contact">Contact<a class="headerlink" href="#contact" title="Permanent link">&para;</a></h2>
 <p>Please contact the author Andrew Chang at achang@novetta.com with questions or comments regarding AdaptNLP.</p>
+<p>Follow  us on Twitter at <a href="https://twitter.com/achang1618">@achang1618</a> and <a href="https://twitter.com/AdaptNLP">@AdaptNLP</a> for
+updates and NLP dialogue.</p>
 <h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
 <p>This project is licensed under the terms of the Apache 2.0 license.</p>
                 

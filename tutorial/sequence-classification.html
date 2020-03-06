@@ -77,7 +77,7 @@
   
     
     
-    <body dir="ltr" data-md-color-primary="800" data-md-color-accent="black">
+    <body dir="ltr" data-md-color-primary="800" data-md-color-accent="green">
   
     <svg class="md-svg">
       <defs>
@@ -316,8 +316,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#tagging-with-tag_texttext-str-model_name_or_path-str-kwargs" class="md-nav__link">
-    Tagging with tag_text(text: str, model_name_or_path: str, **kwargs)
+  <a href="#tagging-with-tag_texttext-str-model_name_or_path-str-mini_batch_size-int-kwargs" class="md-nav__link">
+    Tagging with tag_text(text: str, model_name_or_path: str, mini_batch_size: int, **kwargs)
   </a>
   
 </li>
@@ -574,8 +574,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#tagging-with-tag_texttext-str-model_name_or_path-str-kwargs" class="md-nav__link">
-    Tagging with tag_text(text: str, model_name_or_path: str, **kwargs)
+  <a href="#tagging-with-tag_texttext-str-model_name_or_path-str-mini_batch_size-int-kwargs" class="md-nav__link">
+    Tagging with tag_text(text: str, model_name_or_path: str, mini_batch_size: int, **kwargs)
   </a>
   
 </li>
@@ -610,37 +610,60 @@
 state-of-the-art sequence classification models.</p>
 <h2 id="getting-started-with-easysequenceclassifier">Getting Started with <code>EasySequenceClassifier</code><a class="headerlink" href="#getting-started-with-easysequenceclassifier" title="Permanent link">&para;</a></h2>
 <p>We'll first get started by importing the <code>EasySequenceClassifier</code> class from AdaptNLP.</p>
-<p>After that, we set some example text and instantiate the classifier.</p>
+<p>After that, we set some example text that we'll use further down, and then instantiate the classifier.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasySequenceClassifier</span> 
 
-<span class="n">example_text</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;Novetta Solutions is the best. Albert Einstein used to be employed at Novetta Solutions. </span>
+<span class="n">review_text</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;That wasn&#39;t very good.&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;I really liked it&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;It was really useful&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;It broke after I bought it.&quot;</span><span class="p">]</span>
+
+<span class="n">movie_sentiment_text</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;Novetta Solutions is the best. Albert Einstein used to be employed at Novetta Solutions. </span>
 <span class="s1">The Wright brothers loved to visit the JBF headquarters, and they would have a chat with Albert.&#39;&#39;&#39;</span>
 
 <span class="n">classifier</span> <span class="o">=</span> <span class="n">EasySequenceClassifier</span><span class="p">()</span>
 </code></pre></div>
 
 
-<h3 id="tagging-with-tag_texttext-str-model_name_or_path-str-kwargs">Tagging with <code>tag_text(text: str, model_name_or_path: str, **kwargs)</code><a class="headerlink" href="#tagging-with-tag_texttext-str-model_name_or_path-str-kwargs" title="Permanent link">&para;</a></h3>
+<h3 id="tagging-with-tag_texttext-str-model_name_or_path-str-mini_batch_size-int-kwargs">Tagging with <code>tag_text(text: str, model_name_or_path: str, mini_batch_size: int, **kwargs)</code><a class="headerlink" href="#tagging-with-tag_texttext-str-model_name_or_path-str-mini_batch_size-int-kwargs" title="Permanent link">&para;</a></h3>
 <p>Now that we have the classifier instantiated, we are ready to load in a sequence classification model and tag the text
 with the built-in <code>tag_text()</code> method.  </p>
-<p>This method takes in parameters: <code>text</code> and <code>model_name_or_path</code>.</p>
+<p>This method takes in parameters: <code>text</code>, <code>model_name_or_path</code>, and <code>mini_batch_size</code> as well as optional keyword arguments.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can set <code>model_name_or_path</code> to any of Transformers or Flair's pretrained sequence classification models.
+Transformers models are located at <a href="https://huggingface.co/models">https://huggingface.co/models</a>.  You can also pass in
+the path of a custom trained Transformers <code>xxxForSequenceClassification</code> model.</p>
+</div>
 <p>The method returns a list of Flair's Sentence objects.</p>
-<p>Note: Additional keyword arguments can be passed in as parameters for Flair's token tagging <code>predict()</code> method i.e. 
+<p>Here is one example using a 5-star review-based sentiment classifier that's been trained by <a href="https://www.nlp.town/">NLP Town</a>:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Predict</span>
+<span class="n">sentences</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">tag_text</span><span class="p">(</span><span class="n">review_text</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;nlptown/bert-base-multilingual-uncased-sentiment&quot;</span><span class="p">,</span> <span class="n">mini_batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Label output:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Another example is shown below with a Flair's pre-trained sentiment classifier:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Additional keyword arguments can be passed in as parameters for Flair's token tagging <code>predict()</code> method i.e. 
 <code>mini_batch_size</code>, <code>embedding_storage_mode</code>, <code>verbose</code>, etc.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">#Predict</span>
-<span class="n">sentences</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">tag_text</span><span class="p">(</span><span class="n">example_text</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;en-sentiment&quot;</span><span class="p">)</span>
+</div>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Predict</span>
+<span class="n">sentences</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">tag_text</span><span class="p">(</span><span class="n">movie_sentiment_text</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;en-sentiment&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Label output:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
 </code></pre></div>
 
 
 <p>All of Flair's pretrained sequence classifiers are available for loading through the <code>model_name_or_path</code> parameter, 
 and they can be found <a href="https://github.com/flairNLP/flair/blob/master/resources/docs/TUTORIAL_2_TAGGING.md">here</a>.</p>
 <p>A path to a custom trained Flair Sequence Classifier can also be passed through the <code>model_name_or_path</code> param.</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Label output:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
-</code></pre></div>
-
-
 <p>Note: You can run <code>tag_all()</code> with the sequence classifier, as detailed in the Token Tagging Tutorial.</p>
                 
                   

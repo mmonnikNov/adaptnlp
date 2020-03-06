@@ -77,7 +77,7 @@
   
     
     
-    <body dir="ltr" data-md-color-primary="800" data-md-color-accent="black">
+    <body dir="ltr" data-md-color-primary="800" data-md-color-accent="green">
   
     <svg class="md-svg">
       <defs>
@@ -584,17 +584,53 @@
 <div class="autodoc-docstring"><p>Question Answering Module</p>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">qa</span> <span class="o">=</span> <span class="n">adaptnlp</span><span class="o">.</span><span class="n">EasyQuestionAnswering</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">qa</span><span class="o">.</span><span class="n">predict_qa</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;What is life?&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s2">&quot;Life is NLP.&quot;</span><span class="p">,</span> <span class="n">n_best_size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">qa</span><span class="o">.</span><span class="n">predict_qa</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;What is life?&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s2">&quot;Life is NLP.&quot;</span><span class="p">,</span> <span class="n">n_best_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">mini_batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div></div>
 <div class="autodoc-members">
-<div class="autodoc-signature"><code><strong>predict_qa</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">self</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">query</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">context</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">n_best_size=20</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><code><strong>predict_qa</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">self</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">query</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">context</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">n_best_size=5</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">mini_batch_size=32</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">model_name_or_path='bert-large-uncased-whole-word-masking-finetuned-squad'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">**kwargs</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Predicts top_n answer spans of query in regards to context</p>
 <ul>
-<li><strong>query</strong> - The question</li>
-<li><strong>context</strong> - The context of which the question is asking</li>
+<li><strong>query</strong> - String or list of strings that specify the ordered questions corresponding to <code>context</code></li>
+<li><strong>context</strong> - String or list of strings that specify the ordered contexts corresponding to <code>query</code></li>
 <li><strong>n_best_size</strong> - The top n answers returned</li>
+<li><strong>mini_batch_size</strong> - Mini batch size for inference</li>
+<li><strong>model_name_or_path</strong> - Path to QA model or name of QA model at huggingface.co/models</li>
+<li><strong>kwargs</strong>(Optional) - Keyword arguments for <code>AdaptiveModel</code>s like <code>TransformersQuestionAnswering</code></li>
 </ul>
 <p><strong>return</strong> - Either a list of string answers or a dict of the results</p></div>
+</div>
+</div>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>adaptnlp.<strong>TransformersQuestionAnswering</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">tokenizer</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">model</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Adaptive Model for Transformers Question Answering Model</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong>tokenizer</strong> - A tokenizer object from Huggingface's transformers (TODO)and tokenizers *</li>
+<li><strong>model</strong> - A transformer Question Answering model</li>
+</ul></div>
+<div class="autodoc-members">
+<div class="autodoc-signature"><code><strong>load</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">model_name_or_path</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Class method for loading and constructing this model</p>
+<ul>
+<li><strong>model_name_or_path</strong> - A key string of one of Transformer's pre-trained Question Answering (SQUAD) models</li>
+</ul></div>
+<div class="autodoc-signature"><code><strong>predict</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">self</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">query</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">context</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">n_best_size=5</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">mini_batch_size=32</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">max_answer_length=10</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">do_lower_case=False</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">version_2_with_negative=False</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">verbose_logging=False</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">null_score_diff_threshold=0.0</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">max_seq_length=512</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">doc_stride=128</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">max_query_length=64</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">**kwargs</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Predict method for running inference using the pre-trained question answering model</p>
+<ul>
+<li><strong>query</strong> - String or list of strings that specify the ordered questions corresponding to <code>context</code></li>
+<li><strong>context</strong> - String or list of strings that specify the ordered contexts corresponding to <code>query</code></li>
+<li><strong>n_best_size</strong> - Number of top n results you want</li>
+<li><strong>mini_batch_size</strong> - Mini batch size</li>
+<li><strong>max_answer_length</strong> - Maximum token length for answers that are returned</li>
+<li><strong>do_lower_case</strong> - Set as <code>True</code> if using uncased QA models</li>
+<li><strong>version_2_with_negative</strong> - Set as True if using QA model with SQUAD2.0</li>
+<li><strong>verbose_logging</strong> - Set True if you want prediction verbose loggings</li>
+<li><strong>null_score_diff_threshold</strong> - Threshold for predicting null(no answer) in Squad 2.0 Model.  Default is 0.0.  Raise this if you want fewer null answers</li>
+<li><strong>max_seq_length</strong> - Maximum context token length. Check model configs to see max sequence length the model was trained with</li>
+<li><strong>doc_stride</strong> - Number of token strides to take when splitting up conext into chunks of size <code>max_seq_length</code></li>
+<li><strong>max_query_length</strong> - Maximum token length for queries</li>
+<li><strong>&ast;&ast;kwargs</strong>(Optional) - Optional arguments for the Transformers model (mostly for saving evaluations)</li>
+</ul></div>
 </div>
 </div>
                 
