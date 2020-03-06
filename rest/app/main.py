@@ -39,6 +39,7 @@ _QA_MODEL = adaptnlp.EasyQuestionAnswering()
 _TOKEN_TAGGING_MODE = os.environ["TOKEN_TAGGING_MODE"]
 _TOKEN_TAGGING_MODEL = os.environ["TOKEN_TAGGING_MODEL"]
 _SEQUENCE_CLASSIFICATION_MODEL = os.environ["SEQUENCE_CLASSIFICATION_MODEL"]
+_QUESTION_ANSWERING_MODEL = os.environ["QUESTION_ANSWERING_MODEL"]
 
 
 # Event Handling
@@ -46,11 +47,14 @@ _SEQUENCE_CLASSIFICATION_MODEL = os.environ["SEQUENCE_CLASSIFICATION_MODEL"]
 async def initialize_nlp_task_modules():
     _TOKEN_TAGGER.tag_text(text="", model_name_or_path=_TOKEN_TAGGING_MODEL)
     _SEQUENCE_CLASSIFIER.tag_text(
-        text="", model_name_or_path=_SEQUENCE_CLASSIFICATION_MODEL
+        text="", mini_batch_size=1, model_name_or_path=_SEQUENCE_CLASSIFICATION_MODEL
     )
     _QA_MODEL.predict_qa(
-        "",
-        "______________________________________________________________________________",
+        query="-",
+        context="______________________________________________________________________________",
+        n_best_size=1,
+        mini_batch_size=1,
+        model_name_or_path=_QUESTION_ANSWERING_MODEL,
     )
 
 
@@ -80,7 +84,7 @@ async def sequence_classifier(
 ):
     text = sequence_classification_request.text
     sentences = _SEQUENCE_CLASSIFIER.tag_text(
-        text=text, model_name_or_path=_SEQUENCE_CLASSIFICATION_MODEL
+        text=text, mini_batch_size=1, model_name_or_path=_SEQUENCE_CLASSIFICATION_MODEL
     )
     payload = [sentence.to_dict() for sentence in sentences]
     return payload
@@ -92,7 +96,7 @@ async def question_answering(qa_request: QuestionAnsweringRequest):
     context = qa_request.context
     top_n = qa_request.top_n
     best_answer, best_n_answers = _QA_MODEL.predict_qa(
-        query=query, context=context, n_best_size=top_n
+        query=query, context=context, n_best_size=top_n, mini_batch_size=1, model_name_or_path=_QUESTION_ANSWERING_MODEL
     )
     payload = QuestionAnsweringResponse(
         best_answer=best_answer, best_n_answers=best_n_answers
