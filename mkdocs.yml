@@ -6,7 +6,7 @@ theme:
   name: 'material'
   palette:
     primary: '800'
-    accent: 'black'
+    accent: 'green'
   logo: "img/NovettaAdaptNLP-mark-dark-100px.png"
   favicon: 'img/favicon.ico'
 
