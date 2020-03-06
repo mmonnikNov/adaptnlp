@@ -99,7 +99,7 @@ example_text = "Novetta is a great company that was chosen as one of top 50 grea
 
 ## Load the sequence classifier module and classify sequence of text with the english sentiment model 
 classifier = EasySequenceClassifier()
-sentences = classifier.tag_text(text=example_text, model_name_or_path="en-sentiment")
+sentences = classifier.tag_text(text=example_text, mini_batch_size=1, model_name_or_path="en-sentiment")
 
 ## Output labeled text results in Flair's Sentence object model
 for sentence in sentences:
@@ -119,7 +119,7 @@ top_n = 5
 
 ## Load the QA module and run inference on results 
 qa = EasyQuestionAnswering()
-best_answer, best_n_answers = qa.predict_qa(query=query, context=context, n_best_size=top_n)
+best_answer, best_n_answers = qa.predict_qa(query=query, context=context, n_best_size=top_n, mini_batch_size=1, model_name_or_path="distilbert-base-uncased-distilled-squad")
 
 ## Output top answer as well as top 5 answers
 print(best_answer)
@@ -185,20 +185,21 @@ finetuner.train_one_cycle(output_dir="Path/to/output/directory", learning_rate=l
 Look in the [Tutorials](tutorials) directory for a quick introduction to the library and its very simple
 and straight forward use cases:
 
-  1. Token Classification: NER, POS, Chunk, and Frame Tagging
-      - colab - [token_tagging.ipynb](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/1.%20Token%20Classification/token_tagging.ipynb)
-  2. Sequence Classification: Sentiment
-      - colab - [sequence_classification.ipynb](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/2.%20Sequence%20Classification/sequence_classification.ipynb)
-  3. Embeddings: Transformer Embeddings e.g. BERT, XLM, GPT2, XLNet, roBERTa, ALBERT
-      - colab - [embeddings.ipynb](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/3.%20Embeddings/embeddings.ipynb)
-  4. Question Answering: Span-based Question Answering Model
-      - colab - [question_answering.ipynb](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/4.%20Question%20Answering/question_answering.ipynb)
-  5. Custom Fine-Tuning and Training with Transformer Models
-      - colab -
-        - [sequence_classification_training.ipynb](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/5.%20Finetuning%20and%20Training%20(Advanced)/sequence_classification_training.ipynb)
-        - [fine_tuning.ipynb](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/5.%20Finetuning%20and%20Training%20(Advanced)/fine_tuning.ipynb)
+  1. [Token Classification: NER, POS, Chunk, and Frame Tagging](tutorials/1.%20Token%20Classification)
+      - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/1.%20Token%20Classification/token_tagging.ipynb)
+  2. [Sequence Classification: Sentiment](tutorials/2.%20Sequence%20Classification)
+      - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/2.%20Sequence%20Classification/sequence_classification.ipynb)
+  3. [Embeddings: Transformer Embeddings e.g. BERT, XLM, GPT2, XLNet, roBERTa, ALBERT](tutorials/3.%20Embeddings)
+      - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/3.%20Embeddings/embeddings.ipynb)
+  4. [Question Answering: Span-based Question Answering Model](tutorials/4.%20Question%20Answering)
+      - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/4.%20Question%20Answering/question_answering.ipynb)
+  5. [Custom Fine-Tuning and Training with Transformer Models](tutorials/5.%20Finetuning%20and%20Training%20(Advanced))
+      - Training a Sequence Classifier
+        - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/5.%20Finetuning%20and%20Training%20(Advanced)/sequence_classification_training.ipynb)
+      - Fine-tuning a Transformers Language Model
+        - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/5.%20Finetuning%20and%20Training%20(Advanced)/fine_tuning.ipynb)
   
-Checkout the documentation for more information.
+Checkout the [documentation](https://novetta.github.io/adaptnlp) for more information.
   
 ## REST Service 
 
@@ -245,6 +246,9 @@ docker run -it --rm --gpus all achangnovetta/adaptnlp:latest
 ## Contact
 
 Please contact the author Andrew Chang at achang@novetta.com with questions or comments regarding AdaptNLP.
+
+Follow  us on Twitter at [@achang1618](https://twitter.com/achang1618) and [@AdaptNLP](https://twitter.com/AdaptNLP) for
+updates and NLP dialogue.
 
 ## License
 

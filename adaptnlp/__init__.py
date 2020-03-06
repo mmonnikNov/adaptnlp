@@ -7,8 +7,8 @@ from .embeddings import (
     EasyDocumentEmbeddings,
 )
 from .token_classification import EasyTokenTagger
-from .sequence_classification import EasySequenceClassifier
-from .question_answering import EasyQuestionAnswering
+from .sequence_classification import EasySequenceClassifier, TransformersSequenceClassifier, FlairSequenceClassifier
+from .question_answering import EasyQuestionAnswering, TransformersQuestionAnswering 
 from .training import SequenceClassifierTrainer
 from .transformers.finetuning import LMFineTuner
 
@@ -25,9 +25,11 @@ __all__ = [
     "EasyStackedEmbeddings",
     "EasyDocumentEmbeddings",
     "EasySequenceClassifier",
+    "FlairSequenceClassifier",
+    "TransformersSequenceClassifier",
     "EasyTokenTagger",
-    "EasyTextClassifierTrainer",
     "EasyQuestionAnswering",
+    "TransformersQuestionAnswering",
     "SequenceClassifierTrainer",
     "LMFineTuner",
 ]
