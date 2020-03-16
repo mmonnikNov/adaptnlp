@@ -57,3 +57,11 @@ workflows:
     jobs:
       - cache_and_run_tests
       - deploy_doc: *workflow_filters
+    nightly:
+      triggers:
+        - schedule:
+            cron: "0 0 * * *"
+            filters:
+              branches:
+                only:
+                  - master
