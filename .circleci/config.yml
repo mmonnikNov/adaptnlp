@@ -65,3 +65,6 @@ workflows:
             branches:
               only:
                 - master
+    jobs:
+      - cache_and_run_tests
+      - deploy_doc
