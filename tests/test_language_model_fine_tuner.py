@@ -1,6 +1,9 @@
+import pytest
 from adaptnlp import LMFineTuner
 
-
+@pytest.mark.skip(
+    reason="No memory resources to support until circleci support is contacted"
+)
 def test_language_model_fine_tuner():
     train_data_file = "Path/to/train.csv"
     eval_data_file = "Path/to/test.csv"
