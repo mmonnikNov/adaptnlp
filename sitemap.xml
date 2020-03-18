@@ -1,71 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
      <loc>https://github.com/Novetta/adaptnlp/index.html</loc>
-     <lastmod>2020-03-17</lastmod>
+     <lastmod>2020-03-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://github.com/Novetta/adaptnlp/tutorial/index.html</loc>
-     <lastmod>2020-03-17</lastmod>
+     <lastmod>2020-03-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://github.com/Novetta/adaptnlp/tutorial/token-tagging.html</loc>
-     <lastmod>2020-03-17</lastmod>
+     <lastmod>2020-03-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://github.com/Novetta/adaptnlp/tutorial/sequence-classification.html</loc>
-     <lastmod>2020-03-17</lastmod>
+     <lastmod>2020-03-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://github.com/Novetta/adaptnlp/tutorial/embeddings.html</loc>
-     <lastmod>2020-03-17</lastmod>
+     <lastmod>2020-03-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://github.com/Novetta/adaptnlp/tutorial/question-answering.html</loc>
-     <lastmod>2020-03-17</lastmod>
+     <lastmod>2020-03-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://github.com/Novetta/adaptnlp/tutorial/advanced-index.html</loc>
-     <lastmod>2020-03-17</lastmod>
+     <lastmod>2020-03-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://github.com/Novetta/adaptnlp/tutorial/training-sequence-classification.html</loc>
-     <lastmod>2020-03-17</lastmod>
+     <lastmod>2020-03-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://github.com/Novetta/adaptnlp/tutorial/fine-tuning-language-model.html</loc>
-     <lastmod>2020-03-17</lastmod>
+     <lastmod>2020-03-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://github.com/Novetta/adaptnlp/rest.html</loc>
-     <lastmod>2020-03-17</lastmod>
+     <lastmod>2020-03-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://github.com/Novetta/adaptnlp/class-api/token-tagger-module.html</loc>
-     <lastmod>2020-03-17</lastmod>
+     <lastmod>2020-03-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://github.com/Novetta/adaptnlp/class-api/sequence-classifier-module.html</loc>
-     <lastmod>2020-03-17</lastmod>
+     <lastmod>2020-03-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://github.com/Novetta/adaptnlp/class-api/embeddings-module.html</loc>
-     <lastmod>2020-03-17</lastmod>
+     <lastmod>2020-03-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://github.com/Novetta/adaptnlp/class-api/question-answering-module.html</loc>
-     <lastmod>2020-03-17</lastmod>
+     <lastmod>2020-03-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://github.com/Novetta/adaptnlp/class-api/sequence-classifier-trainer-module.html</loc>
-     <lastmod>2020-03-17</lastmod>
+     <lastmod>2020-03-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://github.com/Novetta/adaptnlp/class-api/language-model-finetuner-module.html</loc>
-     <lastmod>2020-03-17</lastmod>
+     <lastmod>2020-03-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://github.com/Novetta/adaptnlp/contributing.html</loc>
-     <lastmod>2020-03-17</lastmod>
+     <lastmod>2020-03-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
