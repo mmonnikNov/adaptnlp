@@ -67,4 +67,3 @@ workflows:
                 - master
     jobs:
       - cache_and_run_tests
-      - deploy_doc
