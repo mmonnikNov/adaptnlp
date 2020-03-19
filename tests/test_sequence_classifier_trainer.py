@@ -1,10 +1,7 @@
-import pytest
 from adaptnlp import SequenceClassifierTrainer, EasyDocumentEmbeddings
 from flair.datasets import TREC_6
 
-@pytest.mark.skip(
-    reason="No memory resources to support until circleci support is contacted"
-)
+
 def test_sequence_classifier_trainer():
     corpus = TREC_6()
 

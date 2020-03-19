@@ -1,11 +1,8 @@
-import pytest
 from adaptnlp import EasyTokenTagger
 from flair.data import Sentence
 from flair.data import Token
 
-@pytest.mark.skip(
-    reason="No memory resources to support until circleci support is contacted"
-)
+
 def get_tokens():
     s = Sentence()
     s.tokens = [
@@ -23,18 +20,14 @@ def get_tokens():
     s.tokenized = "The quick brown fox jumps over the lazy dog."
     return [s]
 
-@pytest.mark.skip(
-    reason="No memory resources to support until circleci support is contacted"
-)
+
 def base_case_tag_text(model):
     tagger = EasyTokenTagger()
     example_text = "The quick brown fox jumps over the lazy dog."
     sentences = tagger.tag_text(text=example_text, model_name_or_path=model)
     return sentences
 
-@pytest.mark.skip(
-    reason="No memory resources to support until circleci support is contacted"
-)
+
 def base_case_tag_all(model_list):
     tagger = EasyTokenTagger()
     example_text = "The quick brown fox jumps over the lazy dog."
@@ -43,18 +36,14 @@ def base_case_tag_all(model_list):
     sentences = tagger.tag_all(text=example_text)
     return sentences
 
+
 # tag_text method tests
-@pytest.mark.skip(
-    reason="No memory resources to support until circleci support is contacted"
-)
 def test_tag_text_type():
     sentences = base_case_tag_text("ner-fast")
     assert type(sentences) == type(get_tokens())
 
+
 # tag_all method tests
-@pytest.mark.skip(
-    reason="No memory resources to support until circleci support is contacted"
-)
 def test_tag_all_type():
     sentences = base_case_tag_all(["ner-fast"])
     assert type(sentences) == type(get_tokens())
