@@ -52,7 +52,7 @@ pip install -r requirements
 export TOKEN_TAGGING_MODE=ner
 export TOKEN_TAGGING_MODEL=ner-ontonotes-fast
 export SEQUENCE_CLASSIFICATION_MODEL=en-sentiment
-exporrt QUESTION_ANSWERING_MODEL=distilbert-base-uncased-distilled-squad
+export QUESTION_ANSWERING_MODEL=distilbert-base-uncased-distilled-squad
 uvicorn app.main:app --host 0.0.0.0 --port 5000
 
 ```
