@@ -11,6 +11,7 @@ from .sequence_classification import EasySequenceClassifier, TransformersSequenc
 from .question_answering import EasyQuestionAnswering, TransformersQuestionAnswering 
 from .training import SequenceClassifierTrainer
 from .transformers.finetuning import LMFineTuner
+from .summarization import EasySummarizer
 
 # global variable like flair's: cache_root
 cache_root = Path(Path.home(), ".adaptnlp")
