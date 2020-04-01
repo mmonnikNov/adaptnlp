@@ -148,7 +148,7 @@ class TransformersSequenceClassifier(AdaptiveModel):
     def _tokenize(
         self, sentences: Union[List[Sentence], Sentence, List[str], str]
     ) -> TensorDataset:
-        """ Batch tokenizes text and produces a `TensorDatset` with them """
+        """ Batch tokenizes text and produces a `TensorDataset` with them """
 
         tokenized_text = self.tokenizer.batch_encode_plus(
             sentences,
@@ -157,7 +157,7 @@ class TransformersSequenceClassifier(AdaptiveModel):
             add_special_tokens=True,
         )
 
-        # XLM, DistilBERT, RoBERTa, and XLM-RoBERTa don't use segment_ids
+        # Bart, XLM, DistilBERT, RoBERTa, and XLM-RoBERTa don't use token_type_ids
         if isinstance(
             self.model,
             (
