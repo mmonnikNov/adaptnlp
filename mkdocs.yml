@@ -29,12 +29,15 @@ nav:
       - Fine Tuning Language Model: 'tutorial/fine-tuning-language-model.md'
   - NLP Services with FastAPI: 'rest.md'
   - Class API:
-      - Token Tagger: 'class-api/token-tagger-module.md'
-      - Sequence Classifier: 'class-api/sequence-classifier-module.md'
-      - Embeddings: 'class-api/embeddings-module.md'
-      - Question Answering: 'class-api/question-answering-module.md'
-      - Sequence Classifier Trainer: 'class-api/sequence-classifier-trainer-module.md'
-      - Language Model Fine-tuning: 'class-api/language-model-finetuner-module.md'
+      - NLP Tasks:
+        - Token Tagger: 'class-api/token-tagger-module.md'
+        - Sequence Classifier: 'class-api/sequence-classifier-module.md'
+        - Embeddings: 'class-api/embeddings-module.md'
+        - Question Answering: 'class-api/question-answering-module.md'
+        - Summarizer: 'class-api/summarizer-module.md'
+      - Training and Fine-tuning:
+        - Sequence Classifier Trainer: 'class-api/sequence-classifier-trainer-module.md'
+        - Language Model Fine-tuning: 'class-api/language-model-finetuner-module.md'
   - Contributing: 'contributing.md'
 
 markdown_extensions:
