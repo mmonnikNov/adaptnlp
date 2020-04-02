@@ -11,6 +11,7 @@ from transformers import (
     PreTrainedTokenizer,
     PreTrainedModel,
     T5ForConditionalGeneration,
+    BartForConditionalGeneration,
 )
 
 from tqdm import tqdm
@@ -42,6 +43,7 @@ class TransformersSummarizer(AdaptiveModel):
 
         # Setup cuda and automatic allocation of model
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
         self.model.to(self.device)
 
     @classmethod
@@ -95,15 +97,15 @@ class TransformersSummarizer(AdaptiveModel):
                 if len(batch) == 3:
                     inputs = {
                         "input_ids": batch[0],
-                        "attention_masks": batch[1],
+                        "attention_mask": batch[1],
                         "token_type_ids": batch[2],
                     }
                 else:
                     inputs = {
                         "input_ids": batch[0],
-                        "attention_masks": batch[1],
+                        "attention_mask": batch[1],
                     }
-                outputs = self.model.generate(inputs["input_ids"], num_beams=num_beams, max_length=max_length, early_stopping=early_stopping, **kwargs)
+                outputs = self.model.generate(input_ids=inputs["input_ids"], attention_mask=inputs["attention_mask"], num_beams=num_beams, max_length=max_length, early_stopping=early_stopping, **kwargs)
 
         return [self.tokenizer.decode(o, skip_special_tokens=True, clean_up_tokenization_spaces=False) for o in outputs]
 
@@ -111,12 +113,21 @@ class TransformersSummarizer(AdaptiveModel):
     def _tokenize(self, text: Union[List[str], str]) -> TensorDataset:
         """ Batch tokenizes text and produces a `TensorDataset` with text """
 
-        tokenized_text = self.tokenizer.batch_encode_plus(
-            text,
-            return_tensors="pt",
-            pad_to_max_length=True,
-            add_special_tokens=True,
-        )
+        # Pre-trained Bart summarization model has a max length fo 1024 tokens for input
+        if isinstance(self.model, BartForConditionalGeneration):
+            tokenized_text = self.tokenizer.batch_encode_plus(
+                text,
+                return_tensors="pt",
+                max_length=1024,
+                add_special_tokens=True,
+            )
+        else:
+            tokenized_text = self.tokenizer.batch_encode_plus(
+                text,
+                return_tensors="pt",
+                pad_to_max_length=True,
+                add_special_tokens=True,
+            )
 
         # Bart doesn't use `token_type_ids`
         if isinstance(self.model, T5ForConditionalGeneration):
