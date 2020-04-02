@@ -1,6 +1,7 @@
 import pkg_resources
 from pathlib import Path
 
+# Easy Modules
 from .embeddings import (
     EasyWordEmbeddings,
     EasyStackedEmbeddings,
@@ -9,9 +10,11 @@ from .embeddings import (
 from .token_classification import EasyTokenTagger
 from .sequence_classification import EasySequenceClassifier, TransformersSequenceClassifier, FlairSequenceClassifier
 from .question_answering import EasyQuestionAnswering, TransformersQuestionAnswering 
+from .summarization import EasySummarizer, TransformersSummarizer
+
+# Training and Fine-tuning Modules
 from .training import SequenceClassifierTrainer
 from .transformers.finetuning import LMFineTuner
-from .summarization import EasySummarizer
 
 # global variable like flair's: cache_root
 cache_root = Path(Path.home(), ".adaptnlp")
@@ -25,12 +28,14 @@ __all__ = [
     "EasyWordEmbeddings",
     "EasyStackedEmbeddings",
     "EasyDocumentEmbeddings",
+    "EasyTokenTagger",
     "EasySequenceClassifier",
     "FlairSequenceClassifier",
     "TransformersSequenceClassifier",
-    "EasyTokenTagger",
     "EasyQuestionAnswering",
     "TransformersQuestionAnswering",
+    "EasySummarizer",
+    "TransformersSummarizer",
     "SequenceClassifierTrainer",
     "LMFineTuner",
 ]
