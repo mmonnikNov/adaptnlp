@@ -1,9 +1,4 @@
-# Translate
-translations = translator.translate(text = text, t5_prefix="translate English to German", model_name_or_path="t5-small", mini_batch_size=1, min_length=0, max_length=100, early_stopping=True)
-
-print("Translations:\n")
-for t in translations:
-    print(t, "\n")<p align="center">
+<p align="center">
     <a href="https://github.com/Novetta/adaptnlp"> <img src="https://raw.githubusercontent.com/novetta/adaptnlp/master/docs/img/NovettaAdaptNLPlogo-400px.png" width="400"/></a>
 </p>
 
