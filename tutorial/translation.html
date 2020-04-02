@@ -13,7 +13,7 @@
         <meta name="description" content="AdaptNLP - An easy to use Natural Language Processing library and framework for predicting, training, fine-tuning, and serving up state-of-the-art NLP models.">
       
       
-        <link rel="canonical" href="https://github.com/Novetta/adaptnlp/tutorial/embeddings.html">
+        <link rel="canonical" href="https://github.com/Novetta/adaptnlp/tutorial/translation.html">
       
       
       
@@ -40,7 +40,7 @@
     
     
       
-        <title>Embeddings - AdaptNLP</title>
+        <title>Translation - AdaptNLP</title>
       
     
     
@@ -91,7 +91,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#available-language-models" tabindex="0" class="md-skip">
+      <a href="#getting-started-with-easytranslator" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -117,7 +117,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Embeddings
+                Translation
               
             </span>
           
@@ -295,66 +295,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Embeddings
-      </label>
-    
-    <a href="embeddings.html" title="Embeddings" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="embeddings.html" title="Embeddings" class="md-nav__link">
       Embeddings
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#available-language-models" class="md-nav__link">
-    Available Language Models
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#getting-started-with-easywordembeddings" class="md-nav__link">
-    Getting Started with EasyWordEmbeddings
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#getting-started-with-easystackedembeddings" class="md-nav__link">
-    Getting Started with EasyStackedEmbeddings
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#getting-started-with-easydocumentembeddings" class="md-nav__link">
-    Getting Started with EasyDocumentEmbeddings
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -386,11 +331,58 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="translation.html" title="Translation" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Translation
+      </label>
+    
+    <a href="translation.html" title="Translation" class="md-nav__link md-nav__link--active">
       Translation
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started-with-easytranslator" class="md-nav__link">
+    Getting Started with EasyTranslator
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#translating-with-translatetext-str-model_name_or_path-str-mini_batch_size-int-num_beamsint-min_length" class="md-nav__link">
+    Translating with `translate(text: str, model_name_or_path: str, mini_batch_size: int, num_beams:int, min_length:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -670,30 +662,22 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#available-language-models" class="md-nav__link">
-    Available Language Models
+  <a href="#getting-started-with-easytranslator" class="md-nav__link">
+    Getting Started with EasyTranslator
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#translating-with-translatetext-str-model_name_or_path-str-mini_batch_size-int-num_beamsint-min_length" class="md-nav__link">
+    Translating with `translate(text: str, model_name_or_path: str, mini_batch_size: int, num_beams:int, min_length:
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#getting-started-with-easywordembeddings" class="md-nav__link">
-    Getting Started with EasyWordEmbeddings
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#getting-started-with-easystackedembeddings" class="md-nav__link">
-    Getting Started with EasyStackedEmbeddings
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#getting-started-with-easydocumentembeddings" class="md-nav__link">
-    Getting Started with EasyDocumentEmbeddings
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -714,126 +698,78 @@
               
                 
                 
-                  <h1>Embeddings</h1>
+                  <h1>Translation</h1>
                 
-                <p>Embeddings for NLP are the vector representations of unstructured text.</p>
-<p>Examples of applications of Word Embeddings are downstream NLP task model training and similarity search. </p>
-<p>Below, we'll walk through how we can use AdaptNLP's <code>EasyWordEmbeddings</code>, <code>EasyStackedEmbeddings</code>, and 
-<code>EasyDocumentEmbeddings</code> classes.</p>
-<h2 id="available-language-models">Available Language Models<a class="headerlink" href="#available-language-models" title="Permanent link">&para;</a></h2>
-<p>Huggingface's Transformer's model key shortcut names can be found <a href="https://huggingface.co/transformers/pretrained_models.html">here</a>.</p>
-<p>The key shortcut names for their public model-sharing repository are available <a href="https://huggingface.co/models">here</a> as of
-v2.2.2 of the Transformers library.</p>
-<p>Below are the available transformers model architectures for use as an encoder:</p>
+                <p>Translation is the task of producing the input text in another language.</p>
+<p>Below, we'll walk through how we can use AdaptNLP's <code>EasyTranslator</code> module to translate text with
+state-of-the-art models.</p>
+<h2 id="getting-started-with-easytranslator">Getting Started with <code>EasyTranslator</code><a class="headerlink" href="#getting-started-with-easytranslator" title="Permanent link">&para;</a></h2>
+<p>We'll first get started by importing the <code>EasyTranslator</code> class from AdaptNLP.</p>
+<p>After that, we set some example text that we'll use further down, and then instantiate the translator.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasyTranslator</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Machine learning will take over the world very soon.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Machines can speak in many languages.&quot;</span><span class="p">,]</span>
+
+<span class="n">translator</span> <span class="o">=</span> <span class="n">EasyTranslator</span><span class="p">()</span>
+</code></pre></div>
+
+
+<h3 id="translating-with-translatetext-str-model_name_or_path-str-mini_batch_size-int-num_beamsint-min_length">Translating with `translate(text: str, model_name_or_path: str, mini_batch_size: int, num_beams:int, min_length:<a class="headerlink" href="#translating-with-translatetext-str-model_name_or_path-str-mini_batch_size-int-num_beamsint-min_length" title="Permanent link">&para;</a></h3>
+<p>int, max_length: int, early_stopping: bool **kwargs)`</p>
+<p>Now that we have the translator instantiated, we are ready to load in a model and translate the text 
+with the built-in <code>translate()</code> method.  </p>
+<p>This method takes in parameters: <code>text</code>, <code>model_name_or_path</code>, and <code>mini_batch_size</code> as well as optional keyword arguments
+from the <code>Transformers.PreTrainedModel.generate()</code> method.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can set <code>model_name_or_path</code> to any of Transformers pretrained Translation Models with Language Model heads.
+Transformers models are located at <a href="https://huggingface.co/models">https://huggingface.co/models</a>.  You can also pass in
+the path of a custom trained Transformers <code>xxxWithLMHead</code> model.</p>
+</div>
+<p>The method returns a list of Strings.</p>
+<p>Here is an example using the T5-small model:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Translate</span>
+<span class="n">translations</span> <span class="o">=</span> <span class="n">translator</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">,</span> <span class="n">t5_prefix</span><span class="o">=</span><span class="s2">&quot;translate English to German&quot;</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;t5-small&quot;</span><span class="p">,</span> <span class="n">mini_batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">early_stopping</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Translations:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">translations</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Below are some examples of Hugging Face's Pre-Trained Translation models that you can use (These do
+not include models hosted in Hugging Face's model repo):</p>
 <table>
 <thead>
 <tr>
-<th>Transformer Model</th>
+<th>Model</th>
+<th>ID</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>ALBERT</td>
+<td>T5</td>
+<td>'t5-small'</td>
 </tr>
 <tr>
-<td>DistilBERT</td>
+<td></td>
+<td>'t5-base'</td>
 </tr>
 <tr>
-<td>BERT</td>
+<td></td>
+<td>'t5-large'</td>
 </tr>
 <tr>
-<td>CamemBERT</td>
+<td></td>
+<td>'t5-3B'</td>
 </tr>
 <tr>
-<td>RoBERTa</td>
-</tr>
-<tr>
-<td>GPT</td>
-</tr>
-<tr>
-<td>GPT2</td>
-</tr>
-<tr>
-<td>XLNet</td>
-</tr>
-<tr>
-<td>TransformerXL</td>
-</tr>
-<tr>
-<td>XLM</td>
-</tr>
-<tr>
-<td>XLMRoBERTa</td>
+<td></td>
+<td>'t5-11B'</td>
 </tr>
 </tbody>
 </table>
-<p>You can also use Flair's <code>FlairEmbeddings</code> who's model key shortcut names are located <a href="https://github.com/flairNLP/flair/blob/master/resources/docs/embeddings/FLAIR_EMBEDDINGS.md">here</a></p>
-<p>You can also use AllenNLP's <code>ELMOEmbeddings</code> who's model key shortcut names are located <a href="https://github.com/flairNLP/flair/blob/master/resources/docs/embeddings/ELMO_EMBEDDINGS.md">here</a></p>
-<h2 id="getting-started-with-easywordembeddings">Getting Started with <code>EasyWordEmbeddings</code><a class="headerlink" href="#getting-started-with-easywordembeddings" title="Permanent link">&para;</a></h2>
-<p>With <code>EasyWordEmbeddings</code>, you can load in a language model and produce contextual embeddings with text input.</p>
-<p>You can look at each word's embeddings which have been contextualized by their surrounding text, meaning embedding
-outputs will change for the same word depending on the text as a whole.</p>
-<p>Below is an example of producing word embeddings from OpenAI's GPT2 language model.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasyWordEmbeddings</span>
-
-<span class="n">example_text</span> <span class="o">=</span> <span class="s2">&quot;This is Albert.  My last name is Einstein.  I like physics and atoms.&quot;</span>
-
-<span class="c1"># Instantiate embeddings tagger</span>
-<span class="n">embeddings</span> <span class="o">=</span> <span class="n">EasyWordEmbeddings</span><span class="p">()</span>
-
-<span class="c1"># Get GPT2 embeddings of example text... A list of flair Sentence objects are generated</span>
-<span class="n">sentences</span> <span class="o">=</span> <span class="n">embeddings</span><span class="o">.</span><span class="n">embed_text</span><span class="p">(</span><span class="n">example_text</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;gpt2&quot;</span><span class="p">)</span>
-<span class="c1"># Iterate through to access the embeddings</span>
-<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">get_embedding</span><span class="p">())</span>
-    <span class="k">break</span>
-</code></pre></div>
-
-
-<h2 id="getting-started-with-easystackedembeddings">Getting Started with <code>EasyStackedEmbeddings</code><a class="headerlink" href="#getting-started-with-easystackedembeddings" title="Permanent link">&para;</a></h2>
-<p>Stacked embeddings are a simple yet important concept pointed out by Flair that can help produce state-of-the-art
-results in downstream NLP models.</p>
-<p>It produces contextualized word embeddings like <code>EasyWordEmbeddings</code>, except the embeddings are the concatenation of
-tensors from multiple language model. </p>
-<p>Below is an example of producing stacked word embeddings from the BERT base cased and XLNet base cased language
-models.  <code>EasyStackedEmbeddings</code> take in a variable number of key shortcut names to pre-trained language models.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasyStackedEmbeddings</span>
-
-<span class="c1"># Instantiate stacked embeddings tagger</span>
-<span class="n">embeddings</span> <span class="o">=</span> <span class="n">EasyStackedEmbeddings</span><span class="p">(</span><span class="s2">&quot;bert-base-cased&quot;</span><span class="p">,</span> <span class="s2">&quot;xlnet-base-cased&quot;</span><span class="p">)</span>
-
-<span class="c1"># Run the `embed_stack` method to get the stacked embeddings outlined above</span>
-<span class="n">sentences</span> <span class="o">=</span> <span class="n">embeddings</span><span class="o">.</span><span class="n">embed_text</span><span class="p">(</span><span class="n">example_text</span><span class="p">)</span>
-<span class="c1"># Iterate through to access the embeddings</span>
-<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">get_embedding</span><span class="p">())</span>
-    <span class="k">break</span>
-</code></pre></div>
-
-
-<h2 id="getting-started-with-easydocumentembeddings">Getting Started with <code>EasyDocumentEmbeddings</code><a class="headerlink" href="#getting-started-with-easydocumentembeddings" title="Permanent link">&para;</a></h2>
-<p>Document embeddings you can load in a variable number of language models, just like in stacked embeddings, and produce
-and embedding for an entire text.  Unlike <code>EasyWordEmbeddings</code> and <code>EasyStackedEmbeddings</code>, <code>EasyDocumentEmbeddings</code>
-will produce one contextualized embedding for a sequence of words using the pool or RNN method provided by Flair.</p>
-<p>If you are familiar with using Flair's RNN document embeddings, you can pass in hyperparameters through the <code>config</code>
-parameter when instantiating an <code>EasyDocumentEmbeddings</code> object.</p>
-<p>Below is an example of producing aan embedding from the entire text using the BERT base cased and XLNet base 
-cased language models.  We also show the embeddings you get using the pool or RNN method.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasyDocumentEmbeddings</span>
-
-<span class="c1"># Instantiate document embedder with stacked embeddings</span>
-<span class="n">embeddings</span> <span class="o">=</span> <span class="n">EasyDocumentEmbeddings</span><span class="p">(</span><span class="s2">&quot;bert-base-cased&quot;</span><span class="p">,</span> <span class="s2">&quot;xlnet-base-cased&quot;</span><span class="p">)</span>
-
-<span class="c1"># Document Pool embedding...Instead of a list of flair Sentence objects, we get one Sentence object: the document</span>
-<span class="n">text</span> <span class="o">=</span> <span class="n">embeddings</span><span class="o">.</span><span class="n">embed_pool</span><span class="p">(</span><span class="n">example_text</span><span class="p">)</span>
-<span class="c1">#get the text/document embedding</span>
-<span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_embedding</span><span class="p">()</span>
-
-<span class="c1"># Now again but with Document RNN embedding</span>
-<span class="n">text</span> <span class="o">=</span> <span class="n">embeddings</span><span class="o">.</span><span class="n">embed_rnn</span><span class="p">(</span><span class="n">example_text</span><span class="p">)</span>
-<span class="c1">#get the text/document embedding</span>
-<span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_embedding</span><span class="p">()</span>
-</code></pre></div>
                 
                   
                 
@@ -855,7 +791,7 @@ cased language models.  We also show the embeddings you get using the pool or RN
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="sequence-classification.html" title="Sequence Classification" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="summarization.html" title="Summarization" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -864,19 +800,19 @@ cased language models.  We also show the embeddings you get using the pool or RN
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Sequence Classification
+                Summarization
               </span>
             </div>
           </a>
         
         
-          <a href="question-answering.html" title="Question Answering" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="advanced-index.html" title="Advanced - Intro" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Question Answering
+                Advanced - Intro
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
