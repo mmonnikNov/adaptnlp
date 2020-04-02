@@ -91,7 +91,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#quick-start" tabindex="0" class="md-skip">
+      <a href="#translate" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -226,6 +226,8 @@
     
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
+      
+    
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
         AdaptNLP
@@ -238,6 +240,8 @@
       
 <nav class="md-nav md-nav--secondary">
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">Table of contents</label>
@@ -303,6 +307,20 @@
           <li class="md-nav__item">
   <a href="#span-based-question-answering-easyquestionanswering" class="md-nav__link">
     Span-based Question Answering EasyQuestionAnswering
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summarization-easysummarizer" class="md-nav__link">
+    Summarization EasySummarizer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#translation-easytranslator" class="md-nav__link">
+    Translation EasyTranslator
   </a>
   
 </li>
@@ -771,6 +789,8 @@
 <nav class="md-nav md-nav--secondary">
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">Table of contents</label>
     <ul class="md-nav__list" data-md-scrollfix>
@@ -835,6 +855,20 @@
           <li class="md-nav__item">
   <a href="#span-based-question-answering-easyquestionanswering" class="md-nav__link">
     Span-based Question Answering EasyQuestionAnswering
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summarization-easysummarizer" class="md-nav__link">
+    Summarization EasySummarizer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#translation-easytranslator" class="md-nav__link">
+    Translation EasyTranslator
   </a>
   
 </li>
@@ -935,12 +969,13 @@
               
                 
                 
-                  <h1>AdaptNLP</h1>
-                
-                <p align="center">
+                <h1 id="translate">Translate<a class="headerlink" href="#translate" title="Permanent link">&para;</a></h1>
+<p>translations = translator.translate(text = text, t5_prefix="translate English to German", model_name_or_path="t5-small", mini_batch_size=1, min_length=0, max_length=100, early_stopping=True)</p>
+<p>print("Translations:\n")
+for t in translations:
+    print(t, "\n")<p align="center">
     <a href="https://github.com/Novetta/adaptnlp"> <img src="https://raw.githubusercontent.com/novetta/adaptnlp/master/docs/img/NovettaAdaptNLPlogo-400px.png" width="400"/></a>
-</p>
-
+</p></p>
 <p align="center">
 <strong> A high level framework and library for running, training, and deploying state-of-the-art Natural Language Processing (NLP) models for end to end tasks.</strong>
 </p>
@@ -1060,6 +1095,47 @@ system specifies:</p>
 </code></pre></div>
 
 
+<h5 id="summarization-easysummarizer">Summarization <code>EasySummarizer</code><a class="headerlink" href="#summarization-easysummarizer" title="Permanent link">&para;</a></h5>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasySummarizer</span>
+
+<span class="c1"># Text from encyclopedia Britannica on Einstein</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Einstein would write that two “wonders” deeply affected his early years. The first was his encounter with a compass at age five. </span>
+<span class="s2">          He was mystified that invisible forces could deflect the needle. This would lead to a lifelong fascination with invisible forces. </span>
+<span class="s2">          The second wonder came at age 12 when he discovered a book of geometry, which he devoured, calling it his &#39;sacred little geometry </span>
+<span class="s2">          book&#39;. Einstein became deeply religious at age 12, even composing several songs in praise of God and chanting religious songs on </span>
+<span class="s2">          the way to school. This began to change, however, after he read science books that contradicted his religious beliefs. This challenge </span>
+<span class="s2">          to established authority left a deep and lasting impression. At the Luitpold Gymnasium, Einstein often felt out of place and victimized </span>
+<span class="s2">          by a Prussian-style educational system that seemed to stifle originality and creativity. One teacher even told him that he would </span>
+<span class="s2">          never amount to anything.&quot;&quot;&quot;</span>
+
+<span class="n">summarizer</span> <span class="o">=</span> <span class="n">EasySummarizer</span><span class="p">()</span>
+
+<span class="c1"># Summarize</span>
+<span class="n">summaries</span> <span class="o">=</span> <span class="n">summarizer</span><span class="o">.</span><span class="n">summarize</span><span class="p">(</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;t5-small&quot;</span><span class="p">,</span> <span class="n">mini_batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_beams</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">early_stopping</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Summaries:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">summaries</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h5 id="translation-easytranslator">Translation <code>EasyTranslator</code><a class="headerlink" href="#translation-easytranslator" title="Permanent link">&para;</a></h5>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasyTranslator</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Machine learning will take over the world very soon.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Machines can speak in many languages.&quot;</span><span class="p">,]</span>
+
+<span class="n">translator</span> <span class="o">=</span> <span class="n">EasyTranslator</span><span class="p">()</span>
+
+<span class="c1"># Translate</span>
+<span class="n">translations</span> <span class="o">=</span> <span class="n">translator</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">,</span> <span class="n">t5_prefix</span><span class="o">=</span><span class="s2">&quot;translate English to German&quot;</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;t5-small&quot;</span><span class="p">,</span> <span class="n">mini_batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">early_stopping</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Translations:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">translations</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+
 <h5 id="sequence-classification-training-sequenceclassifier">Sequence Classification Training <code>SequenceClassifier</code><a class="headerlink" href="#sequence-classification-training-sequenceclassifier" title="Permanent link">&para;</a></h5>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasyDocumentEmbeddings</span><span class="p">,</span> <span class="n">SequenceClassifierTrainer</span> 
 
@@ -1115,24 +1191,40 @@ system specifies:</p>
 <h2 id="tutorials">Tutorials<a class="headerlink" href="#tutorials" title="Permanent link">&para;</a></h2>
 <p>Look in the <a href="tutorials">Tutorials</a> directory for a quick introduction to the library and its very simple
 and straight forward use cases:</p>
-<p><strong>NLP Tasks</strong>
-  1. <a href="tutorials/1.%20Token%20Classification">Token Classification: NER, POS, Chunk, and Frame Tagging</a>
-      - <a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/1.%20Token%20Classification/token_tagging.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>
-  2. <a href="tutorials/2.%20Sequence%20Classification">Sequence Classification: Sentiment</a>
-      - <a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/2.%20Sequence%20Classification/sequence_classification.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>
-  3. <a href="tutorials/3.%20Embeddings">Embeddings: Transformer Embeddings e.g. BERT, XLM, GPT2, XLNet, roBERTa, ALBERT</a>
-      - <a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/3.%20Embeddings/embeddings.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>
-  4. <a href="tutorials/4.%20Question%20Answering">Question Answering: Span-based Question Answering Model</a>
-      - <a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/4.%20Question%20Answering/question_answering.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>
-  5. <a href="tutorials/5.%20Summarization">Summarization: Abstractive and Extractive</a>
-      - <a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/5.%20Summarization/summarization.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>
-  6. <a href="tutorials/6.%20Translation">Translation: Seq2Seq</a>
-      - <a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/6.%20Translation/translation.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
-<p><strong><a href="tutorials/Finetuning%20and%20Training%20(Advanced)">Custom Fine-Tuning and Training with Transformer Models</a></strong>
- - Training a Sequence Classifier
-   - <a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/Finetuning%20and%20Training%20(Advanced)/sequence_classification_training.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>
- - Fine-tuning a Transformers Language Model
-   - <a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/Finetuning%20and%20Training%20(Advanced)/fine_tuning.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p><strong>NLP Tasks</strong></p>
+<ol>
+<li><a href="tutorials/1.%20Token%20Classification">Token Classification: NER, POS, Chunk, and Frame Tagging</a><ul>
+<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/1.%20Token%20Classification/token_tagging.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
+</ul>
+</li>
+<li><a href="tutorials/2.%20Sequence%20Classification">Sequence Classification: Sentiment</a><ul>
+<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/2.%20Sequence%20Classification/sequence_classification.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
+</ul>
+</li>
+<li><a href="tutorials/3.%20Embeddings">Embeddings: Transformer Embeddings e.g. BERT, XLM, GPT2, XLNet, roBERTa, ALBERT</a><ul>
+<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/3.%20Embeddings/embeddings.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
+</ul>
+</li>
+<li><a href="tutorials/4.%20Question%20Answering">Question Answering: Span-based Question Answering Model</a><ul>
+<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/4.%20Question%20Answering/question_answering.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
+</ul>
+</li>
+<li><a href="tutorials/5.%20Summarization">Summarization: Abstractive and Extractive</a><ul>
+<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/5.%20Summarization/summarization.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
+</ul>
+</li>
+<li><a href="tutorials/6.%20Translation">Translation: Seq2Seq</a><ul>
+<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/6.%20Translation/translation.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
+</ul>
+</li>
+</ol>
+<p><strong><a href="tutorials/Finetuning%20and%20Training%20(Advanced)">Custom Fine-Tuning and Training with Transformer Models</a></strong></p>
+<ul>
+<li>Training a Sequence Classifier</li>
+<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/Finetuning%20and%20Training%20(Advanced)/sequence_classification_training.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
+<li>Fine-tuning a Transformers Language Model</li>
+<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/Finetuning%20and%20Training%20(Advanced)/fine_tuning.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
+</ul>
 <p>Checkout the <a href="https://novetta.github.io/adaptnlp">documentation</a> for more information.</p>
 <h2 id="rest-service">REST Service<a class="headerlink" href="#rest-service" title="Permanent link">&para;</a></h2>
 <p>We use FastAPI for standing up endpoints for serving state-of-the-art NLP models with AdaptNLP.</p>
