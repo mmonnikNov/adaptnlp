@@ -91,6 +91,7 @@ class TransformersTranslator(AdaptiveModel):
 
             dataset = self._tokenize(text)
             dataloader = DataLoader(dataset, batch_size=mini_batch_size)
+            translations = []
 
             logger.info(f"Running translator on {len(dataset)} text sequences")
             logger.info(f"Batch size = {mini_batch_size}")
@@ -118,12 +119,14 @@ class TransformersTranslator(AdaptiveModel):
                     **kwargs,
                 )
 
-        return [
-            self.tokenizer.decode(
-                o, skip_special_tokens=True, clean_up_tokenization_spaces=False
-            )
-            for o in outputs
-        ]
+                translations.append([
+                    self.tokenizer.decode(
+                        o, skip_special_tokens=True, clean_up_tokenization_spaces=False
+                    )
+                    for o in outputs
+                ])
+
+        return translations
 
     def _tokenize(self, text: Union[List[str], str]) -> TensorDataset:
         """ Batch tokenizes text and produces a `TensorDataset` with text """
