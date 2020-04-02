@@ -2,10 +2,15 @@
 
 ## Getting Started 
 
-#### Docker
+#### Docker Hub
 The docker image of AdaptNLP is built with the `achangnovetta/adaptnlp:latest` image.
 
-To build and run the rest services by running one of the following methods in this directory:
+The docker image of AdaptNLP's rest services is hosted on Docker Hub as well [here](https://hub.docker.com/r/achangnovetta/adaptnlp-rest).
+
+This image can be pulled by running `docker pull achangnovetta/adaptnlp-rest:latest`
+
+## Build and Run
+To manually build and run the rest services by running one of the following methods in this directory:
 
 #### 1. Docker Build Env Arg Entries
 Specify the pretrained models you want to use for the endpoints.  These can be Transformers pre-trained models, Flair's pre-trained models,
