@@ -20,6 +20,7 @@ from adaptnlp.model import AdaptiveModel
 
 logger = logging.getLogger(__name__)
 
+
 class TransformersSummarizer(AdaptiveModel):
     """ Adaptive model for Transformer's Conditional Generation or Language Models (Transformer's T5 and Bart
         conditiional generation models have a language modeling head)
@@ -107,10 +108,22 @@ class TransformersSummarizer(AdaptiveModel):
                         "input_ids": batch[0],
                         "attention_mask": batch[1],
                     }
-                outputs = self.model.generate(input_ids=inputs["input_ids"], attention_mask=inputs["attention_mask"], num_beams=num_beams, min_length=min_length, max_length=max_length, early_stopping=early_stopping, **kwargs)
+                outputs = self.model.generate(
+                    input_ids=inputs["input_ids"],
+                    attention_mask=inputs["attention_mask"],
+                    num_beams=num_beams,
+                    min_length=min_length,
+                    max_length=max_length,
+                    early_stopping=early_stopping,
+                    **kwargs,
+                )
 
-        return [self.tokenizer.decode(o, skip_special_tokens=True, clean_up_tokenization_spaces=False) for o in outputs]
-
+        return [
+            self.tokenizer.decode(
+                o, skip_special_tokens=True, clean_up_tokenization_spaces=False
+            )
+            for o in outputs
+        ]
 
     def _tokenize(self, text: Union[List[str], str]) -> TensorDataset:
         """ Batch tokenizes text and produces a `TensorDataset` with text """
@@ -118,10 +131,7 @@ class TransformersSummarizer(AdaptiveModel):
         # Pre-trained Bart summarization model has a max length fo 1024 tokens for input
         if isinstance(self.model, BartForConditionalGeneration):
             tokenized_text = self.tokenizer.batch_encode_plus(
-                text,
-                return_tensors="pt",
-                max_length=1024,
-                add_special_tokens=True,
+                text, return_tensors="pt", max_length=1024, add_special_tokens=True,
             )
         else:
             tokenized_text = self.tokenizer.batch_encode_plus(
@@ -140,11 +150,11 @@ class TransformersSummarizer(AdaptiveModel):
             )
         else:
             dataset = TensorDataset(
-                tokenized_text["input_ids"],
-                tokenized_text["attention_mask"],
+                tokenized_text["input_ids"], tokenized_text["attention_mask"],
             )
 
         return dataset
+
 
 class EasySummarizer:
     """ Summarization Module
@@ -170,7 +180,7 @@ class EasySummarizer:
         min_length: int = 0,
         max_length: int = 128,
         early_stopping: bool = True,
-        ** kwargs,
+        **kwargs,
     ) -> List[str]:
         """ Predict method for running inference using the pre-trained sequence classifier model
 
@@ -183,7 +193,17 @@ class EasySummarizer:
         * **&ast;&ast;kwargs**(Optional) - Optional arguments for the Transformers `PreTrainedModel.generate()` method
         """
         if not self.summarizers[model_name_or_path]:
-            self.summarizers[model_name_or_path] = TransformersSummarizer.load(model_name_or_path)
+            self.summarizers[model_name_or_path] = TransformersSummarizer.load(
+                model_name_or_path
+            )
 
         summarizer = self.summarizers[model_name_or_path]
-        return summarizer.predict(text=text, mini_batch_size=mini_batch_size, num_beams=num_beams, min_length=min_length, max_length=max_length, early_stopping=early_stopping, **kwargs)
+        return summarizer.predict(
+            text=text,
+            mini_batch_size=mini_batch_size,
+            num_beams=num_beams,
+            min_length=min_length,
+            max_length=max_length,
+            early_stopping=early_stopping,
+            **kwargs,
+        )

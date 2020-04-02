@@ -96,7 +96,11 @@ async def question_answering(qa_request: QuestionAnsweringRequest):
     context = qa_request.context
     top_n = qa_request.top_n
     best_answer, best_n_answers = _QA_MODEL.predict_qa(
-        query=query, context=context, n_best_size=top_n, mini_batch_size=1, model_name_or_path=_QUESTION_ANSWERING_MODEL
+        query=query,
+        context=context,
+        n_best_size=top_n,
+        mini_batch_size=1,
+        model_name_or_path=_QUESTION_ANSWERING_MODEL,
     )
     payload = QuestionAnsweringResponse(
         best_answer=best_answer, best_n_answers=best_n_answers
