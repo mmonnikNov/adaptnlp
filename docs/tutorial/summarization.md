@@ -47,7 +47,8 @@ int, max_length: int, early_stopping: bool **kwargs)`
 Now that we have the summarizer instantiated, we are ready to load in a model and compress the text 
 with the built-in `summarize()` method.  
 
-This method takes in parameters: `text`, `model_name_or_path`, and `mini_batch_size` as well as optional keyword arguments.
+This method takes in parameters: `text`, `model_name_or_path`, and `mini_batch_size` as well as optional keyword arguments
+from the `Transformers.PreTrainedModel.generate()` method.
 
 !!! note 
     You can set `model_name_or_path` to any of Transformers pretrained Summarization Models with Language Model heads.
@@ -78,3 +79,14 @@ for s in summaries:
     print(s, "\n")
 ```
 
+Below are some examples of Hugging Face's Pre-Trained Summarization models that you can use (These do
+not include models hosted in Hugging Face's model repo):
+
+| Model |  ID  |
+| ----- | ---- |
+| T5    |   't5-small'   |
+|       |   't5-base'    |
+|       |   't5-large'   | 
+|       |   't5-3B'      |
+|       |   't5-11B'     |
+| Bart  |   'bart-large-cnn' |

@@ -23,6 +23,8 @@ nav:
       - Sequence Classification: 'tutorial/sequence-classification.md'
       - Embeddings: 'tutorial/embeddings.md'
       - Question Answering: 'tutorial/question-answering.md'
+      - Summarization: 'tutorial/summarization.md'
+      - Translation: 'tutorial/translation.md'
   - Advanced - User Guide:
       - Advanced - Intro: 'tutorial/advanced-index.md'
       - Training Sequence Classification: 'tutorial/training-sequence-classification.md'
