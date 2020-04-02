@@ -62,6 +62,7 @@ class TransformersSummarizer(AdaptiveModel):
         text: Union[List[str], str],
         mini_batch_size: int = 32,
         num_beams: int = 4,
+        min_length: int = 0,
         max_length: int = 128,
         early_stopping: bool = True,
         **kwargs,
@@ -71,6 +72,7 @@ class TransformersSummarizer(AdaptiveModel):
         * **text** - String, list of strings, sentences, or list of sentences to run inference on
         * **mini_batch_size** - Mini batch size
         * **num_beams** - Number of beams for beam search. Must be between 1 and infinity. 1 means no beam search.  Default to 4.
+        * **min_length** -  The min length of the sequence to be generated. Default to 0
         * **max_length** - The max length of the sequence to be generated. Between min_length and infinity. Default to 128
         * **early_stopping** - if set to True beam search is stopped when at least num_beams sentences finished per batch.
         * **&ast;&ast;kwargs**(Optional) - Optional arguments for the Transformers `PreTrainedModel.generate()` method
@@ -105,7 +107,7 @@ class TransformersSummarizer(AdaptiveModel):
                         "input_ids": batch[0],
                         "attention_mask": batch[1],
                     }
-                outputs = self.model.generate(input_ids=inputs["input_ids"], attention_mask=inputs["attention_mask"], num_beams=num_beams, max_length=max_length, early_stopping=early_stopping, **kwargs)
+                outputs = self.model.generate(input_ids=inputs["input_ids"], attention_mask=inputs["attention_mask"], num_beams=num_beams, min_length=min_length, max_length=max_length, early_stopping=early_stopping, **kwargs)
 
         return [self.tokenizer.decode(o, skip_special_tokens=True, clean_up_tokenization_spaces=False) for o in outputs]
 
@@ -145,7 +147,7 @@ class TransformersSummarizer(AdaptiveModel):
         return dataset
 
 class EasySummarizer:
-    """ Summarization model
+    """ Summarization Module
 
     Usage:
 
@@ -165,6 +167,7 @@ class EasySummarizer:
         model_name_or_path: str = "t5-small",
         mini_batch_size: int = 32,
         num_beams: int = 4,
+        min_length: int = 0,
         max_length: int = 128,
         early_stopping: bool = True,
         ** kwargs,
@@ -174,6 +177,7 @@ class EasySummarizer:
         * **text** - String, list of strings, sentences, or list of sentences to run inference on
         * **mini_batch_size** - Mini batch size
         * **num_beams** - Number of beams for beam search. Must be between 1 and infinity. 1 means no beam search.  Default to 4.
+        * **min_length** -  The min length of the sequence to be generated. Default to 0
         * **max_length** - The max length of the sequence to be generated. Between min_length and infinity. Default to 128
         * **early_stopping** - if set to True beam search is stopped when at least num_beams sentences finished per batch.
         * **&ast;&ast;kwargs**(Optional) - Optional arguments for the Transformers `PreTrainedModel.generate()` method
@@ -182,4 +186,4 @@ class EasySummarizer:
             self.summarizers[model_name_or_path] = TransformersSummarizer.load(model_name_or_path)
 
         summarizer = self.summarizers[model_name_or_path]
-        return summarizer.predict(text=text, mini_batch_size=mini_batch_size, **kwargs)
+        return summarizer.predict(text=text, mini_batch_size=mini_batch_size, num_beams=num_beams, min_length=min_length, max_length=max_length, early_stopping=early_stopping, **kwargs)
