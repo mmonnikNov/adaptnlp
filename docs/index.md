@@ -1,4 +1,9 @@
-<p align="center">
+# Translate
+translations = translator.translate(text = text, t5_prefix="translate English to German", model_name_or_path="t5-small", mini_batch_size=1, min_length=0, max_length=100, early_stopping=True)
+
+print("Translations:\n")
+for t in translations:
+    print(t, "\n")<p align="center">
     <a href="https://github.com/Novetta/adaptnlp"> <img src="https://raw.githubusercontent.com/novetta/adaptnlp/master/docs/img/NovettaAdaptNLPlogo-400px.png" width="400"/></a>
 </p>
 
@@ -128,6 +133,48 @@ print(best_answer)
 print(best_n_answers)
 ```
 
+##### Summarization `EasySummarizer`
+
+```python
+from adaptnlp import EasySummarizer
+
+# Text from encyclopedia Britannica on Einstein
+text = """Einstein would write that two “wonders” deeply affected his early years. The first was his encounter with a compass at age five. 
+          He was mystified that invisible forces could deflect the needle. This would lead to a lifelong fascination with invisible forces. 
+          The second wonder came at age 12 when he discovered a book of geometry, which he devoured, calling it his 'sacred little geometry 
+          book'. Einstein became deeply religious at age 12, even composing several songs in praise of God and chanting religious songs on 
+          the way to school. This began to change, however, after he read science books that contradicted his religious beliefs. This challenge 
+          to established authority left a deep and lasting impression. At the Luitpold Gymnasium, Einstein often felt out of place and victimized 
+          by a Prussian-style educational system that seemed to stifle originality and creativity. One teacher even told him that he would 
+          never amount to anything."""
+
+summarizer = EasySummarizer()
+
+# Summarize
+summaries = summarizer.summarize(text = text, model_name_or_path="t5-small", mini_batch_size=1, num_beams = 4, min_length=0, max_length=100, early_stopping=True)
+
+print("Summaries:\n")
+for s in summaries:
+    print(s, "\n")
+```
+
+##### Translation `EasyTranslator`
+```python
+from adaptnlp import EasyTranslator
+
+text = ["Machine learning will take over the world very soon.",
+        "Machines can speak in many languages.",]
+
+translator = EasyTranslator()
+
+# Translate
+translations = translator.translate(text = text, t5_prefix="translate English to German", model_name_or_path="t5-small", mini_batch_size=1, min_length=0, max_length=100, early_stopping=True)
+
+print("Translations:\n")
+for t in translations:
+    print(t, "\n")
+```
+
 ##### Sequence Classification Training `SequenceClassifier`
 ```python
 from adaptnlp import EasyDocumentEmbeddings, SequenceClassifierTrainer 
@@ -188,6 +235,7 @@ Look in the [Tutorials](tutorials) directory for a quick introduction to the lib
 and straight forward use cases:
 
 **NLP Tasks**
+
   1. [Token Classification: NER, POS, Chunk, and Frame Tagging](tutorials/1.%20Token%20Classification)
       - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/1.%20Token%20Classification/token_tagging.ipynb)
   2. [Sequence Classification: Sentiment](tutorials/2.%20Sequence%20Classification)
@@ -202,6 +250,7 @@ and straight forward use cases:
       - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/6.%20Translation/translation.ipynb)
 
 **[Custom Fine-Tuning and Training with Transformer Models](tutorials/Finetuning%20and%20Training%20(Advanced))**
+
  - Training a Sequence Classifier
    - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/Finetuning%20and%20Training%20(Advanced)/sequence_classification_training.ipynb)
  - Fine-tuning a Transformers Language Model
