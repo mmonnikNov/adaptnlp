@@ -90,6 +90,7 @@ class TransformersSummarizer(AdaptiveModel):
 
             dataset = self._tokenize(text)
             dataloader = DataLoader(dataset, batch_size=mini_batch_size)
+            summaries = []
 
             logger.info(f"Running summarizer on {len(dataset)} text sequences")
             logger.info(f"Batch size = {mini_batch_size}")
@@ -118,12 +119,14 @@ class TransformersSummarizer(AdaptiveModel):
                     **kwargs,
                 )
 
-        return [
-            self.tokenizer.decode(
-                o, skip_special_tokens=True, clean_up_tokenization_spaces=False
-            )
-            for o in outputs
-        ]
+                summaries.append([
+                    self.tokenizer.decode(
+                        o, skip_special_tokens=True, clean_up_tokenization_spaces=False
+                    )
+                    for o in outputs
+                ])
+
+        return summaries
 
     def _tokenize(self, text: Union[List[str], str]) -> TensorDataset:
         """ Batch tokenizes text and produces a `TensorDataset` with text """
@@ -131,7 +134,7 @@ class TransformersSummarizer(AdaptiveModel):
         # Pre-trained Bart summarization model has a max length fo 1024 tokens for input
         if isinstance(self.model, BartForConditionalGeneration):
             tokenized_text = self.tokenizer.batch_encode_plus(
-                text, return_tensors="pt", max_length=1024, add_special_tokens=True,
+                text, return_tensors="pt", max_length=1024, add_special_tokens=True, pad_to_max_length=True,
             )
         else:
             tokenized_text = self.tokenizer.batch_encode_plus(
