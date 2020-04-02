@@ -35,6 +35,7 @@ nav:
         - Embeddings: 'class-api/embeddings-module.md'
         - Question Answering: 'class-api/question-answering-module.md'
         - Summarizer: 'class-api/summarizer-module.md'
+        - Translator: 'class-api/translator-module.md'
       - Training and Fine-tuning:
         - Sequence Classifier Trainer: 'class-api/sequence-classifier-trainer-module.md'
         - Language Model Fine-tuning: 'class-api/language-model-finetuner-module.md'
