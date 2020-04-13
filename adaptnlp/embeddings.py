@@ -1,10 +1,11 @@
+import logging
 from typing import List, Dict, Union
 from collections import defaultdict
 
 from flair.data import Sentence
 from flair.embeddings import (
     Embeddings,
-    # WordEmbeddings,
+    WordEmbeddings,
     StackedEmbeddings,
     FlairEmbeddings,
     BertEmbeddings,
@@ -16,6 +17,8 @@ from flair.embeddings import (
     RoBERTaEmbeddings,
     # MuseCrosslingualEmbeddings,
 )
+
+logger = logging.getLogger(__name__)
 
 FLAIR_PRETRAINED_MODEL_NAMES = {
     "multi-forward",
@@ -160,9 +163,12 @@ class EasyWordEmbeddings:
             ):
                 self.models[model_name_or_path] = FlairEmbeddings(model_name_or_path)
             else:
-                print(
-                    f"Corresponding flair embedding module not found for {model_name_or_path}"
-                )
+                try:
+                    self.models[model_name_or_path] = WordEmbeddings(model_name_or_path)
+                except ValueError:
+                    raise ValueError(
+                        f"Embeddings not found for the model key: {model_name_or_path}, check documentation or custom model path to verify specified model"
+                    )
                 return Sentence("")
         embedding = self.models[model_name_or_path]
         return embedding.embed(sentences)
@@ -235,9 +241,12 @@ class EasyStackedEmbeddings:
             ):
                 self.embedding_stack.append(FlairEmbeddings(model_name_or_path))
             else:
-                print(
-                    f"Corresponding flair embedding module not found for {model_name_or_path}"
-                )
+                try:
+                    self.embedding_stack.append(WordEmbeddings(model_name_or_path))
+                except ValueError:
+                    raise ValueError(
+                        f"Embeddings not found for the model key: {model_name_or_path}, check documentation or custom model path to verify specified model"
+                    )
 
         assert len(self.embedding_stack) != 0
         self.stacked_embeddings = StackedEmbeddings(embeddings=self.embedding_stack)
@@ -348,9 +357,12 @@ class EasyDocumentEmbeddings:
             ):
                 self.embedding_stack.append(FlairEmbeddings(model_name_or_path))
             else:
-                print(
-                    f"Corresponding flair embedding module not found for {model_name_or_path}"
-                )
+                try:
+                    self.embedding_stack.append(WordEmbeddings(model_name_or_path))
+                except ValueError:
+                    raise ValueError(
+                        f"Embeddings not found for the model key: {model_name_or_path}, check documentation or custom model path to verify specified model"
+                    )
 
         assert len(self.embedding_stack) != 0
         if "pool" in methods:
