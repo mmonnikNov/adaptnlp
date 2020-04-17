@@ -119,12 +119,13 @@ class TransformersSummarizer(AdaptiveModel):
                     **kwargs,
                 )
 
-                summaries = [
-                    self.tokenizer.decode(
-                        o, skip_special_tokens=True, clean_up_tokenization_spaces=False,
-                    )
-                    for o in outputs
-                ]
+                
+                for o in outputs:
+                    summaries.append([
+                        self.tokenizer.decode(
+                            o, skip_special_tokens=True, clean_up_tokenization_spaces=False,
+                        )
+                    ].pop())
 
         return summaries
 

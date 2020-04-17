@@ -119,12 +119,12 @@ class TransformersTranslator(AdaptiveModel):
                     **kwargs,
                 )
 
-                translations = [
-                    self.tokenizer.decode(
-                        o, skip_special_tokens=True, clean_up_tokenization_spaces=False,
-                    )
-                    for o in outputs
-                ]
+                for o in outputs:
+                    translations.append([
+                        self.tokenizer.decode(
+                            o, skip_special_tokens=True, clean_up_tokenization_spaces=False,
+                        )
+                    ].pop())
 
         return translations
 
