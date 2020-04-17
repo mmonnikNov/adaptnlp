@@ -119,16 +119,12 @@ class TransformersSummarizer(AdaptiveModel):
                     **kwargs,
                 )
 
-                summaries.append(
-                    [
-                        self.tokenizer.decode(
-                            o,
-                            skip_special_tokens=True,
-                            clean_up_tokenization_spaces=False,
-                        )
-                        for o in outputs
-                    ]
-                )
+                summaries = [
+                    self.tokenizer.decode(
+                        o, skip_special_tokens=True, clean_up_tokenization_spaces=False,
+                    )
+                    for o in outputs
+                ]
 
         return summaries
 
@@ -196,6 +192,7 @@ class EasySummarizer:
         """ Predict method for running inference using the pre-trained sequence classifier model
 
         * **text** - String, list of strings, sentences, or list of sentences to run inference on
+        * **model_name_or_path** - A String model id or path to a pre-trained model repository or custom trained model directory 
         * **mini_batch_size** - Mini batch size
         * **num_beams** - Number of beams for beam search. Must be between 1 and infinity. 1 means no beam search.  Default to 4.
         * **min_length** -  The min length of the sequence to be generated. Default to 0
