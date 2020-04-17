@@ -702,8 +702,9 @@
 for parameters of the method <code>Transformers.PreTrainedModel.generate()</code> can be used as well.</p>
 <ul>
 <li><strong>text</strong> - String, list of strings, sentences, or list of sentences to run inference on</li>
-<li><strong>mini_batch_size</strong> - Mini batch size</li>
+<li><strong>model_name_or_path</strong> - A String model id or path to a pre-trained model repository or custom trained model directory</li>
 <li><strong>t5_prefix</strong>(Optional) - The pre-appended prefix for the specificied task. Only in use for T5-type models.</li>
+<li><strong>mini_batch_size</strong> - Mini batch size</li>
 <li><strong>num_beams</strong> - Number of beams for beam search. Must be between 1 and infinity. 1 means no beam search.  Default to 1.</li>
 <li><strong>min_length</strong> -  The min length of the sequence to be generated. Default to 0</li>
 <li><strong>max_length</strong> - The max length of the sequence to be generated. Between min_length and infinity. Default to 128</li>
