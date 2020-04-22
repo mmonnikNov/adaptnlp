@@ -1,6 +1,4 @@
 click
-flake8
-black
 jupyter
 jupyterlab
 transformers==2.8.0
