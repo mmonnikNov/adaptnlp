@@ -1,6 +1,7 @@
 click
 jupyter
 jupyterlab
+torch==1.4.0
 transformers==2.8.0
 flair==0.4.5
 html_text
