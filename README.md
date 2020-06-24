@@ -69,6 +69,27 @@ pip install adaptnlp
 
 If you want to work on AdaptNLP, `pip install adaptnlp[dev]` will install its development tools.
 
+#### Requirements and Installation for Windows Users
+
+##### Virtual Environment
+To avoid dependency clustering and issues, it would be wise to install AdaptNLP in a virtual environment.
+To create a new python 3.6+ virtual environment, run this command and then activate it however your operating
+system specifies:
+
+```
+python -m venv venv-adaptnlp
+```
+##### PyTorch Install
+PyTorch needs to manually installed on Windows environments. If it's not already installed, proceed to http://pytorch.org/get-started/locally to select your preferences and then run the given install command. Note that the current version of PyTorch we use relies on cuda 10.1.
+
+##### AdaptNLP Install
+
+Install using pip in your virtual environment:
+```
+pip install adaptnlp
+```
+
+If you want to work on AdaptNLP, `pip install adaptnlp[dev]` will install its development tools.
 
 #### Examples and General Use
 
