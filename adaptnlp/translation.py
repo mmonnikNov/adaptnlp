@@ -120,11 +120,15 @@ class TransformersTranslator(AdaptiveModel):
                 )
 
                 for o in outputs:
-                    translations.append([
-                        self.tokenizer.decode(
-                            o, skip_special_tokens=True, clean_up_tokenization_spaces=False,
-                        )
-                    ].pop())
+                    translations.append(
+                        [
+                            self.tokenizer.decode(
+                                o,
+                                skip_special_tokens=True,
+                                clean_up_tokenization_spaces=False,
+                            )
+                        ].pop()
+                    )
 
         return translations
 
