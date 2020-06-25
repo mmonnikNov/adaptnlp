@@ -49,7 +49,7 @@ Learning Researchers and Scientists a modular and **adaptive** approach to a var
 
 ## Quick Start
 
-#### Requirements and Installation
+#### Requirements and Installation for Linux/Mac
 
 ##### Virtual Environment
 To avoid dependency clustering and issues, it would be wise to install AdaptNLP in a virtual environment.
@@ -61,7 +61,6 @@ python -m venv venv-adaptnlp
 ```
 
 ##### AdaptNLP Install
-
 Install using pip in your virtual environment:
 ```
 pip install adaptnlp
@@ -69,6 +68,18 @@ pip install adaptnlp
 
 If you want to work on AdaptNLP, `pip install adaptnlp[dev]` will install its development tools.
 
+#### Requirements and Installation for Windows
+
+##### PyTorch Install
+PyTorch needs to manually installed on Windows environments. If it's not already installed, proceed to http://pytorch.org/get-started/locally to select your preferences and then run the given install command. Note that the current version of PyTorch we use relies on cuda 10.1.
+
+##### AdaptNLP Install
+Install using pip:
+```
+pip install adaptnlp
+```
+
+If you want to work on AdaptNLP, `pip install adaptnlp[dev]` will install its development tools.
 
 #### Examples and General Use
 
