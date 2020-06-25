@@ -16,6 +16,7 @@ from .sequence_classification import (
 from .question_answering import EasyQuestionAnswering, TransformersQuestionAnswering
 from .summarization import EasySummarizer, TransformersSummarizer
 from .translation import EasyTranslator, TransformersTranslator
+from .text_generation import EasyTextGenerator, TransformersTextGenerator
 
 # Training and Fine-tuning Modules
 from .training import SequenceClassifierTrainer
@@ -43,6 +44,8 @@ __all__ = [
     "TransformersSummarizer",
     "EasyTranslator",
     "TransformersTranslator",
+    "EasyTextGenerator",
+    "TransformersTextGenerator",
     "SequenceClassifierTrainer",
     "LMFineTuner",
 ]
