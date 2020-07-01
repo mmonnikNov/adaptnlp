@@ -41,8 +41,7 @@ text = ["""Einstein’s education was disrupted by his father’s repeated failu
 summarizer = EasySummarizer()
 ```
 
-### Summarizing with `summarize(text: str, model_name_or_path: str, mini_batch_size: int, num_beams:int, min_length: 
-int, max_length: int, early_stopping: bool **kwargs)`
+### Summarizing with `summarize(text: str, model_name_or_path: str, mini_batch_size: int, num_beams:int, min_length: int, max_length: int, early_stopping: bool **kwargs)`
 
 Now that we have the summarizer instantiated, we are ready to load in a model and compress the text 
 with the built-in `summarize()` method.  
@@ -67,6 +66,14 @@ print("Summaries:\n")
 for s in summaries:
     print(s, "\n")
 ```
+<details>
+<summary>Output</summary>
+```
+Einstein was left at a boardinghouse in Munich and expected to finish his education . in 1894, after his company failed to get an important contract to electrify the city of Munich, Hermann Einstein moved to Milan to work with a relative . his parents realized the enormous problems he faced as a school dropout and draft dodger with no employable skills . 
+
+Einstein was mystified invisible forces could deflect the needle . the second wonder came at age 12 when he discovered a book of geometry . Einstein became deeply religious at age 12 . 
+```
+</details>
 
 Another example is shown below using the Bart-large trained on CNN data:
 
@@ -78,6 +85,14 @@ print("Summaries:\n")
 for s in summaries:
     print(s, "\n")
 ```
+<details>
+<summary>Output</summary>
+```
+Einstein's education was disrupted by his father's repeated failures at business. He ran away at 16 to escape the prospect of military duty. He went to a special high school run by Jost Winteler in Aarau, Switzerland. 
+
+Einstein would write that two ‘wonders’ deeply affected his early years. The first was his encounter with a compass at age five. The second wonder came at age 12 when he discovered a book of geometry. 
+```
+</details>
 
 Below are some examples of Hugging Face's Pre-Trained Summarization models that you can use (These do
 not include models hosted in Hugging Face's model repo):

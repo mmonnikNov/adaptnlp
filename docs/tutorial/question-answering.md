@@ -60,6 +60,14 @@ print(top_prediction)
 
 print(all_nbest_json)
 ```
+<details>
+<summary>Output </summary>
+```python
+disruption of well-established industries
+
+[OrderedDict([('text', 'disruption of well-established industries'), ('probability', 0.6033442567874925), ('start_logit', 6.112505912780762), ('end_logit', 4.161777019500732), ('start_index', 45), ('end_index', 48)]), OrderedDict([('text', 'disruption'), ('probability', 0.297660848770138), ('start_logit', 6.112505912780762), ('end_logit', 3.4552438259124756), ('start_index', 45), ('end_index', 45)]), OrderedDict([('text', 'its disruption of well-established industries'), ('probability', 0.05852587255867402), ('start_logit', 3.779486894607544), ('end_logit', 4.161777019500732), ('start_index', 44), ('end_index', 48)]), OrderedDict([('text', 'its disruption'), ('probability', 0.02887383231852614), ('start_logit', 3.779486894607544), ('end_logit', 3.4552438259124756), ('start_index', 44), ('end_index', 45)]), OrderedDict([('text', 'Amazon is known for its disruption'), ('probability', 0.011595189565169283), ('start_logit', 2.8671414852142334), ('end_logit', 3.4552438259124756), ('start_index', 40), ('end_index', 45)])]
+```
+</details>
 
 We can do the same thing but now more question/context pairs!
 
@@ -75,6 +83,18 @@ print(top_prediction)
 
 print(all_nbest_json)
 ```
+
+<details>
+<summary>Output </summary>
+```python
+
+OrderedDict([('0', 'disruption of well-established industries'), ('1', 'Jeff Bezos'), ('2', '$13.4 billion')])
+
+OrderedDict([('0', [OrderedDict([('text', 'disruption of well-established industries'), ('probability', 0.6033442567874925), ('start_logit', 6.112505912780762), ('end_logit', 4.161777019500732), ('start_index', 45), ('end_index', 48)]), OrderedDict([('text', 'disruption'), ('probability', 0.297660848770138), ('start_logit', 6.112505912780762), ('end_logit', 3.4552438259124756), ('start_index', 45), ('end_index', 45)]), OrderedDict([('text', 'its disruption of well-established industries'), ('probability', 0.05852587255867402), ('start_logit', 3.779486894607544), ('end_logit', 4.161777019500732), ('start_index', 44), ('end_index', 48)]), OrderedDict([('text', 'its disruption'), ('probability', 0.02887383231852614), ('start_logit', 3.779486894607544), ('end_logit', 3.4552438259124756), ('start_index', 44), ('end_index', 45)]), OrderedDict([('text', 'Amazon is known for its disruption'), ('probability', 0.011595189565169283), ('start_logit', 2.8671414852142334), ('end_logit', 3.4552438259124756), ('start_index', 40), ('end_index', 45)])]), ('1', [OrderedDict([('text', 'Jeff Bezos'), ('probability', 0.5127511010234306), ('start_logit', 2.8254265785217285), ('end_logit', 0.6868380904197693), ('start_index', 119), ('end_index', 120)]), OrderedDict([('text', 'Amazon was founded by Jeff Bezos'), ('probability', 0.4715363478154372), ('start_logit', 2.7416322231292725), ('end_logit', 0.6868380904197693), ('start_index', 115), ('end_index', 120)]), OrderedDict([('text', 'founded by Jeff Bezos'), ('probability', 0.00861648484186261), ('start_logit', -1.2606867551803589), ('end_logit', 0.6868380904197693), ('start_index', 117), ('end_index', 120)]), OrderedDict([('text', 'Bezos'), ('probability', 0.007096066319269671), ('start_logit', -1.45482337474823), ('end_logit', 0.6868380904197693), ('start_index', 120), ('end_index', 120)])]), ('2', [OrderedDict([('text', '$13.4 billion'), ('probability', 0.9661266044018949), ('start_logit', 9.706584930419922), ('end_logit', 9.610511779785156), ('start_index', 178), ('end_index', 179)]), OrderedDict([('text', '13.4 billion'), ('probability', 0.021838208850347186), ('start_logit', 5.9169511795043945), ('end_logit', 9.610511779785156), ('start_index', 178), ('end_index', 179)]), OrderedDict([('text', '$13.4 billion,'), ('probability', 0.01157609551257036), ('start_logit', 9.706584930419922), ('end_logit', 5.186159133911133), ('start_index', 178), ('end_index', 179)]), OrderedDict([('text', '13.4 billion,'), ('probability', 0.0002616646620880307), ('start_logit', 5.9169511795043945), ('end_logit', 5.186159133911133), ('start_index', 178), ('end_index', 179)]), OrderedDict([('text', '$'), ('probability', 0.0001974265730996087), ('start_logit', 9.706584930419922), ('end_logit', 1.11482834815979), ('start_index', 178), ('end_index', 178)])])])
+```
+</details>
+
+
 
 !!! note
     Check out `TransformersQuestionAnswering` for a more in-depth look into the additional parameters you can pass into

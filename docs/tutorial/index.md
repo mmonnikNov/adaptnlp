@@ -45,7 +45,14 @@ for sentence in sentences:
         print(entity)
 
 ```
-
+<details>
+<summary>Output</summary>
+```python
+Span [1]: "Novetta"   [− Labels: ORG (0.9925)]
+Span [7]: "Mclean"    [− Labels: LOC (0.9993)]
+Span [9]: "Virginia"  [− Labels: LOC (1.0)]
+```
+</details>
 ##### English Sentiment Classifier `EasySequenceClassifier`
 
 ```python
@@ -63,6 +70,13 @@ for sentence in sentences:
     print(sentence.labels)
 
 ```
+<details>
+<summary>Output</summary>
+```python
+[POSITIVE (0.9977)]
+```
+</details>
+
 
 ##### Language Model Embeddings `EasyWordEmbeddings`
 ```python
@@ -80,7 +94,20 @@ for sentence in sentences:
     for token in sentence:
         print(token.get_embedding())
 ```
+<details>
+<summary>Output</summary>
+```python
+tensor([-1.8757,  0.6195, -1.3108,  ..., -1.3787, -0.6885,  1.6934])
+tensor([-0.0617, -2.3885,  2.2028,  ...,  0.2774,  0.8424, -1.5328])
+tensor([-0.0480, -0.7461, -0.5282,  ...,  0.1554,  0.2542,  0.8199])
+tensor([ 1.0621, -0.3834,  1.5259,  ..., -0.0937, -0.0337,  1.0316])
+tensor([-0.0027, -1.6549, -1.6274,  ...,  0.3001,  0.0146, -0.1931])
+tensor([ 0.6624, -0.9889,  0.6716,  ..., -0.4907,  0.5692,  0.9456])
+tensor([ 0.5633,  0.4789, -0.2232,  ..., -0.1454,  0.2486,  0.5163])
+```
+</details>
 
+<!-- 
 
 ##### Span-based Question Answering `EasyQuestionAnswering`
 
@@ -153,4 +180,4 @@ finetuner.freeze()
 # Train and Save Fine Tuned Language Models
 finetuner.train_one_cycle(output_dir="Path/to/output/directory", learning_rate=learning_rate)
 
-```
+``` -->
