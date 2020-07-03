@@ -66,11 +66,10 @@ print("Summaries:\n")
 for s in summaries:
     print(s, "\n")
 ```
-<details>
+<details class = "summary">
 <summary>Output</summary>
 ```
 Einstein was left at a boardinghouse in Munich and expected to finish his education . in 1894, after his company failed to get an important contract to electrify the city of Munich, Hermann Einstein moved to Milan to work with a relative . his parents realized the enormous problems he faced as a school dropout and draft dodger with no employable skills . 
-
 Einstein was mystified invisible forces could deflect the needle . the second wonder came at age 12 when he discovered a book of geometry . Einstein became deeply religious at age 12 . 
 ```
 </details>
@@ -85,7 +84,7 @@ print("Summaries:\n")
 for s in summaries:
     print(s, "\n")
 ```
-<details>
+<details class = "summary">
 <summary>Output</summary>
 ```
 Einstein's education was disrupted by his father's repeated failures at business. He ran away at 16 to escape the prospect of military duty. He went to a special high school run by Jost Winteler in Aarau, Switzerland. 

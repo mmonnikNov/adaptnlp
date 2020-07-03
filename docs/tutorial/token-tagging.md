@@ -98,9 +98,9 @@ print("List string outputs of tags:\n")
 for sen in sentences:
     print(sen.to_tagged_string())
 ```
-<details>
+<details class = "summary">
 <summary>Output</summary>
-```python
+```
 Novetta <B-ORG> Solutions <E-ORG> is the best . Albert <B-PERSON> Einstein <E-PERSON> used to be employed at Novetta <B-ORG> Solutions <E-ORG> . The Wright <S-PERSON> brothers loved to visit the JBF <S-ORG> headquarters , and they would have a chat with Albert <S-PERSON> .
 ```
 </details>
@@ -114,7 +114,7 @@ for sen in sentences:
     for entity in sen.get_spans(label_type="ner"):
         print(entity)
 ```
-<details>
+<details class = "summary">
 <summary>Output</summary>
 ```python
 Span [1,2]: "Novetta Solutions"     [− Labels: ORG (0.9644)]
@@ -168,7 +168,7 @@ for sen in sentences:
     for entity in sen.get_spans(label_type="pos"):
         print(entity)
 ```
-<details>
+<details class = "summary">
 <summary>Output </summary>
 ```python
 Span [1]: "Novetta"       [− Labels: NNP (0.9998)]
@@ -216,7 +216,7 @@ for sen in sentences:
         print(entity)
 
 ```
-<details>
+<details class = "summary">
 <summary>Output </summary>
 ```python
 Span [1,2]: "Novetta Solutions"   [− Labels: ORG (0.9644)]

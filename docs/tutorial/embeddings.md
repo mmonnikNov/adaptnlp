@@ -58,7 +58,7 @@ for token in sentences[0]:
     break
 ```
 
-<details>
+<details class = "summary">
 <summary>Output</summary>
 ```python
 tensor([-0.1524, -0.0703,  0.5778,  ..., -0.3797, -0.3565,  2.4139])
@@ -89,7 +89,7 @@ for token in sentences[0]:
     print(token.get_embedding())
     break
 ```
-<details>
+<details class = "summary">
 <summary>Output</summary>
 ```python
 tensor([ 0.5918, -0.4142,  1.0203,  ..., -0.1045, -1.2841,  0.0192])
@@ -120,7 +120,7 @@ text = embeddings.embed_pool(example_text)
 #get the text/document embedding
 text[0].get_embedding()
 ```
-<details>
+<details class = "summary">
 <summary>Output</summary>
 ```python
 tensor([ 0.4216,  0.0123,  0.3136,  ..., -0.0683, -0.3761, -0.0974],
@@ -134,7 +134,7 @@ text = embeddings.embed_rnn(example_text)
 #get the text/document embedding
 text[0].get_embedding()
 ```
-<details>
+<details class = "summary">
 <summary>Output</summary>
 ```python
 tensor([ 4.0643e-02,  4.7823e-01,  3.5992e-01, -6.5744e-01,  2.5690e-01,

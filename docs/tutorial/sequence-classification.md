@@ -50,7 +50,7 @@ print("Label output:\n")
 for sentence in sentences:
     print(sentence.labels)
 ```
-<details>
+<details class = "summary">
 <summary>Output</summary>
 ```python
 [1 star (0.1454), 2 stars (0.4862), 3 stars (0.3473), 4 stars (0.019), 5 stars (0.002)]
@@ -73,7 +73,7 @@ print("Label output:\n")
 for sentence in sentences:
     print(sentence.labels)
 ```
-<details>
+<details class = "summary">
 <summary>Output</summary>
 ```python
 [POSITIVE (0.9983)]

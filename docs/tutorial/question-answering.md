@@ -45,7 +45,7 @@ qa_model = EasyQuestionAnswering()
 
 Now that we have the question answering model instantiated, we can run inference using the built-in `predict_qa` method.
 
-!!! note
+!!! Note
     You can set `model_name_or_path` to any of Transformer's pretrained question answering models.
     Transformers models are located at [https://huggingface.co/models](https://huggingface.co/models).  You can also pass in
     the path of a custom trained Transformers `xxxForQuestionAnswering` model.
@@ -60,7 +60,7 @@ print(top_prediction)
 
 print(all_nbest_json)
 ```
-<details>
+<details class = "summary">
 <summary>Output </summary>
 ```python
 disruption of well-established industries
@@ -84,7 +84,7 @@ print(top_prediction)
 print(all_nbest_json)
 ```
 
-<details>
+<details class = "summary">
 <summary>Output </summary>
 ```python
 

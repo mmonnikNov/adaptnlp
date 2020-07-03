@@ -44,7 +44,7 @@ print("Translations:\n")
 for t in translations:
     print(t, "\n")
 ```
-<details>
+<details class = "summary">
 <summary>Output</summary>
 ```
 Das Maschinelle Lernen wird die Welt in Kürze übernehmen. 

@@ -45,14 +45,15 @@ for sentence in sentences:
         print(entity)
 
 ```
-<details>
-<summary>Output</summary>
+<details class = "summary">
+ <summary>Output</summary>
 ```python
 Span [1]: "Novetta"   [− Labels: ORG (0.9925)]
 Span [7]: "Mclean"    [− Labels: LOC (0.9993)]
 Span [9]: "Virginia"  [− Labels: LOC (1.0)]
 ```
 </details>
+
 ##### English Sentiment Classifier `EasySequenceClassifier`
 
 ```python
@@ -70,7 +71,7 @@ for sentence in sentences:
     print(sentence.labels)
 
 ```
-<details>
+<details class = "summary">
 <summary>Output</summary>
 ```python
 [POSITIVE (0.9977)]
@@ -94,7 +95,7 @@ for sentence in sentences:
     for token in sentence:
         print(token.get_embedding())
 ```
-<details>
+<details class = "summary">
 <summary>Output</summary>
 ```python
 tensor([-1.8757,  0.6195, -1.3108,  ..., -1.3787, -0.6885,  1.6934])
@@ -107,7 +108,7 @@ tensor([ 0.5633,  0.4789, -0.2232,  ..., -0.1454,  0.2486,  0.5163])
 ```
 </details>
 
-<!-- 
+
 
 ##### Span-based Question Answering `EasyQuestionAnswering`
 
@@ -121,13 +122,20 @@ top_n = 5
 
 ## Load the QA module and run inference on results 
 qa = EasyQuestionAnswering()
-best_answer, best_n_answers = qa.predict_bert_qa(query=query, context=context, n_best_size=top_n)
+best_answer, best_n_answers = qa.predict_qa(query=query, context=context, n_best_size=top_n)
 
 ## Output top answer as well as top 5 answers
 print(best_answer)
 print(best_n_answers)
 ```
+<details class = "summary">
+<summary>Output</summary>
+```python
+[OrderedDict([('text', 'Machine Learning'), ('probability', 0.9924118248851219), ('start_logit', 8.646799087524414), ('end_logit', 8.419432640075684), ('start_index', 0), ('end_index', 1)]), OrderedDict([('text', 'Learning'), ('probability', 0.004796293656050888), ('start_logit', 3.314504384994507), ('end_logit', 8.419432640075684), ('start_index', 1), ('end_index', 1)]), OrderedDict([('text', 'Machine Learning is the meaning of life.'), ('probability', 0.0018383556202966893), ('start_logit', 8.646799087524414), ('end_logit', 2.1281659603118896), ('start_index', 0), ('end_index', 6)]), OrderedDict([('text', 'Machine'), ('probability', 0.0009446411263795704), ('start_logit', 8.646799087524414), ('end_logit', 1.4623442888259888), ('start_index', 0), ('end_index', 0)]), OrderedDict([('text', 'Learning is the meaning of life.'), ('probability', 8.884712150840367e-06), ('start_logit', 3.314504384994507), ('end_logit', 2.1281659603118896), ('start_index', 1), ('end_index', 6)])]
+```
+</detais>
 
+<!-- 
 ##### Sequence Classification Training `SequenceClassifier`
 ```python
 from adaptnlp import EasyDocumentEmbeddings, SequenceClassifierTrainer 
@@ -178,6 +186,4 @@ learning_rate = finetuner.find_learning_rate(base_path="Path/to/base/directory")
 finetuner.freeze()
 
 # Train and Save Fine Tuned Language Models
-finetuner.train_one_cycle(output_dir="Path/to/output/directory", learning_rate=learning_rate)
-
-``` -->
+finetuner.train_one_cycle(output_dir="Path/to/output/directory", learning_rate=learning_rate) -->
