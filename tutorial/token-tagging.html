@@ -190,8 +190,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../index.html" title="AdaptNLP" class="md-nav__link">
-      AdaptNLP
+    <a href="../index.html" title="AdaptNLP Overview" class="md-nav__link">
+      AdaptNLP Overview
     </a>
   </li>
 
@@ -1051,20 +1051,43 @@ and they can be found <a href="https://github.com/flairNLP/flair/blob/master/res
 </code></pre></div>
 
 
-<p>If you want just the entities, you can run the below but you'll need to specify the <code>tag_type</code> as "ner" or "pos" etc.
+<details class = "summary">
+<summary>Output</summary>
+
+<div class="codehilite"><pre><span></span><code>Novetta &lt;B-ORG&gt; Solutions &lt;E-ORG&gt; is the best . Albert &lt;B-PERSON&gt; Einstein &lt;E-PERSON&gt; used to be employed at Novetta &lt;B-ORG&gt; Solutions &lt;E-ORG&gt; . The Wright &lt;S-PERSON&gt; brothers loved to visit the JBF &lt;S-ORG&gt; headquarters , and they would have a chat with Albert &lt;S-PERSON&gt; .
+</code></pre></div>
+
+
+</details>
+
+<p>If you want just the entities, you can run the below but you'll need to specify the <code>label_type</code> as "ner" or "pos" etc.
 (more information can be found in Flair's documentation):</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;List entities tagged:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">sen</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">sen</span><span class="o">.</span><span class="n">get_spans</span><span class="p">(</span><span class="n">tag_type</span><span class="o">=</span><span class="s2">&quot;ner&quot;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">sen</span><span class="o">.</span><span class="n">get_spans</span><span class="p">(</span><span class="n">label_type</span><span class="o">=</span><span class="s2">&quot;ner&quot;</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
 </code></pre></div>
 
 
-<p>Here are some additional tag_types that support some of Flair's pre-trained token taggers:</p>
+<details class = "summary">
+<summary>Output</summary>
+
+<div class="codehilite"><pre><span></span><code><span class="n">Span</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]:</span> <span class="s2">&quot;Novetta Solutions&quot;</span>     <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">ORG</span> <span class="p">(</span><span class="mf">0.9644</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">]:</span> <span class="s2">&quot;Albert Einstein&quot;</span>       <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">PERSON</span> <span class="p">(</span><span class="mf">0.9969</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">]:</span> <span class="s2">&quot;Novetta Solutions&quot;</span>   <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">ORG</span> <span class="p">(</span><span class="mf">0.9796</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">18</span><span class="p">]:</span> <span class="s2">&quot;Wright&quot;</span>                 <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">PERSON</span> <span class="p">(</span><span class="mf">0.9995</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">24</span><span class="p">]:</span> <span class="s2">&quot;JBF&quot;</span>                    <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">ORG</span> <span class="p">(</span><span class="mf">0.9898</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">34</span><span class="p">]:</span> <span class="s2">&quot;Albert&quot;</span>                 <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">PERSON</span> <span class="p">(</span><span class="mf">0.9999</span><span class="p">)]</span>
+</code></pre></div>
+
+
+</details>
+
+<p>Here are some additional label_typess that support some of Flair's pre-trained token taggers:</p>
 <table>
 <thead>
 <tr>
-<th>tag_type</th>
+<th>label_types</th>
 <th>Description</th>
 </tr>
 </thead>
@@ -1083,7 +1106,7 @@ and they can be found <a href="https://github.com/flairNLP/flair/blob/master/res
 </tr>
 </tbody>
 </table>
-<p>NOTE: You can add your own tag_types when running the sequence classifier trainer in AdaptNLP.</p>
+<p>NOTE: You can add your own label_typess when running the sequence classifier trainer in AdaptNLP.</p>
 <h3 id="tagging-with-tag_alltext-str-model_name_or_path-str-kwargs">Tagging with <code>tag_all(text: str, model_name_or_path: str, **kwargs)</code><a class="headerlink" href="#tagging-with-tag_alltext-str-model_name_or_path-str-kwargs" title="Permanent link">&para;</a></h3>
 <p>As you tag text with multiple pretrained token tagging models, your tagger will have multiple models loaded...memory
 permitting.</p>
@@ -1105,15 +1128,76 @@ tagger.  See an example below:</p>
 
 
 <p>Now we can see below that you get a list of Flair sentences tagged with the "ner-ontonotes" AND "pos" model:</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;List entities tagged:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;List entities tagged:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;List entities tagged:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">sen</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">sen</span><span class="o">.</span><span class="n">get_spans</span><span class="p">(</span><span class="n">tag_type</span><span class="o">=</span><span class="s2">&quot;pos&quot;</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">sen</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">sen</span><span class="o">.</span><span class="n">get_spans</span><span class="p">(</span><span class="n">tag_type</span><span class="o">=</span><span class="s2">&quot;ner&quot;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">sen</span><span class="o">.</span><span class="n">get_spans</span><span class="p">(</span><span class="n">label_type</span><span class="o">=</span><span class="s2">&quot;pos&quot;</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
 </code></pre></div>
+
+
+<details class = "summary">
+<summary>Output </summary>
+
+<div class="codehilite"><pre><span></span><code><span class="n">Span</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="s2">&quot;Novetta&quot;</span>       <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">NNP</span> <span class="p">(</span><span class="mf">0.9998</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="s2">&quot;Solutions&quot;</span>     <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">NNPS</span> <span class="p">(</span><span class="mf">0.8235</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="s2">&quot;is&quot;</span>            <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">VBZ</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="s2">&quot;the&quot;</span>           <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">DT</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="s2">&quot;best&quot;</span>          <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">JJS</span> <span class="p">(</span><span class="mf">0.9996</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">6</span><span class="p">]:</span> <span class="s2">&quot;.&quot;</span>             <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="o">.</span> <span class="p">(</span><span class="mf">0.9995</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">7</span><span class="p">]:</span> <span class="s2">&quot;Albert&quot;</span>        <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">NNP</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">8</span><span class="p">]:</span> <span class="s2">&quot;Einstein&quot;</span>      <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">NNP</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">9</span><span class="p">]:</span> <span class="s2">&quot;used&quot;</span>          <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">VBD</span> <span class="p">(</span><span class="mf">0.9981</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">10</span><span class="p">]:</span> <span class="s2">&quot;to&quot;</span>           <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">TO</span> <span class="p">(</span><span class="mf">0.9999</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">11</span><span class="p">]:</span> <span class="s2">&quot;be&quot;</span>           <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">VB</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">12</span><span class="p">]:</span> <span class="s2">&quot;employed&quot;</span>     <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">VBN</span> <span class="p">(</span><span class="mf">0.9971</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">13</span><span class="p">]:</span> <span class="s2">&quot;at&quot;</span>           <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">IN</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">14</span><span class="p">]:</span> <span class="s2">&quot;Novetta&quot;</span>      <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">NNP</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">15</span><span class="p">]:</span> <span class="s2">&quot;Solutions&quot;</span>    <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">NNPS</span> <span class="p">(</span><span class="mf">0.6877</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">16</span><span class="p">]:</span> <span class="s2">&quot;.&quot;</span>            <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="o">.</span> <span class="p">(</span><span class="mf">0.5807</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">17</span><span class="p">]:</span> <span class="s2">&quot;The&quot;</span>          <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">DT</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">18</span><span class="p">]:</span> <span class="s2">&quot;Wright&quot;</span>       <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">NNP</span> <span class="p">(</span><span class="mf">0.9999</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">19</span><span class="p">]:</span> <span class="s2">&quot;brothers&quot;</span>     <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">NNS</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">20</span><span class="p">]:</span> <span class="s2">&quot;loved&quot;</span>        <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">VBD</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">21</span><span class="p">]:</span> <span class="s2">&quot;to&quot;</span>           <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">TO</span> <span class="p">(</span><span class="mf">0.9994</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">22</span><span class="p">]:</span> <span class="s2">&quot;visit&quot;</span>        <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">VB</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">23</span><span class="p">]:</span> <span class="s2">&quot;the&quot;</span>          <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">DT</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">24</span><span class="p">]:</span> <span class="s2">&quot;JBF&quot;</span>          <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">NNP</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">25</span><span class="p">]:</span> <span class="s2">&quot;headquarters&quot;</span> <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">NN</span> <span class="p">(</span><span class="mf">0.9325</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">26</span><span class="p">]:</span> <span class="s2">&quot;,&quot;</span>            <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="p">,</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">27</span><span class="p">]:</span> <span class="s2">&quot;and&quot;</span>          <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">CC</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">28</span><span class="p">]:</span> <span class="s2">&quot;they&quot;</span>         <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">PRP</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">29</span><span class="p">]:</span> <span class="s2">&quot;would&quot;</span>        <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">MD</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">30</span><span class="p">]:</span> <span class="s2">&quot;have&quot;</span>         <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">VB</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">31</span><span class="p">]:</span> <span class="s2">&quot;a&quot;</span>            <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">DT</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">32</span><span class="p">]:</span> <span class="s2">&quot;chat&quot;</span>         <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">NN</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">33</span><span class="p">]:</span> <span class="s2">&quot;with&quot;</span>         <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">IN</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">34</span><span class="p">]:</span> <span class="s2">&quot;Albert&quot;</span>       <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">NNP</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">35</span><span class="p">]:</span> <span class="s2">&quot;.&quot;</span>            <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="o">.</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+</code></pre></div>
+
+
+</details>
+
+<div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;List entities tagged:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">sen</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">sen</span><span class="o">.</span><span class="n">get_spans</span><span class="p">(</span><span class="n">label_type</span><span class="o">=</span><span class="s2">&quot;ner&quot;</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
+</code></pre></div>
+
+
+<details class = "summary">
+<summary>Output </summary>
+
+<div class="codehilite"><pre><span></span><code><span class="n">Span</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]:</span> <span class="s2">&quot;Novetta Solutions&quot;</span>   <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">ORG</span> <span class="p">(</span><span class="mf">0.9644</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">]:</span> <span class="s2">&quot;Albert Einstein&quot;</span>     <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">PERSON</span> <span class="p">(</span><span class="mf">0.9969</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">]:</span> <span class="s2">&quot;Novetta Solutions&quot;</span> <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">ORG</span> <span class="p">(</span><span class="mf">0.9796</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">18</span><span class="p">]:</span> <span class="s2">&quot;Wright&quot;</span>               <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">PERSON</span> <span class="p">(</span><span class="mf">0.9995</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">24</span><span class="p">]:</span> <span class="s2">&quot;JBF&quot;</span>                  <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">ORG</span> <span class="p">(</span><span class="mf">0.9898</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">34</span><span class="p">]:</span> <span class="s2">&quot;Albert&quot;</span>               <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">PERSON</span> <span class="p">(</span><span class="mf">0.9999</span><span class="p">)]</span>
+</code></pre></div>
+
+
+</details>
                 
               
               

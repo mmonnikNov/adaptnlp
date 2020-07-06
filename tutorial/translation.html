@@ -190,8 +190,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../index.html" title="AdaptNLP" class="md-nav__link">
-      AdaptNLP
+    <a href="../index.html" title="AdaptNLP Overview" class="md-nav__link">
+      AdaptNLP Overview
     </a>
   </li>
 
@@ -340,8 +340,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#translating-with-translatetext-str-model_name_or_path-str-mini_batch_size-int-num_beamsint-min_length" class="md-nav__link">
-    Translating with `translate(text: str, model_name_or_path: str, mini_batch_size: int, num_beams:int, min_length:
+  <a href="#translating-with-translatetext-str-model_name_or_path-str-mini_batch_size-int-num_beamsint-min_length-int-max_length-int-early_stopping-bool-kwargs" class="md-nav__link">
+    Translating with translate(text: str, model_name_or_path: str, mini_batch_size: int, num_beams:int, min_length: int, max_length: int, early_stopping: bool **kwargs)
   </a>
   
 </li>
@@ -671,8 +671,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#translating-with-translatetext-str-model_name_or_path-str-mini_batch_size-int-num_beamsint-min_length" class="md-nav__link">
-    Translating with `translate(text: str, model_name_or_path: str, mini_batch_size: int, num_beams:int, min_length:
+  <a href="#translating-with-translatetext-str-model_name_or_path-str-mini_batch_size-int-num_beamsint-min_length-int-max_length-int-early_stopping-bool-kwargs" class="md-nav__link">
+    Translating with translate(text: str, model_name_or_path: str, mini_batch_size: int, num_beams:int, min_length: int, max_length: int, early_stopping: bool **kwargs)
   </a>
   
 </li>
@@ -715,8 +715,7 @@ state-of-the-art models.</p>
 </code></pre></div>
 
 
-<h3 id="translating-with-translatetext-str-model_name_or_path-str-mini_batch_size-int-num_beamsint-min_length">Translating with `translate(text: str, model_name_or_path: str, mini_batch_size: int, num_beams:int, min_length:<a class="headerlink" href="#translating-with-translatetext-str-model_name_or_path-str-mini_batch_size-int-num_beamsint-min_length" title="Permanent link">&para;</a></h3>
-<p>int, max_length: int, early_stopping: bool **kwargs)`</p>
+<h3 id="translating-with-translatetext-str-model_name_or_path-str-mini_batch_size-int-num_beamsint-min_length-int-max_length-int-early_stopping-bool-kwargs">Translating with <code>translate(text: str, model_name_or_path: str, mini_batch_size: int, num_beams:int, min_length: int, max_length: int, early_stopping: bool **kwargs)</code><a class="headerlink" href="#translating-with-translatetext-str-model_name_or_path-str-mini_batch_size-int-num_beamsint-min_length-int-max_length-int-early_stopping-bool-kwargs" title="Permanent link">&para;</a></h3>
 <p>Now that we have the translator instantiated, we are ready to load in a model and translate the text 
 with the built-in <code>translate()</code> method.  </p>
 <p>This method takes in parameters: <code>text</code>, <code>model_name_or_path</code>, and <code>mini_batch_size</code> as well as optional keyword arguments
@@ -737,6 +736,17 @@ the path of a custom trained Transformers <code>xxxWithLMHead</code> model.</p>
     <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 
+
+<details class = "summary">
+<summary>Output</summary>
+
+<div class="codehilite"><pre><span></span><code>Das Maschinelle Lernen wird die Welt in Kürze übernehmen. 
+
+Maschinen können in vielen Sprachen sprechen. 
+</code></pre></div>
+
+
+</details>
 
 <p>Below are some examples of Hugging Face's Pre-Trained Translation models that you can use (These do
 not include models hosted in Hugging Face's model repo):</p>

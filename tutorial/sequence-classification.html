@@ -190,8 +190,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../index.html" title="AdaptNLP" class="md-nav__link">
-      AdaptNLP
+    <a href="../index.html" title="AdaptNLP Overview" class="md-nav__link">
+      AdaptNLP Overview
     </a>
   </li>
 
@@ -742,6 +742,18 @@ the path of a custom trained Transformers <code>xxxForSequenceClassification</co
 </code></pre></div>
 
 
+<details class = "summary">
+<summary>Output</summary>
+
+<div class="codehilite"><pre><span></span><code><span class="p">[</span><span class="mi">1</span> <span class="n">star</span> <span class="p">(</span><span class="mf">0.1454</span><span class="p">),</span> <span class="mi">2</span> <span class="n">stars</span> <span class="p">(</span><span class="mf">0.4862</span><span class="p">),</span> <span class="mi">3</span> <span class="n">stars</span> <span class="p">(</span><span class="mf">0.3473</span><span class="p">),</span> <span class="mi">4</span> <span class="n">stars</span> <span class="p">(</span><span class="mf">0.019</span><span class="p">),</span> <span class="mi">5</span> <span class="n">stars</span> <span class="p">(</span><span class="mf">0.002</span><span class="p">)]</span>
+<span class="p">[</span><span class="mi">1</span> <span class="n">star</span> <span class="p">(</span><span class="mf">0.0042</span><span class="p">),</span> <span class="mi">2</span> <span class="n">stars</span> <span class="p">(</span><span class="mf">0.0059</span><span class="p">),</span> <span class="mi">3</span> <span class="n">stars</span> <span class="p">(</span><span class="mf">0.0644</span><span class="p">),</span> <span class="mi">4</span> <span class="n">stars</span> <span class="p">(</span><span class="mf">0.4761</span><span class="p">),</span> <span class="mi">5</span> <span class="n">stars</span> <span class="p">(</span><span class="mf">0.4494</span><span class="p">)]</span>
+<span class="p">[</span><span class="mi">1</span> <span class="n">star</span> <span class="p">(</span><span class="mf">0.0087</span><span class="p">),</span> <span class="mi">2</span> <span class="n">stars</span> <span class="p">(</span><span class="mf">0.0126</span><span class="p">),</span> <span class="mi">3</span> <span class="n">stars</span> <span class="p">(</span><span class="mf">0.08</span><span class="p">),</span> <span class="mi">4</span> <span class="n">stars</span> <span class="p">(</span><span class="mf">0.403</span><span class="p">),</span> <span class="mi">5</span> <span class="n">stars</span> <span class="p">(</span><span class="mf">0.4957</span><span class="p">)]</span>
+<span class="p">[</span><span class="mi">1</span> <span class="n">star</span> <span class="p">(</span><span class="mf">0.4489</span><span class="p">),</span> <span class="mi">2</span> <span class="n">stars</span> <span class="p">(</span><span class="mf">0.3935</span><span class="p">),</span> <span class="mi">3</span> <span class="n">stars</span> <span class="p">(</span><span class="mf">0.1416</span><span class="p">),</span> <span class="mi">4</span> <span class="n">stars</span> <span class="p">(</span><span class="mf">0.0121</span><span class="p">),</span> <span class="mi">5</span> <span class="n">stars</span> <span class="p">(</span><span class="mf">0.0039</span><span class="p">)]</span>
+</code></pre></div>
+
+
+</details>
+
 <p>Another example is shown below with a Flair's pre-trained sentiment classifier:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -756,6 +768,15 @@ the path of a custom trained Transformers <code>xxxForSequenceClassification</co
     <span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
 </code></pre></div>
 
+
+<details class = "summary">
+<summary>Output</summary>
+
+<div class="codehilite"><pre><span></span><code><span class="p">[</span><span class="n">POSITIVE</span> <span class="p">(</span><span class="mf">0.9983</span><span class="p">)]</span>
+</code></pre></div>
+
+
+</details>
 
 <p>All of Flair's pretrained sequence classifiers are available for loading through the <code>model_name_or_path</code> parameter, 
 and they can be found <a href="https://github.com/flairNLP/flair/blob/master/resources/docs/TUTORIAL_2_TAGGING.md">here</a>.</p>

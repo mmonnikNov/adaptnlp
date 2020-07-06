@@ -190,8 +190,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../index.html" title="AdaptNLP" class="md-nav__link">
-      AdaptNLP
+    <a href="../index.html" title="AdaptNLP Overview" class="md-nav__link">
+      AdaptNLP Overview
     </a>
   </li>
 
@@ -298,20 +298,6 @@
           <li class="md-nav__item">
   <a href="#span-based-question-answering-easyquestionanswering" class="md-nav__link">
     Span-based Question Answering EasyQuestionAnswering
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sequence-classification-training-sequenceclassifier" class="md-nav__link">
-    Sequence Classification Training SequenceClassifier
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#transformers-language-model-fine-tuning-lmfinetuner" class="md-nav__link">
-    Transformers Language Model Fine Tuning LMFineTuner
   </a>
   
 </li>
@@ -747,20 +733,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#sequence-classification-training-sequenceclassifier" class="md-nav__link">
-    Sequence Classification Training SequenceClassifier
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#transformers-language-model-fine-tuning-lmfinetuner" class="md-nav__link">
-    Transformers Language Model Fine Tuning LMFineTuner
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -818,6 +790,17 @@ CUAD-compatible NVIDIA GPUs and NVIDIA drivers installed.  GPU-less environments
 </code></pre></div>
 
 
+<details class = "summary">
+ <summary>Output</summary>
+
+<div class="codehilite"><pre><span></span><code><span class="n">Span</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="s2">&quot;Novetta&quot;</span>   <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">ORG</span> <span class="p">(</span><span class="mf">0.9925</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">7</span><span class="p">]:</span> <span class="s2">&quot;Mclean&quot;</span>    <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">LOC</span> <span class="p">(</span><span class="mf">0.9993</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">9</span><span class="p">]:</span> <span class="s2">&quot;Virginia&quot;</span>  <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">LOC</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+</code></pre></div>
+
+
+</details>
+
 <h5 id="english-sentiment-classifier-easysequenceclassifier">English Sentiment Classifier <code>EasySequenceClassifier</code><a class="headerlink" href="#english-sentiment-classifier-easysequenceclassifier" title="Permanent link">&para;</a></h5>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasySequenceClassifier</span> 
 
@@ -833,6 +816,15 @@ CUAD-compatible NVIDIA GPUs and NVIDIA drivers installed.  GPU-less environments
     <span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
 </code></pre></div>
 
+
+<details class = "summary">
+<summary>Output</summary>
+
+<div class="codehilite"><pre><span></span><code><span class="p">[</span><span class="n">POSITIVE</span> <span class="p">(</span><span class="mf">0.9977</span><span class="p">)]</span>
+</code></pre></div>
+
+
+</details>
 
 <h5 id="language-model-embeddings-easywordembeddings">Language Model Embeddings <code>EasyWordEmbeddings</code><a class="headerlink" href="#language-model-embeddings-easywordembeddings" title="Permanent link">&para;</a></h5>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasyWordEmbeddings</span>
@@ -851,6 +843,21 @@ CUAD-compatible NVIDIA GPUs and NVIDIA drivers installed.  GPU-less environments
 </code></pre></div>
 
 
+<details class = "summary">
+<summary>Output</summary>
+
+<div class="codehilite"><pre><span></span><code><span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mf">1.8757</span><span class="p">,</span>  <span class="mf">0.6195</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.3108</span><span class="p">,</span>  <span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.3787</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.6885</span><span class="p">,</span>  <span class="mf">1.6934</span><span class="p">])</span>
+<span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mf">0.0617</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.3885</span><span class="p">,</span>  <span class="mf">2.2028</span><span class="p">,</span>  <span class="o">...</span><span class="p">,</span>  <span class="mf">0.2774</span><span class="p">,</span>  <span class="mf">0.8424</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.5328</span><span class="p">])</span>
+<span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mf">0.0480</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7461</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5282</span><span class="p">,</span>  <span class="o">...</span><span class="p">,</span>  <span class="mf">0.1554</span><span class="p">,</span>  <span class="mf">0.2542</span><span class="p">,</span>  <span class="mf">0.8199</span><span class="p">])</span>
+<span class="n">tensor</span><span class="p">([</span> <span class="mf">1.0621</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3834</span><span class="p">,</span>  <span class="mf">1.5259</span><span class="p">,</span>  <span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0937</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0337</span><span class="p">,</span>  <span class="mf">1.0316</span><span class="p">])</span>
+<span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mf">0.0027</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.6549</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.6274</span><span class="p">,</span>  <span class="o">...</span><span class="p">,</span>  <span class="mf">0.3001</span><span class="p">,</span>  <span class="mf">0.0146</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1931</span><span class="p">])</span>
+<span class="n">tensor</span><span class="p">([</span> <span class="mf">0.6624</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9889</span><span class="p">,</span>  <span class="mf">0.6716</span><span class="p">,</span>  <span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4907</span><span class="p">,</span>  <span class="mf">0.5692</span><span class="p">,</span>  <span class="mf">0.9456</span><span class="p">])</span>
+<span class="n">tensor</span><span class="p">([</span> <span class="mf">0.5633</span><span class="p">,</span>  <span class="mf">0.4789</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2232</span><span class="p">,</span>  <span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1454</span><span class="p">,</span>  <span class="mf">0.2486</span><span class="p">,</span>  <span class="mf">0.5163</span><span class="p">])</span>
+</code></pre></div>
+
+
+</details>
+
 <h5 id="span-based-question-answering-easyquestionanswering">Span-based Question Answering <code>EasyQuestionAnswering</code><a class="headerlink" href="#span-based-question-answering-easyquestionanswering" title="Permanent link">&para;</a></h5>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasyQuestionAnswering</span> 
 
@@ -861,7 +868,7 @@ CUAD-compatible NVIDIA GPUs and NVIDIA drivers installed.  GPU-less environments
 
 <span class="c1">## Load the QA module and run inference on results </span>
 <span class="n">qa</span> <span class="o">=</span> <span class="n">EasyQuestionAnswering</span><span class="p">()</span>
-<span class="n">best_answer</span><span class="p">,</span> <span class="n">best_n_answers</span> <span class="o">=</span> <span class="n">qa</span><span class="o">.</span><span class="n">predict_bert_qa</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span> <span class="n">n_best_size</span><span class="o">=</span><span class="n">top_n</span><span class="p">)</span>
+<span class="n">best_answer</span><span class="p">,</span> <span class="n">best_n_answers</span> <span class="o">=</span> <span class="n">qa</span><span class="o">.</span><span class="n">predict_qa</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span> <span class="n">n_best_size</span><span class="o">=</span><span class="n">top_n</span><span class="p">)</span>
 
 <span class="c1">## Output top answer as well as top 5 answers</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">best_answer</span><span class="p">)</span>
@@ -869,7 +876,18 @@ CUAD-compatible NVIDIA GPUs and NVIDIA drivers installed.  GPU-less environments
 </code></pre></div>
 
 
-<h5 id="sequence-classification-training-sequenceclassifier">Sequence Classification Training <code>SequenceClassifier</code><a class="headerlink" href="#sequence-classification-training-sequenceclassifier" title="Permanent link">&para;</a></h5>
+<details class = "summary">
+<summary>Output</summary>
+
+<div class="codehilite"><pre><span></span><code><span class="p">[</span><span class="n">OrderedDict</span><span class="p">([(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;Machine Learning&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;probability&#39;</span><span class="p">,</span> <span class="mf">0.9924118248851219</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_logit&#39;</span><span class="p">,</span> <span class="mf">8.646799087524414</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_logit&#39;</span><span class="p">,</span> <span class="mf">8.419432640075684</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_index&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_index&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]),</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;Learning&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;probability&#39;</span><span class="p">,</span> <span class="mf">0.004796293656050888</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_logit&#39;</span><span class="p">,</span> <span class="mf">3.314504384994507</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_logit&#39;</span><span class="p">,</span> <span class="mf">8.419432640075684</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_index&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_index&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]),</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;Machine Learning is the meaning of life.&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;probability&#39;</span><span class="p">,</span> <span class="mf">0.0018383556202966893</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_logit&#39;</span><span class="p">,</span> <span class="mf">8.646799087524414</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_logit&#39;</span><span class="p">,</span> <span class="mf">2.1281659603118896</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_index&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_index&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]),</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;Machine&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;probability&#39;</span><span class="p">,</span> <span class="mf">0.0009446411263795704</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_logit&#39;</span><span class="p">,</span> <span class="mf">8.646799087524414</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_logit&#39;</span><span class="p">,</span> <span class="mf">1.4623442888259888</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_index&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_index&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]),</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;Learning is the meaning of life.&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;probability&#39;</span><span class="p">,</span> <span class="mf">8.884712150840367e-06</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_logit&#39;</span><span class="p">,</span> <span class="mf">3.314504384994507</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_logit&#39;</span><span class="p">,</span> <span class="mf">2.1281659603118896</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_index&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_index&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)])]</span>
+</code></pre></div>
+
+
+</detais>
+
+<!-- 
+##### Sequence Classification Training `SequenceClassifier`
+
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasyDocumentEmbeddings</span><span class="p">,</span> <span class="n">SequenceClassifierTrainer</span> 
 
 <span class="c1"># Specify corpus data directory and model output directory</span>
@@ -901,24 +919,26 @@ CUAD-compatible NVIDIA GPUs and NVIDIA drivers installed.  GPU-less environments
 </code></pre></div>
 
 
-<h5 id="transformers-language-model-fine-tuning-lmfinetuner">Transformers Language Model Fine Tuning <code>LMFineTuner</code><a class="headerlink" href="#transformers-language-model-fine-tuning-lmfinetuner" title="Permanent link">&para;</a></h5>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">LMFineTuner</span>
 
-<span class="c1"># Specify Text Data File Paths</span>
-<span class="n">train_data_file</span> <span class="o">=</span> <span class="s2">&quot;Path/to/train.csv&quot;</span>
-<span class="n">eval_data_file</span> <span class="o">=</span> <span class="s2">&quot;Path/to/test.csv&quot;</span>
+##### Transformers Language Model Fine Tuning `LMFineTuner`
 
-<span class="c1"># Instantiate Finetuner with Desired Language Model</span>
-<span class="n">finetuner</span> <span class="o">=</span> <span class="n">LMFineTuner</span><span class="p">(</span><span class="n">train_data_file</span><span class="o">=</span><span class="n">train_data_file</span><span class="p">,</span> <span class="n">eval_data_file</span><span class="o">=</span><span class="n">eval_data_file</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="s2">&quot;bert&quot;</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;bert-base-cased&quot;</span><span class="p">)</span>
-<span class="n">finetuner</span><span class="o">.</span><span class="n">freeze</span><span class="p">()</span>
+```python
+from adaptnlp import LMFineTuner
 
-<span class="c1"># Find Optimal Learning Rate</span>
-<span class="n">learning_rate</span> <span class="o">=</span> <span class="n">finetuner</span><span class="o">.</span><span class="n">find_learning_rate</span><span class="p">(</span><span class="n">base_path</span><span class="o">=</span><span class="s2">&quot;Path/to/base/directory&quot;</span><span class="p">)</span>
-<span class="n">finetuner</span><span class="o">.</span><span class="n">freeze</span><span class="p">()</span>
+# Specify Text Data File Paths
+train_data_file = "Path/to/train.csv"
+eval_data_file = "Path/to/test.csv"
 
-<span class="c1"># Train and Save Fine Tuned Language Models</span>
-<span class="n">finetuner</span><span class="o">.</span><span class="n">train_one_cycle</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;Path/to/output/directory&quot;</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
-</code></pre></div>
+# Instantiate Finetuner with Desired Language Model
+finetuner = LMFineTuner(train_data_file=train_data_file, eval_data_file=eval_data_file, model_type="bert", model_name_or_path="bert-base-cased")
+finetuner.freeze()
+
+# Find Optimal Learning Rate
+learning_rate = finetuner.find_learning_rate(base_path="Path/to/base/directory")
+finetuner.freeze()
+
+# Train and Save Fine Tuned Language Models
+finetuner.train_one_cycle(output_dir="Path/to/output/directory", learning_rate=learning_rate) -->
                 
               
               
@@ -937,7 +957,7 @@ CUAD-compatible NVIDIA GPUs and NVIDIA drivers installed.  GPU-less environments
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../index.html" title="AdaptNLP" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../index.html" title="AdaptNLP Overview" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -946,7 +966,7 @@ CUAD-compatible NVIDIA GPUs and NVIDIA drivers installed.  GPU-less environments
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                AdaptNLP
+                AdaptNLP Overview
               </div>
             </div>
           </a>

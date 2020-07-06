@@ -19,7 +19,7 @@
     
     
       
-        <title>AdaptNLP - AdaptNLP</title>
+        <title>AdaptNLP Overview - AdaptNLP</title>
       
     
     
@@ -85,8 +85,15 @@
     </label>
     <div class="md-header-nav__title" data-md-component="header-title">
       
-        <div class="md-header-nav__ellipsis md-ellipsis">
-          AdaptNLP
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            AdaptNLP
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              AdaptNLP Overview
+            
+          </span>
         </div>
       
     </div>
@@ -190,14 +197,14 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        AdaptNLP
+        AdaptNLP Overview
         <span class="md-nav__icon md-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
         </span>
       </label>
     
-    <a href="index.html" title="AdaptNLP" class="md-nav__link md-nav__link--active">
-      AdaptNLP
+    <a href="index.html" title="AdaptNLP Overview" class="md-nav__link md-nav__link--active">
+      AdaptNLP Overview
     </a>
     
       
@@ -314,20 +321,6 @@
           <li class="md-nav__item">
   <a href="#translation-easytranslator" class="md-nav__link">
     Translation EasyTranslator
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sequence-classification-training-sequenceclassifier" class="md-nav__link">
-    Sequence Classification Training SequenceClassifier
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#transformers-language-model-fine-tuning-lmfinetuner" class="md-nav__link">
-    Transformers Language Model Fine Tuning LMFineTuner
   </a>
   
 </li>
@@ -922,20 +915,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#sequence-classification-training-sequenceclassifier" class="md-nav__link">
-    Sequence Classification Training SequenceClassifier
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#transformers-language-model-fine-tuning-lmfinetuner" class="md-nav__link">
-    Transformers Language Model Fine Tuning LMFineTuner
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1017,7 +996,7 @@
                   
                 
                 
-                  <h1>AdaptNLP</h1>
+                  <h1>AdaptNLP Overview</h1>
                 
                 <p align="center">
     <a href="https://github.com/Novetta/adaptnlp"> <img src="https://raw.githubusercontent.com/novetta/adaptnlp/master/docs/img/NovettaAdaptNLPlogo-400px.png" width="400"/></a>
@@ -1119,6 +1098,17 @@ system specifies:</p>
 </code></pre></div>
 
 
+<details class = "summary">
+ <summary>Output</summary>
+
+<div class="codehilite"><pre><span></span><code><span class="n">Span</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="s2">&quot;Novetta&quot;</span>   <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">ORG</span> <span class="p">(</span><span class="mf">0.9925</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">7</span><span class="p">]:</span> <span class="s2">&quot;Mclean&quot;</span>    <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">LOC</span> <span class="p">(</span><span class="mf">0.9993</span><span class="p">)]</span>
+<span class="n">Span</span> <span class="p">[</span><span class="mi">9</span><span class="p">]:</span> <span class="s2">&quot;Virginia&quot;</span>  <span class="p">[</span><span class="err">−</span> <span class="n">Labels</span><span class="p">:</span> <span class="n">LOC</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">)]</span>
+</code></pre></div>
+
+
+</details>
+
 <h5 id="english-sentiment-classifier-easysequenceclassifier">English Sentiment Classifier <code>EasySequenceClassifier</code><a class="headerlink" href="#english-sentiment-classifier-easysequenceclassifier" title="Permanent link">&para;</a></h5>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasySequenceClassifier</span> 
 
@@ -1134,6 +1124,15 @@ system specifies:</p>
     <span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
 </code></pre></div>
 
+
+<details class = "summary">
+<summary>Output</summary>
+
+<div class="codehilite"><pre><span></span><code><span class="p">[</span><span class="n">POSITIVE</span> <span class="p">(</span><span class="mf">0.9983</span><span class="p">)]</span>
+</code></pre></div>
+
+
+</details>
 
 <h5 id="span-based-question-answering-easyquestionanswering">Span-based Question Answering <code>EasyQuestionAnswering</code><a class="headerlink" href="#span-based-question-answering-easyquestionanswering" title="Permanent link">&para;</a></h5>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasyQuestionAnswering</span> 
@@ -1153,6 +1152,15 @@ system specifies:</p>
 </code></pre></div>
 
 
+<details class = "summary">
+<summary>Output</summary>
+
+<div class="codehilite"><pre><span></span><code><span class="p">[</span><span class="n">OrderedDict</span><span class="p">([(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;Machine Learning&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;probability&#39;</span><span class="p">,</span> <span class="mf">0.9978840517692185</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_logit&#39;</span><span class="p">,</span> <span class="mf">8.442423820495605</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_logit&#39;</span><span class="p">,</span> <span class="mf">8.063008308410645</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_index&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_index&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]),</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;Machine&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;probability&#39;</span><span class="p">,</span> <span class="mf">0.0010938238341776795</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_logit&#39;</span><span class="p">,</span> <span class="mf">8.442423820495605</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_logit&#39;</span><span class="p">,</span> <span class="mf">1.2470508813858032</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_index&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_index&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]),</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;Machine Learning is the meaning of life.&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;probability&#39;</span><span class="p">,</span> <span class="mf">0.0007310516091540702</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_logit&#39;</span><span class="p">,</span> <span class="mf">8.442423820495605</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_logit&#39;</span><span class="p">,</span> <span class="mf">0.8440999984741211</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_index&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_index&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]),</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;Machine Learning is the meaning&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;probability&#39;</span><span class="p">,</span> <span class="mf">0.00020125385987753433</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_logit&#39;</span><span class="p">,</span> <span class="mf">8.442423820495605</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_logit&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4458169639110565</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_index&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_index&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]),</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;Learning&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;probability&#39;</span><span class="p">,</span> <span class="mf">8.981892757199805e-05</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_logit&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.8731728196144104</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_logit&#39;</span><span class="p">,</span> <span class="mf">8.063008308410645</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;start_index&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_index&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])]</span>
+</code></pre></div>
+
+
+</details>
+
 <h5 id="summarization-easysummarizer">Summarization <code>EasySummarizer</code><a class="headerlink" href="#summarization-easysummarizer" title="Permanent link">&para;</a></h5>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasySummarizer</span>
 
@@ -1168,6 +1176,7 @@ system specifies:</p>
 
 <span class="n">summarizer</span> <span class="o">=</span> <span class="n">EasySummarizer</span><span class="p">()</span>
 
+
 <span class="c1"># Summarize</span>
 <span class="n">summaries</span> <span class="o">=</span> <span class="n">summarizer</span><span class="o">.</span><span class="n">summarize</span><span class="p">(</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;t5-small&quot;</span><span class="p">,</span> <span class="n">mini_batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_beams</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">early_stopping</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -1176,6 +1185,15 @@ system specifies:</p>
     <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 
+
+<details class="summary">
+<summary>Output</summary>
+
+<div class="codehilite"><pre><span></span><code>Einstein was mystified invisible forces could deflect the needle . the second wonder came at age 12 when he discovered a book of geometry . Einstein became deeply religious at age 12 . 
+</code></pre></div>
+
+
+</details>
 
 <h5 id="translation-easytranslator">Translation <code>EasyTranslator</code><a class="headerlink" href="#translation-easytranslator" title="Permanent link">&para;</a></h5>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasyTranslator</span>
@@ -1194,57 +1212,15 @@ system specifies:</p>
 </code></pre></div>
 
 
-<h5 id="sequence-classification-training-sequenceclassifier">Sequence Classification Training <code>SequenceClassifier</code><a class="headerlink" href="#sequence-classification-training-sequenceclassifier" title="Permanent link">&para;</a></h5>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasyDocumentEmbeddings</span><span class="p">,</span> <span class="n">SequenceClassifierTrainer</span> 
+<details class="summary">
+<summary>Output</summary>
 
-<span class="c1"># Specify corpus data directory and model output directory</span>
-<span class="n">corpus</span> <span class="o">=</span> <span class="s2">&quot;Path/to/data/directory&quot;</span> 
-<span class="n">OUTPUT_DIR</span> <span class="o">=</span> <span class="s2">&quot;Path/to/output/directory&quot;</span> 
-
-<span class="c1"># Instantiate AdaptNLP easy document embeddings module, which can take in a variable number of embeddings to make `Stacked Embeddings`.  </span>
-<span class="c1"># You may also use custom Transformers LM models by specifying the path the the language model</span>
-<span class="n">doc_embeddings</span> <span class="o">=</span> <span class="n">EasyDocumentEmbeddings</span><span class="p">(</span><span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;bert-base-cased&quot;</span><span class="p">,</span> <span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;rnn&quot;</span><span class="p">])</span>
-
-<span class="c1"># Instantiate Sequence Classifier Trainer by loading in the data, data column map, and embeddings as an encoder</span>
-<span class="n">sc_trainer</span> <span class="o">=</span> <span class="n">SequenceClassifierTrainer</span><span class="p">(</span><span class="n">corpus</span><span class="o">=</span><span class="n">corpus</span><span class="p">,</span> <span class="n">encoder</span><span class="o">=</span><span class="n">doc_embeddings</span><span class="p">,</span> <span class="n">column_name_map</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="s2">&quot;label&quot;</span><span class="p">})</span>
-
-<span class="c1"># Find Learning Rate</span>
-<span class="n">learning_rate</span> <span class="o">=</span> <span class="n">sc_trainer</span><span class="o">.</span><span class="n">find_learning_rate</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="n">OUTPUT_DIR</span><span class="p">)</span>
-
-<span class="c1"># Train Using Flair&#39;s Sequence Classification Head</span>
-<span class="n">sc_trainer</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="n">OUTPUT_DIR</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
-
-
-<span class="c1"># Predict text labels with the trained model using `EasySequenceClassifier`</span>
-<span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasySequenceClassifier</span>
-<span class="n">example_text</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;Where was the Queen&#39;s wedding held? &#39;&#39;&#39;</span>
-<span class="n">classifier</span> <span class="o">=</span> <span class="n">EasySequenceClassifier</span><span class="p">()</span>
-<span class="n">sentences</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">tag_text</span><span class="p">(</span><span class="n">example_text</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="n">OUTPUT_DIR</span> <span class="o">/</span> <span class="s2">&quot;final-model.pt&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Label output:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code>Das Maschinelle Lernen wird die Welt in Kürze übernehmen. 
+Maschinen können in vielen Sprachen sprechen. 
 </code></pre></div>
 
 
-<h5 id="transformers-language-model-fine-tuning-lmfinetuner">Transformers Language Model Fine Tuning <code>LMFineTuner</code><a class="headerlink" href="#transformers-language-model-fine-tuning-lmfinetuner" title="Permanent link">&para;</a></h5>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">LMFineTuner</span>
-
-<span class="c1"># Specify Text Data File Paths</span>
-<span class="n">train_data_file</span> <span class="o">=</span> <span class="s2">&quot;Path/to/train.csv&quot;</span>
-<span class="n">eval_data_file</span> <span class="o">=</span> <span class="s2">&quot;Path/to/test.csv&quot;</span>
-
-<span class="c1"># Instantiate Finetuner with Desired Language Model</span>
-<span class="n">finetuner</span> <span class="o">=</span> <span class="n">LMFineTuner</span><span class="p">(</span><span class="n">train_data_file</span><span class="o">=</span><span class="n">train_data_file</span><span class="p">,</span> <span class="n">eval_data_file</span><span class="o">=</span><span class="n">eval_data_file</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="s2">&quot;bert&quot;</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;bert-base-cased&quot;</span><span class="p">)</span>
-<span class="n">finetuner</span><span class="o">.</span><span class="n">freeze</span><span class="p">()</span>
-
-<span class="c1"># Find Optimal Learning Rate</span>
-<span class="n">learning_rate</span> <span class="o">=</span> <span class="n">finetuner</span><span class="o">.</span><span class="n">find_learning_rate</span><span class="p">(</span><span class="n">base_path</span><span class="o">=</span><span class="s2">&quot;Path/to/base/directory&quot;</span><span class="p">)</span>
-<span class="n">finetuner</span><span class="o">.</span><span class="n">freeze</span><span class="p">()</span>
-
-<span class="c1"># Train and Save Fine Tuned Language Models</span>
-<span class="n">finetuner</span><span class="o">.</span><span class="n">train_one_cycle</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;Path/to/output/directory&quot;</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
-</code></pre></div>
-
+</details>
 
 <h2 id="tutorials">Tutorials<a class="headerlink" href="#tutorials" title="Permanent link">&para;</a></h2>
 <p>Look in the <a href="tutorials">Tutorials</a> directory for a quick introduction to the library and its very simple
@@ -1324,6 +1300,61 @@ docker run -it --rm achangnovetta/adaptnlp:latest
 updates and NLP dialogue.</p>
 <h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
 <p>This project is licensed under the terms of the Apache 2.0 license.</p>
+<!-- ##### Sequence Classification Training `SequenceClassifier`
+
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasyDocumentEmbeddings</span><span class="p">,</span> <span class="n">SequenceClassifierTrainer</span> 
+
+<span class="c1"># Specify corpus data directory and model output directory</span>
+<span class="n">corpus</span> <span class="o">=</span> <span class="s2">&quot;Path/to/data/directory&quot;</span> 
+<span class="n">OUTPUT_DIR</span> <span class="o">=</span> <span class="s2">&quot;Path/to/output/directory&quot;</span> 
+
+<span class="c1"># Instantiate AdaptNLP easy document embeddings module, which can take in a variable number of embeddings to make `Stacked Embeddings`.  </span>
+<span class="c1"># You may also use custom Transformers LM models by specifying the path the the language model</span>
+<span class="n">doc_embeddings</span> <span class="o">=</span> <span class="n">EasyDocumentEmbeddings</span><span class="p">(</span><span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;bert-base-cased&quot;</span><span class="p">,</span> <span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;rnn&quot;</span><span class="p">])</span>
+
+<span class="c1"># Instantiate Sequence Classifier Trainer by loading in the data, data column map, and embeddings as an encoder</span>
+<span class="n">sc_trainer</span> <span class="o">=</span> <span class="n">SequenceClassifierTrainer</span><span class="p">(</span><span class="n">corpus</span><span class="o">=</span><span class="n">corpus</span><span class="p">,</span> <span class="n">encoder</span><span class="o">=</span><span class="n">doc_embeddings</span><span class="p">,</span> <span class="n">column_name_map</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="s2">&quot;label&quot;</span><span class="p">})</span>
+
+<span class="c1"># Find Learning Rate</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="n">sc_trainer</span><span class="o">.</span><span class="n">find_learning_rate</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="n">OUTPUT_DIR</span><span class="p">)</span>
+
+<span class="c1"># Train Using Flair&#39;s Sequence Classification Head</span>
+<span class="n">sc_trainer</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="n">OUTPUT_DIR</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+
+
+<span class="c1"># Predict text labels with the trained model using `EasySequenceClassifier`</span>
+<span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasySequenceClassifier</span>
+<span class="n">example_text</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;Where was the Queen&#39;s wedding held? &#39;&#39;&#39;</span>
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">EasySequenceClassifier</span><span class="p">()</span>
+<span class="n">sentences</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">tag_text</span><span class="p">(</span><span class="n">example_text</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="n">OUTPUT_DIR</span> <span class="o">/</span> <span class="s2">&quot;final-model.pt&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Label output:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
+</code></pre></div>
+
+
+
+##### Transformers Language Model Fine Tuning `LMFineTuner`
+
+```python
+from adaptnlp import LMFineTuner
+
+# Specify Text Data File Paths
+train_data_file = "Path/to/train.csv"
+eval_data_file = "Path/to/test.csv"
+
+# Instantiate Finetuner with Desired Language Model
+finetuner = LMFineTuner(train_data_file=train_data_file, eval_data_file=eval_data_file, model_type="bert", model_name_or_path="bert-base-cased")
+finetuner.freeze()
+
+# Find Optimal Learning Rate
+learning_rate = finetuner.find_learning_rate(base_path="Path/to/base/directory")
+finetuner.freeze()
+
+# Train and Save Fine Tuned Language Models
+finetuner.train_one_cycle(output_dir="Path/to/output/directory", learning_rate=learning_rate)
+
+``` -->
                 
               
               
