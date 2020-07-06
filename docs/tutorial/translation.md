@@ -19,8 +19,7 @@ text = ["Machine learning will take over the world very soon.",
 translator = EasyTranslator()
 ```
 
-### Translating with `translate(text: str, model_name_or_path: str, mini_batch_size: int, num_beams:int, min_length: 
-int, max_length: int, early_stopping: bool **kwargs)`
+### Translating with `translate(text: str, model_name_or_path: str, mini_batch_size: int, num_beams:int, min_length: int, max_length: int, early_stopping: bool **kwargs)`
 
 Now that we have the translator instantiated, we are ready to load in a model and translate the text 
 with the built-in `translate()` method.  
@@ -45,6 +44,14 @@ print("Translations:\n")
 for t in translations:
     print(t, "\n")
 ```
+<details class = "summary">
+<summary>Output</summary>
+```
+Das Maschinelle Lernen wird die Welt in Kürze übernehmen. 
+
+Maschinen können in vielen Sprachen sprechen. 
+```
+</details>
 
 Below are some examples of Hugging Face's Pre-Trained Translation models that you can use (These do
 not include models hosted in Hugging Face's model repo):
