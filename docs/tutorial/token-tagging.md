@@ -98,26 +98,43 @@ print("List string outputs of tags:\n")
 for sen in sentences:
     print(sen.to_tagged_string())
 ```
+<details class = "summary">
+<summary>Output</summary>
+```
+Novetta <B-ORG> Solutions <E-ORG> is the best . Albert <B-PERSON> Einstein <E-PERSON> used to be employed at Novetta <B-ORG> Solutions <E-ORG> . The Wright <S-PERSON> brothers loved to visit the JBF <S-ORG> headquarters , and they would have a chat with Albert <S-PERSON> .
+```
+</details>
 
-If you want just the entities, you can run the below but you'll need to specify the `tag_type` as "ner" or "pos" etc.
+If you want just the entities, you can run the below but you'll need to specify the `label_type` as "ner" or "pos" etc.
 (more information can be found in Flair's documentation):
 
 ```python
 print("List entities tagged:\n")
 for sen in sentences:
-    for entity in sen.get_spans(tag_type="ner"):
+    for entity in sen.get_spans(label_type="ner"):
         print(entity)
 ```
+<details class = "summary">
+<summary>Output</summary>
+```python
+Span [1,2]: "Novetta Solutions"     [− Labels: ORG (0.9644)]
+Span [7,8]: "Albert Einstein"       [− Labels: PERSON (0.9969)]
+Span [14,15]: "Novetta Solutions"   [− Labels: ORG (0.9796)]
+Span [18]: "Wright"                 [− Labels: PERSON (0.9995)]
+Span [24]: "JBF"                    [− Labels: ORG (0.9898)]
+Span [34]: "Albert"                 [− Labels: PERSON (0.9999)]
+```
+</details>
 
-Here are some additional tag_types that support some of Flair's pre-trained token taggers:
+Here are some additional label_typess that support some of Flair's pre-trained token taggers:
 
-| tag_type | Description |
+| label_types | Description |
 | -------------    | ------------- |
 | 'ner' | For Named Entity Recognition tagged text |
 | 'pos' | For Parts of Speech tagged text |
 | 'np' | For Syntactic Chunking tagged text |
 
-NOTE: You can add your own tag_types when running the sequence classifier trainer in AdaptNLP.
+NOTE: You can add your own label_typess when running the sequence classifier trainer in AdaptNLP.
 
 ### Tagging with `tag_all(text: str, model_name_or_path: str, **kwargs)`
 
@@ -146,14 +163,69 @@ sentences = tagger.tag_all(text=example_text)
 Now we can see below that you get a list of Flair sentences tagged with the "ner-ontonotes" AND "pos" model:
 
 ```python
-print("List entities tagged:\n")print("List entities tagged:\n")
+print("List entities tagged:\n")
 for sen in sentences:
-    for entity in sen.get_spans(tag_type="pos"):
-        print(entity)
-        
-for sen in sentences:
-    for entity in sen.get_spans(tag_type="ner"):
+    for entity in sen.get_spans(label_type="pos"):
         print(entity)
 ```
+<details class = "summary">
+<summary>Output </summary>
+```python
+Span [1]: "Novetta"       [− Labels: NNP (0.9998)]
+Span [2]: "Solutions"     [− Labels: NNPS (0.8235)]
+Span [3]: "is"            [− Labels: VBZ (1.0)]
+Span [4]: "the"           [− Labels: DT (1.0)]
+Span [5]: "best"          [− Labels: JJS (0.9996)]
+Span [6]: "."             [− Labels: . (0.9995)]
+Span [7]: "Albert"        [− Labels: NNP (1.0)]
+Span [8]: "Einstein"      [− Labels: NNP (1.0)]
+Span [9]: "used"          [− Labels: VBD (0.9981)]
+Span [10]: "to"           [− Labels: TO (0.9999)]
+Span [11]: "be"           [− Labels: VB (1.0)]
+Span [12]: "employed"     [− Labels: VBN (0.9971)]
+Span [13]: "at"           [− Labels: IN (1.0)]
+Span [14]: "Novetta"      [− Labels: NNP (1.0)]
+Span [15]: "Solutions"    [− Labels: NNPS (0.6877)]
+Span [16]: "."            [− Labels: . (0.5807)]
+Span [17]: "The"          [− Labels: DT (1.0)]
+Span [18]: "Wright"       [− Labels: NNP (0.9999)]
+Span [19]: "brothers"     [− Labels: NNS (1.0)]
+Span [20]: "loved"        [− Labels: VBD (1.0)]
+Span [21]: "to"           [− Labels: TO (0.9994)]
+Span [22]: "visit"        [− Labels: VB (1.0)]
+Span [23]: "the"          [− Labels: DT (1.0)]
+Span [24]: "JBF"          [− Labels: NNP (1.0)]
+Span [25]: "headquarters" [− Labels: NN (0.9325)]
+Span [26]: ","            [− Labels: , (1.0)]
+Span [27]: "and"          [− Labels: CC (1.0)]
+Span [28]: "they"         [− Labels: PRP (1.0)]
+Span [29]: "would"        [− Labels: MD (1.0)]
+Span [30]: "have"         [− Labels: VB (1.0)]
+Span [31]: "a"            [− Labels: DT (1.0)]
+Span [32]: "chat"         [− Labels: NN (1.0)]
+Span [33]: "with"         [− Labels: IN (1.0)]
+Span [34]: "Albert"       [− Labels: NNP (1.0)]
+Span [35]: "."            [− Labels: . (1.0)]
+```
+</details>
+
+```python
+print("List entities tagged:\n")
+for sen in sentences:
+    for entity in sen.get_spans(label_type="ner"):
+        print(entity)
+
+```
+<details class = "summary">
+<summary>Output </summary>
+```python
+Span [1,2]: "Novetta Solutions"   [− Labels: ORG (0.9644)]
+Span [7,8]: "Albert Einstein"     [− Labels: PERSON (0.9969)]
+Span [14,15]: "Novetta Solutions" [− Labels: ORG (0.9796)]
+Span [18]: "Wright"               [− Labels: PERSON (0.9995)]
+Span [24]: "JBF"                  [− Labels: ORG (0.9898)]
+Span [34]: "Albert"               [− Labels: PERSON (0.9999)]
+```
+</details>
 
 

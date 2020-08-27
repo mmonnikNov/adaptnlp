@@ -11,7 +11,7 @@ with open("requirements.txt") as reqs_file:
 with open("requirements_dev.txt") as reqs_dev_file:
     dev_requires = reqs_dev_file.read().splitlines()
 
-with open("README.md", "r") as fh:
+with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(

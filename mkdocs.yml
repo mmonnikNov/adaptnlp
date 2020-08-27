@@ -16,7 +16,7 @@ repo_url: https://github.com/Novetta/adaptnlp
 edit_uri: ''
 
 nav:
-  - AdaptNLP: 'index.md'
+  - AdaptNLP Overview: 'index.md'
   - Tutorial - User Guide:
       - Tutorial - Intro: 'tutorial/index.md'
       - Token Tagging: 'tutorial/token-tagging.md'
@@ -25,6 +25,7 @@ nav:
       - Question Answering: 'tutorial/question-answering.md'
       - Summarization: 'tutorial/summarization.md'
       - Translation: 'tutorial/translation.md'
+      - Text Generation: 'tutorial/text-generation.md'
   - Advanced - User Guide:
       - Advanced - Intro: 'tutorial/advanced-index.md'
       - Training Sequence Classification: 'tutorial/training-sequence-classification.md'
@@ -48,6 +49,8 @@ markdown_extensions:
       permalink: true
   - markdown.extensions.codehilite:
       guess_lang: false
+  - pymdownx.details
+  - pymdownx.superfences
   - admonition
   - codehilite
   - mkautodoc

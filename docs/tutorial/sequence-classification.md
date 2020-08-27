@@ -50,7 +50,15 @@ print("Label output:\n")
 for sentence in sentences:
     print(sentence.labels)
 ```
-
+<details class = "summary">
+<summary>Output</summary>
+```python
+[1 star (0.1454), 2 stars (0.4862), 3 stars (0.3473), 4 stars (0.019), 5 stars (0.002)]
+[1 star (0.0042), 2 stars (0.0059), 3 stars (0.0644), 4 stars (0.4761), 5 stars (0.4494)]
+[1 star (0.0087), 2 stars (0.0126), 3 stars (0.08), 4 stars (0.403), 5 stars (0.4957)]
+[1 star (0.4489), 2 stars (0.3935), 3 stars (0.1416), 4 stars (0.0121), 5 stars (0.0039)]
+```
+</details>
 Another example is shown below with a Flair's pre-trained sentiment classifier:
 
 !!! note
@@ -65,6 +73,12 @@ print("Label output:\n")
 for sentence in sentences:
     print(sentence.labels)
 ```
+<details class = "summary">
+<summary>Output</summary>
+```python
+[POSITIVE (0.9983)]
+```
+</details>
 
 All of Flair's pretrained sequence classifiers are available for loading through the `model_name_or_path` parameter, 
 and they can be found [here](https://github.com/flairNLP/flair/blob/master/resources/docs/TUTORIAL_2_TAGGING.md).
