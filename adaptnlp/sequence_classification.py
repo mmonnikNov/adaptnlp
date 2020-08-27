@@ -3,7 +3,11 @@ from typing import List, Dict, Union, Tuple
 from collections import defaultdict
 
 import torch
+from torch import nn
 from torch.utils.data import TensorDataset, DataLoader
+import nlp
+from nlp import ClassLabel
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 from flair.data import Sentence, DataPoint, Label
 from flair.models import TextClassifier
 from transformers import (
@@ -11,12 +15,24 @@ from transformers import (
     AutoModelForSequenceClassification,
     PreTrainedTokenizer,
     PreTrainedModel,
+    BertPreTrainedModel,
+    DistilBertPreTrainedModel,
+    XLMPreTrainedModel,
+    XLNetPreTrainedModel,
+    ElectraPreTrainedModel,
     BertForSequenceClassification,
     XLNetForSequenceClassification,
     AlbertForSequenceClassification,
+    TrainingArguments,
+    Trainer
 )
 
-from tqdm import tqdm
+from tqdm import tqdm as tqdm_base
+def tqdm(*args, **kwargs):
+    if hasattr(tqdm_base, '_instances'):
+        for instance in list(tqdm_base._instances):
+            tqdm_base._decr_instances(instance)
+    return tqdm_base(*args, **kwargs)
 
 from adaptnlp.model import AdaptiveModel
 
@@ -53,7 +69,7 @@ class TransformersSequenceClassifier(AdaptiveModel):
 
         * **model_name_or_path** - A key string of one of Transformer's pre-trained Sequence Classifier Model
         """
-        tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
+        tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, use_fast=True)
         model = AutoModelForSequenceClassification.from_pretrained(model_name_or_path)
         classifier = cls(tokenizer, model)
         return classifier
@@ -136,8 +152,7 @@ class TransformersSequenceClassifier(AdaptiveModel):
                 # Initialize and assign labels to each class in each datapoint prediction
                 text_sent = Sentence(text)
                 for k, v in id2label.items():
-                    label = Label(value=v, score=pred[k])
-                    text_sent.add_label(label)
+                    text_sent.add_label(label_type="sc", value=v, score=pred[k])
                 results.append(text_sent)
 
         # Order results back into original order
@@ -150,6 +165,7 @@ class TransformersSequenceClassifier(AdaptiveModel):
     ) -> TensorDataset:
         """ Batch tokenizes text and produces a `TensorDataset` with them """
 
+        # TODO: __call__ from tokenizer base class in the transformers library could automate/handle this
         tokenized_text = self.tokenizer.batch_encode_plus(
             sentences,
             return_tensors="pt",
@@ -269,7 +285,7 @@ class EasySequenceClassifier:
                 self.sequence_classifiers[
                     model_name_or_path
                 ] = FlairSequenceClassifier.load(model_name_or_path)
-            except FileNotFoundError:
+            except:
                 logger.info(
                     f"{model_name_or_path} not a valid Flair pre-trained model...checking transformers repo"
                 )
@@ -306,3 +322,106 @@ class EasySequenceClassifier:
                 **kwargs,
             )
         return sentences
+
+    def train(
+        self,
+        training_args: TrainingArguments,
+        train_dataset: nlp.Dataset,
+        eval_dataset: nlp.Dataset,
+        model_name_or_path: str="bert-base-uncased",
+        text_col_nm: str = "text",
+        label_col_nm: str = "label",
+    ) -> None:
+        """ Trains and/or finetunes the sequence classification model
+
+        * **model_name_or_path** - The model name key or model path
+        * **training_args** - Transformers `TrainingArguments` object model
+        * **train_dataset** - Training `Dataset` class object from the nlp library
+        * **eval_dataset** - Eval `Dataset` class object from the nlp library
+        * **text_col_nm** - Name of the text feature column used as training data (Default "text")
+        * **label_col_nm** - Name of the label feature column (Default "label")
+        * **return** - None
+        """
+        # Dynamically load sequence classifier
+        if not self.sequence_classifiers[model_name_or_path]:
+            try:
+                self.sequence_classifiers[
+                    model_name_or_path
+                ] = TransformersSequenceClassifier.load(model_name_or_path)
+            except ValueError:
+                logger.info("Try transformers model")
+        
+        classifier = self.sequence_classifiers[model_name_or_path]
+
+        # Set nlp.Dataset label values in sequence classifier configuration
+        ## Important NOTE: Updating configurations do not update the sequence classification head module layer
+        ## We are manually initializing a new linear layer for the "new" labels being trained
+        class_label = train_dataset.features["label"]
+        config_data = {
+            "num_labels": class_label.num_classes,
+            "id2label": {v:n for v, n in enumerate(class_label.names)},
+            "label2id": {n:v for v, n in enumerate(class_label.names)},
+        }
+        classifier.model.config.update(config_data)
+        self._mutate_model_head(classifier=classifier, class_label=class_label)
+        
+        # Batch map datasets as torch tensors with tokenizer
+        def tokenize(batch):
+            return classifier.tokenizer(batch[text_col_nm], padding=True, truncation=True)
+        train_dataset = train_dataset.map(tokenize, batch_size=len(train_dataset), batched=True)
+        eval_dataset = eval_dataset.map(tokenize, batch_size=len(eval_dataset), batched=True)
+        train_dataset.set_format('torch', columns=['input_ids', 'attention_mask', label_col_nm])
+        eval_dataset.set_format('torch', columns=['input_ids', 'attention_mask', label_col_nm])
+
+        # Setup default metrics for sequence classification training
+        def compute_metrics(pred):
+            labels = pred.label_ids
+            preds = pred.predictions.argmax(-1)
+            precision, recall, f1, _ = precision_recall_fscore_support(labels, preds, average=None)
+            acc = accuracy_score(labels, preds)
+            return {
+                'accuracy': acc,
+                'f1': f1,
+                'precision': precision,
+                'recall': recall
+            }
+            
+        # Instantiate transformers trainer
+        self.trainer = Trainer(
+            model=classifier.model,
+            args=training_args,
+            train_dataset=train_dataset,
+            eval_dataset=eval_dataset,
+            compute_metrics=compute_metrics,
+        )
+
+        # Train and serialize
+        self.trainer.train()
+        self.trainer.save_model()
+        classifier.tokenizer.save_pretrained(training_args.output_dir)
+
+    def evaluate(self) -> Dict[str, float]:
+        if not self.trainer:
+            logger.info("No trainer loaded, you should probably run `classifier.train(...)` first")
+            return None
+        return self.trainer.evaluate()
+    
+
+    def _mutate_model_head(self, classifier: PreTrainedModel, class_label: ClassLabel) -> None:
+        """ Manually intialize new linear layers for prediction heads on specific language models that we're trying to train on
+        """
+        if isinstance(classifier.model, (BertPreTrainedModel, DistilBertPreTrainedModel)):
+            classifier.model.classifier = nn.Linear(classifier.model.config.hidden_size, class_label.num_classes)
+            classifier.model.num_labels = class_label.num_classes
+        elif isinstance(classifier.model, XLMPreTrainedModel):
+            classifier.model.num_labels = class_label.num_classes
+        elif isinstance(classifier.model, XLNetPreTrainedModel):
+            classifier.model.logits_proj = nn.Linear(classifier.model.config.d_model, class_label.num_classes)
+            classifier.model.num_labels = class_label.num_classes
+        elif isinstance(classifier.model, ElectraPreTrainedModel):
+            classifier.model.num_labels = class_label.num_classes
+        else:
+            logger.info(f"Sorry, can not train on a model of type {type(classifier.model)}")
+
+
+
