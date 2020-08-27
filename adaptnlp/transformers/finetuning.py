@@ -145,7 +145,7 @@ class TextDataset(Dataset):
         return torch.tensor(self.examples[item])
 
 
-class LMFineTuner:
+class LMFineTunerManual:
     """
      A Language Model Fine Tuner object you can set language model configurations and then train and evaluate
 
