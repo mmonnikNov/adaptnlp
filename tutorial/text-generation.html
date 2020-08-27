@@ -11,7 +11,7 @@
         <meta name="description" content="AdaptNLP - An easy to use Natural Language Processing library and framework for predicting, training, fine-tuning, and serving up state-of-the-art NLP models.">
       
       
-        <link rel="canonical" href="https://github.com/Novetta/adaptnlp/class-api/translator-module.html">
+        <link rel="canonical" href="https://github.com/Novetta/adaptnlp/tutorial/text-generation.html">
       
       
       <link rel="shortcut icon" href="../img/favicon.ico">
@@ -19,7 +19,7 @@
     
     
       
-        <title>Translator - AdaptNLP</title>
+        <title>Text Generation - AdaptNLP</title>
       
     
     
@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#easytranslator" class="md-skip">
+        <a href="#getting-started-with-textgeneration" class="md-skip">
           Skip to content
         </a>
       
@@ -91,7 +91,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Translator
+              Text Generation
             
           </span>
         </div>
@@ -200,10 +200,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
     
     <label class="md-nav__link" for="nav-2">
       Tutorial - User Guide
@@ -227,7 +229,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../tutorial/index.html" title="Tutorial - Intro" class="md-nav__link">
+    <a href="index.html" title="Tutorial - Intro" class="md-nav__link">
       Tutorial - Intro
     </a>
   </li>
@@ -239,7 +241,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../tutorial/token-tagging.html" title="Token Tagging" class="md-nav__link">
+    <a href="token-tagging.html" title="Token Tagging" class="md-nav__link">
       Token Tagging
     </a>
   </li>
@@ -251,7 +253,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../tutorial/sequence-classification.html" title="Sequence Classification" class="md-nav__link">
+    <a href="sequence-classification.html" title="Sequence Classification" class="md-nav__link">
       Sequence Classification
     </a>
   </li>
@@ -263,7 +265,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../tutorial/embeddings.html" title="Embeddings" class="md-nav__link">
+    <a href="embeddings.html" title="Embeddings" class="md-nav__link">
       Embeddings
     </a>
   </li>
@@ -275,7 +277,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../tutorial/question-answering.html" title="Question Answering" class="md-nav__link">
+    <a href="question-answering.html" title="Question Answering" class="md-nav__link">
       Question Answering
     </a>
   </li>
@@ -287,7 +289,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../tutorial/summarization.html" title="Summarization" class="md-nav__link">
+    <a href="summarization.html" title="Summarization" class="md-nav__link">
       Summarization
     </a>
   </li>
@@ -299,7 +301,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../tutorial/translation.html" title="Translation" class="md-nav__link">
+    <a href="translation.html" title="Translation" class="md-nav__link">
       Translation
     </a>
   </li>
@@ -309,11 +311,62 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../tutorial/text-generation.html" title="Text Generation" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Text Generation
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="text-generation.html" title="Text Generation" class="md-nav__link md-nav__link--active">
       Text Generation
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started-with-textgeneration" class="md-nav__link">
+    Getting Started with TextGeneration
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started with TextGeneration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-with-generatetextstr-model_name_or_path-str-mini_batch_size-int-num_tokens_to_produce-int-kwargs" class="md-nav__link">
+    Generate with generate(text:str, model_name_or_path: str, mini_batch_size: int, num_tokens_to_produce: int **kwargs)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -353,7 +406,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../tutorial/advanced-index.html" title="Advanced - Intro" class="md-nav__link">
+    <a href="advanced-index.html" title="Advanced - Intro" class="md-nav__link">
       Advanced - Intro
     </a>
   </li>
@@ -365,7 +418,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../tutorial/training-sequence-classification.html" title="Training Sequence Classification" class="md-nav__link">
+    <a href="training-sequence-classification.html" title="Training Sequence Classification" class="md-nav__link">
       Training Sequence Classification
     </a>
   </li>
@@ -377,7 +430,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../tutorial/fine-tuning-language-model.html" title="Fine Tuning Language Model" class="md-nav__link">
+    <a href="fine-tuning-language-model.html" title="Fine Tuning Language Model" class="md-nav__link">
       Fine Tuning Language Model
     </a>
   </li>
@@ -404,12 +457,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
     
     <label class="md-nav__link" for="nav-5">
       Class API
@@ -431,12 +482,10 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1" type="checkbox" id="nav-5-1" checked>
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1" type="checkbox" id="nav-5-1">
     
     <label class="md-nav__link" for="nav-5-1">
       NLP Tasks
@@ -460,7 +509,7 @@
 
 
   <li class="md-nav__item">
-    <a href="token-tagger-module.html" title="Token Tagger" class="md-nav__link">
+    <a href="../class-api/token-tagger-module.html" title="Token Tagger" class="md-nav__link">
       Token Tagger
     </a>
   </li>
@@ -472,7 +521,7 @@
 
 
   <li class="md-nav__item">
-    <a href="sequence-classifier-module.html" title="Sequence Classifier" class="md-nav__link">
+    <a href="../class-api/sequence-classifier-module.html" title="Sequence Classifier" class="md-nav__link">
       Sequence Classifier
     </a>
   </li>
@@ -484,7 +533,7 @@
 
 
   <li class="md-nav__item">
-    <a href="embeddings-module.html" title="Embeddings" class="md-nav__link">
+    <a href="../class-api/embeddings-module.html" title="Embeddings" class="md-nav__link">
       Embeddings
     </a>
   </li>
@@ -496,7 +545,7 @@
 
 
   <li class="md-nav__item">
-    <a href="question-answering-module.html" title="Question Answering" class="md-nav__link">
+    <a href="../class-api/question-answering-module.html" title="Question Answering" class="md-nav__link">
       Question Answering
     </a>
   </li>
@@ -508,7 +557,7 @@
 
 
   <li class="md-nav__item">
-    <a href="summarizer-module.html" title="Summarizer" class="md-nav__link">
+    <a href="../class-api/summarizer-module.html" title="Summarizer" class="md-nav__link">
       Summarizer
     </a>
   </li>
@@ -518,56 +567,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Translator
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
-        </span>
-      </label>
-    
-    <a href="translator-module.html" title="Translator" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../class-api/translator-module.html" title="Translator" class="md-nav__link">
       Translator
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-      </span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#easytranslator" class="md-nav__link">
-    EasyTranslator
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#transformerstranslator" class="md-nav__link">
-    TransformersTranslator
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -607,7 +611,7 @@
 
 
   <li class="md-nav__item">
-    <a href="sequence-classifier-trainer-module.html" title="Sequence Classifier Trainer" class="md-nav__link">
+    <a href="../class-api/sequence-classifier-trainer-module.html" title="Sequence Classifier Trainer" class="md-nav__link">
       Sequence Classifier Trainer
     </a>
   </li>
@@ -619,7 +623,7 @@
 
 
   <li class="md-nav__item">
-    <a href="language-model-finetuner-module.html" title="Language Model Fine-tuning" class="md-nav__link">
+    <a href="../class-api/language-model-finetuner-module.html" title="Language Model Fine-tuning" class="md-nav__link">
       Language Model Fine-tuning
     </a>
   </li>
@@ -671,16 +675,22 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#easytranslator" class="md-nav__link">
-    EasyTranslator
+  <a href="#getting-started-with-textgeneration" class="md-nav__link">
+    Getting Started with TextGeneration
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started with TextGeneration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-with-generatetextstr-model_name_or_path-str-mini_batch_size-int-num_tokens_to_produce-int-kwargs" class="md-nav__link">
+    Generate with generate(text:str, model_name_or_path: str, mini_batch_size: int, num_tokens_to_produce: int **kwargs)
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#transformerstranslator" class="md-nav__link">
-    TransformersTranslator
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -700,70 +710,50 @@
                   
                 
                 
-                  <h1>Translator</h1>
+                  <h1>Text Generation</h1>
                 
-                <h2 id="easytranslator"><code>EasyTranslator</code><a class="headerlink" href="#easytranslator" title="Permanent link">&para;</a></h2>
-<div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>adaptnlp.<strong>EasyTranslator</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Translation Module</p>
-<p>Usage:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">translator</span> <span class="o">=</span> <span class="n">EasyTranslator</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">translator</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;translate this text&quot;</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;t5-small&quot;</span><span class="p">)</span>
-</code></pre></div></div>
-<div class="autodoc-members">
-<div class="autodoc-signature"><code><strong>translate</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">self</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">text</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">model_name_or_path='t5-small'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">t5_prefix='translate English to German'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">mini_batch_size=32</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">num_beams=1</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">min_length=0</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">max_length=128</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">early_stopping=True</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">**kwargs</em><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Predict method for running inference using the pre-trained sequence classifier model. Keyword arguments
-for parameters of the method <code>Transformers.PreTrainedModel.generate()</code> can be used as well.</p>
-<ul>
-<li><strong>text</strong> - String, list of strings, sentences, or list of sentences to run inference on</li>
-<li><strong>model_name_or_path</strong> - A String model id or path to a pre-trained model repository or custom trained model directory</li>
-<li><strong>t5_prefix</strong>(Optional) - The pre-appended prefix for the specificied task. Only in use for T5-type models.</li>
-<li><strong>mini_batch_size</strong> - Mini batch size</li>
-<li><strong>num_beams</strong> - Number of beams for beam search. Must be between 1 and infinity. 1 means no beam search.  Default to 1.</li>
-<li><strong>min_length</strong> -  The min length of the sequence to be generated. Default to 0</li>
-<li><strong>max_length</strong> - The max length of the sequence to be generated. Between min_length and infinity. Default to 128</li>
-<li><strong>early_stopping</strong> - if set to True beam search is stopped when at least num_beams sentences finished per batch.</li>
-<li><strong>&ast;&ast;kwargs</strong>(Optional) - Optional arguments for the Transformers <code>PreTrainedModel.generate()</code> method</li>
-</ul></div>
-</div>
-</div>
-<h2 id="transformerstranslator"><code>TransformersTranslator</code><a class="headerlink" href="#transformerstranslator" title="Permanent link">&para;</a></h2>
-<div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>adaptnlp.<strong>TransformersTranslator</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">tokenizer</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">model</em><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Adaptive model for Transformer's Conditional Generation or Language Models (Transformer's T5 and Bart
-conditional generation models have a language modeling head)</p>
-<p>Usage:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">translator</span> <span class="o">=</span> <span class="n">TransformersTranslator</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;transformers-translator-model&quot;</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">translator</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Example text&quot;</span><span class="p">,</span> <span class="n">mini_batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+                <p>Text generation is the NLP task of generating a coherent sequence of words, usually from a language model. The current leading methods, most notably OpenAI’s GPT-2 and GPT-3, rely on feeding tokens (words or characters) into a pre-trained language model which then uses this seed data to construct a sequence of text. AdaptNLP provides simple methods to easily fine-tune these state-of-the-art models and generate text for any use case. </p>
+<p>Below, we'll walk through how we can use AdaptNLP's <code>EasyTextGenerator</code> module to generate text to complete a given String.</p>
+<h2 id="getting-started-with-textgeneration">Getting Started with <code>TextGeneration</code><a class="headerlink" href="#getting-started-with-textgeneration" title="Permanent link">&para;</a></h2>
+<p>We'll first get started by importing the <code>EasyTextGenerator</code> class from AdaptNLP.</p>
+<p>After that, we set some example text that we'll use further down, and then instantiate the generator.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasyTextGenerator</span>
+
+<span class="c1"># Text from encyclopedia Britannica on Einstein</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;What has happened?&quot;</span>
+
+<span class="n">generator</span> <span class="o">=</span> <span class="n">EasyTextGenerator</span><span class="p">()</span>
 </code></pre></div>
 
 
-<p><strong>Parameters:</strong></p>
-<ul>
-<li><strong>tokenizer</strong> - A tokenizer object from Huggingface's transformers (TODO)and tokenizers</li>
-<li><strong>model</strong> - A transformers Conditional Generation (Bart or T5) or Language model</li>
-</ul></div>
-<div class="autodoc-members">
-<div class="autodoc-signature"><code><strong>load</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">model_name_or_path</em><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Class method for loading and constructing this classifier</p>
-<ul>
-<li><strong>model_name_or_path</strong> - A key string of one of Transformer's pre-trained translator Model</li>
-</ul></div>
-<div class="autodoc-signature"><code><strong>predict</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">self</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">text</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">t5_prefix='translate English to German'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">mini_batch_size=32</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">num_beams=1</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">min_length=0</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">max_length=128</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">early_stopping=True</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">**kwargs</em><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Predict method for running inference using the pre-trained sequence classifier model.  Keyword arguments
-for parameters of the method <code>Transformers.PreTrainedModel.generate()</code> can be used as well.</p>
-<ul>
-<li><strong>text</strong> - String, list of strings, sentences, or list of sentences to run inference on</li>
-<li><strong>t5_prefix</strong>(Optional) - The pre-appended prefix for the specificied task. Only in use for T5-type models.</li>
-<li><strong>mini_batch_size</strong> - Mini batch size</li>
-<li><strong>num_beams</strong> - Number of beams for beam search. Must be between 1 and infinity. 1 means no beam search.  Default to 1.</li>
-<li><strong>min_length</strong> -  The min length of the sequence to be generated. Default to 0</li>
-<li><strong>max_length</strong> - The max length of the sequence to be generated. Between min_length and infinity. Default to 128</li>
-<li><strong>early_stopping</strong> - if set to True beam search is stopped when at least num_beams sentences finished per batch.</li>
-<li><strong>&ast;&ast;kwargs</strong>(Optional) - Optional arguments for the Transformers <code>PreTrainedModel.generate()</code> method</li>
-</ul></div>
+<h3 id="generate-with-generatetextstr-model_name_or_path-str-mini_batch_size-int-num_tokens_to_produce-int-kwargs">Generate with <code>generate(text:str, model_name_or_path: str, mini_batch_size: int, num_tokens_to_produce: int **kwargs)</code><a class="headerlink" href="#generate-with-generatetextstr-model_name_or_path-str-mini_batch_size-int-num_tokens_to_produce-int-kwargs" title="Permanent link">&para;</a></h3>
+<p>Now that we have the summarizer instantiated, we are ready to load in a model and compress the text 
+with the built-in <code>generate()</code> method.  </p>
+<p>This method takes in parameters: <code>text</code>, <code>model_name_or_path</code>, <code>mini_batch_size</code>, and <code>num_tokens_to_produce</code> as well as optional keyword arguments
+from the <code>Transformers.PreTrainedModel.generate()</code> method.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can set <code>model_name_or_path</code> to any of Transformers pretrained Generation Models with Language Model heads.
+Transformers models are located at <a href="https://huggingface.co/models">https://huggingface.co/models</a>.  You can also pass in
+the path of a custom trained Transformers <code>xxxWithLMHead</code> model.</p>
 </div>
-</div>
+<p>The method returns a list of Strings.</p>
+<p>Here is one example using the gpt2 model:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Generate</span>
+<span class="n">generated_text</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="s2">&quot;What has happened&quot;</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;gpt2&quot;</span><span class="p">,</span> <span class="n">mini_batch_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">num_tokens_to_produce</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">generated_text</span><span class="p">)</span>
+</code></pre></div>
+
+
+<details class = "summary">
+<summary>Output</summary>
+
+<div class="codehilite"><pre><span></span><code>[&quot;What has happened to the world&#39;s most important technology?\n\nThe world&#39;s most important technology is the Internet. It&#39;s the most important technology in the world. It&#39;s the most important technology in the world. It&#39;s the most important technology in the world.&quot;]
+</code></pre></div>
+
+
+</details>
                 
               
               
@@ -782,7 +772,7 @@ for parameters of the method <code>Transformers.PreTrainedModel.generate()</code
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="summarizer-module.html" title="Summarizer" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="translation.html" title="Translation" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -791,19 +781,19 @@ for parameters of the method <code>Transformers.PreTrainedModel.generate()</code
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Summarizer
+                Translation
               </div>
             </div>
           </a>
         
         
-          <a href="sequence-classifier-trainer-module.html" title="Sequence Classifier Trainer" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="advanced-index.html" title="Advanced - Intro" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Sequence Classifier Trainer
+                Advanced - Intro
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
