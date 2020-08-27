@@ -41,7 +41,8 @@ nav:
         - Translator: 'class-api/translator-module.md'
       - Training and Fine-tuning:
         - Sequence Classifier Trainer: 'class-api/sequence-classifier-trainer-module.md'
-        - Language Model Fine-tuning: 'class-api/language-model-finetuner-module.md'
+        - Language Model Fine-tuning: 'class-api/language-model-module.md'
+        - Language Model Fine-tuning Manual: 'class-api/language-model-finetuner-module.md'
   - Contributing: 'contributing.md'
 
 markdown_extensions:
