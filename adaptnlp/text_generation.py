@@ -21,19 +21,19 @@ logger = logging.getLogger(__name__)
 
 
 class TransformersTextGenerator(AdaptiveModel):
-    """ Adaptive model for Transformer's Language Models 
+    """Adaptive model for Transformer's Language Models
 
-        Usage:
-        ```python
-        >>> generator = TransformersTextGenerator.load("gpt2")
-        >>> generator.generate(text="Example text", mini_batch_size=32)
-        ```
+    Usage:
+    ```python
+    >>> generator = TransformersTextGenerator.load("gpt2")
+    >>> generator.generate(text="Example text", mini_batch_size=32)
+    ```
 
-        **Parameters:**
+    **Parameters:**
 
-        * **tokenizer** - A tokenizer object from Huggingface's transformers (TODO)and tokenizers
-        * **model** - A transformers Language model
-        """
+    * **tokenizer** - A tokenizer object from Huggingface's transformers (TODO)and tokenizers
+    * **model** - A transformers Language model
+    """
 
     def __init__(self, tokenizer: PreTrainedTokenizer, model: PreTrainedModel):
         # Load up model and tokenizer
@@ -46,9 +46,9 @@ class TransformersTextGenerator(AdaptiveModel):
 
     @classmethod
     def load(cls, model_name_or_path: str) -> AdaptiveModel:
-        """ Class method for loading and constructing this Model 
+        """Class method for loading and constructing this Model
 
-         * **model_name_or_path** - A key string of one of Transformer's pre-trained Language Model
+        * **model_name_or_path** - A key string of one of Transformer's pre-trained Language Model
         """
         tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, pad_token="<PAD>")
         model = AutoModelWithLMHead.from_pretrained(model_name_or_path)
@@ -62,7 +62,7 @@ class TransformersTextGenerator(AdaptiveModel):
         num_tokens_to_produce: int = 50,
         **kwargs,
     ) -> List[str]:
-        """ Predict method for running inference using the pre-trained sequence classifier model.  Keyword arguments
+        """Predict method for running inference using the pre-trained sequence classifier model.  Keyword arguments
         for parameters of the method `Transformers.PreTrainedModel.generate()` can be used as well.
 
         * **text** - String, list of strings, sentences, or list of sentences to run inference on
@@ -127,7 +127,8 @@ class TransformersTextGenerator(AdaptiveModel):
             )
         else:
             dataset = TensorDataset(
-                tokenized_text["input_ids"], tokenized_text["attention_mask"],
+                tokenized_text["input_ids"],
+                tokenized_text["attention_mask"],
             )
 
         return dataset
@@ -145,13 +146,12 @@ class TransformersTextGenerator(AdaptiveModel):
 
         # we need to get the token ids of the last non-padded value
         last_non_masked_idx = torch.sum(attn_mask, dim=1) - 1
-        start_idx = inp_idx = (
+        start_idx = (
             (last_non_masked_idx)
             .view(-1, 1)
             .repeat(1, self.tokenizer.vocab_size)
             .unsqueeze(1)
         )
-        past = None
 
         # get correct position ids
         position_ids = torch.tensor(
@@ -201,7 +201,7 @@ class TransformersTextGenerator(AdaptiveModel):
 
 
 class EasyTextGenerator:
-    """ Text Generation Module
+    """Text Generation Module
 
     Usage:
 
@@ -223,11 +223,11 @@ class EasyTextGenerator:
         num_tokens_to_produce: int = 50,
         **kwargs,
     ) -> List[str]:
-        """ Predict method for running inference using the pre-trained sequence classifier model. Keyword arguments
+        """Predict method for running inference using the pre-trained sequence classifier model. Keyword arguments
         for parameters of the method `Transformers.PreTrainedModel.generate()` can be used as well.
 
         * **text** - String, list of strings, sentences, or list of sentences to run inference on
-        * **model_name_or_path** - A String model id or path to a pre-trained model repository or custom trained model directory 
+        * **model_name_or_path** - A String model id or path to a pre-trained model repository or custom trained model directory
         * **mini_batch_size** - Mini batch size
         * **num_tokens_to_produce** - Number of tokens you want to generate
         * **&ast;&ast;kwargs**(Optional) - Optional arguments for the Transformers `PreTrainedModel.generate()` method

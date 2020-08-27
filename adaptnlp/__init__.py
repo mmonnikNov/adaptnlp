@@ -50,5 +50,5 @@ __all__ = [
     "TransformersTextGenerator",
     "SequenceClassifierTrainer",
     "LMFineTuner",
-    "LMFIneTunerOld",
+    "LMFineTunerManual",
 ]

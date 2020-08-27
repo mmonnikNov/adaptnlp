@@ -1,48 +1,25 @@
 # coding=utf-8
 # This file uses code from the language modeling examples in the huggingface Transformer's repo
 
+import os
 import logging
-from typing import List, Dict, Union, Tuple
-from collections import defaultdict
+import math
+from typing import Dict, Union
 from pathlib import Path
 
 import torch
-from torch import nn
-from torch.utils.data import TensorDataset, DataLoader, Dataset
-import nlp
-from nlp import ClassLabel
-from sklearn.metrics import accuracy_score, precision_recall_fscore_support
-from flair.data import Sentence, DataPoint, Label
-from flair.models import TextClassifier
+from torch.utils.data import Dataset
 from transformers import (
     AutoTokenizer,
     AutoModelWithLMHead,
-    PreTrainedTokenizer,
-    PreTrainedModel,
-    BertPreTrainedModel,
-    XLMPreTrainedModel,
-    XLNetPreTrainedModel,
-    ElectraPreTrainedModel,
-    BertForSequenceClassification,
-    XLNetForSequenceClassification,
-    AlbertForSequenceClassification,
     TrainingArguments,
     Trainer,
     TextDataset,
     DataCollatorForLanguageModeling,
     # TODO: For XLNet, will be available in Transformers release 3.0.2+
-    #DataCollatorForPermutationLanguageModeling,
-    LineByLineTextDataset
+    # DataCollatorForPermutationLanguageModeling,
+    LineByLineTextDataset,
 )
-
-from tqdm import tqdm as tqdm_base
-def tqdm(*args, **kwargs):
-    if hasattr(tqdm_base, '_instances'):
-        for instance in list(tqdm_base._instances):
-            tqdm_base._decr_instances(instance)
-    return tqdm_base(*args, **kwargs)
-
-from adaptnlp.model import AdaptiveModel
 
 logger = logging.getLogger(__name__)
 
@@ -68,9 +45,13 @@ class LMFineTuner:
         model_name_or_path="bert-base-cased",
     ):
 
-        logger.info("This is the new updated `LMFineTuner` class object for 0.2.0+. If you're looking for `LMFineTuner` from <=0.1.6, you can instantiate it with LMFineTunerManual")
+        logger.info(
+            "This is the new updated `LMFineTuner` class object for 0.2.0+. If you're looking for `LMFineTuner` from <=0.1.6, you can instantiate it with LMFineTunerManual"
+        )
         # Load model and tokenizer
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, use_fast=True)
+        self.tokenizer = AutoTokenizer.from_pretrained(
+            model_name_or_path, use_fast=True
+        )
         self.model = AutoModelWithLMHead.from_pretrained(model_name_or_path)
         self.trainer = None
 
@@ -91,7 +72,7 @@ class LMFineTuner:
         block_size: int = -1,
         overwrite_cache: bool = False,
     ):
-        """ Train and fine-tune the loaded language model
+        """Train and fine-tune the loaded language model
 
         * **train_file** - The input training data file (a text file).
         * **eval_file** - An optional input evaluation data file to evaluate the perplexity on (a text file).
@@ -123,29 +104,45 @@ class LMFineTuner:
         logger.info(f"Training/evaluation parameters: {training_args.to_json_string()}")
 
         # Check if masked language model or not
-        if self.model.config.model_type in ["bert", "roberta", "distilbert", "camembert"] and not mlm:
+        if (
+            self.model.config.model_type
+            in ["bert", "roberta", "distilbert", "camembert"]
+            and not mlm
+        ):
             raise ValueError(
                 """BERT and RoBERTa-like models do not have LM heads but masked LM heads. They must be run with
                 mlm set as True(masked language modeling)."""
             )
 
         # Check block size for Dataset
-        if block_size <=0:
+        if block_size <= 0:
             block_size = self.tokenizer.max_len
         else:
             block_size = min(block_size, self.tokenizer.max_len)
 
         # Get datasets
-        train_dataset = self._get_dataset(file_path = train_file, line_by_line=line_by_line, block_size=block_size, overwrite_cache=overwrite_cache)
-        eval_dataset = self._get_dataset(file_path = eval_file, line_by_line=line_by_line, block_size=block_size, overwrite_cache=overwrite_cache)
+        train_dataset = self._get_dataset(
+            file_path=train_file,
+            line_by_line=line_by_line,
+            block_size=block_size,
+            overwrite_cache=overwrite_cache,
+        )
+        eval_dataset = self._get_dataset(
+            file_path=eval_file,
+            line_by_line=line_by_line,
+            block_size=block_size,
+            overwrite_cache=overwrite_cache,
+        )
         self.train_dataset = train_dataset
         self.eval_dataset = eval_dataset
 
         # Get Collator
         # TODO: DataCollatorForPermutationLanguageModeling not availbe until release 3.0.2+
         if self.model.config.model_type == "xlnet":
-            logger.info(f"Cannot currently finetune XLNet model")
-            raise ValueError("Use another language model besides XLNet for LM finetuning")
+            logger.info("Cannot currently finetune XLNet model")
+            raise ValueError(
+                "Use another language model besides XLNet for LM finetuning"
+            )
             """
             data_collator = DataCollatorForPermutationLanguageModeling(
             tokenizer=self.tokenizer,
@@ -155,8 +152,8 @@ class LMFineTuner:
             """
         else:
             data_collator = DataCollatorForLanguageModeling(
-            tokenizer=self.tokenizer, mlm=mlm, mlm_probability=mlm_probability
-        )
+                tokenizer=self.tokenizer, mlm=mlm, mlm_probability=mlm_probability
+            )
 
         # Initialize Trainer
         self.trainer = Trainer(
@@ -164,7 +161,7 @@ class LMFineTuner:
             args=training_args,
             data_collator=data_collator,
             train_dataset=train_dataset,
-            eval_dataset=eval_dataset
+            eval_dataset=eval_dataset,
         )
 
         # Train and serialize
@@ -175,7 +172,9 @@ class LMFineTuner:
     def evaluate(self) -> Dict[str, float]:
 
         if not self.trainer:
-            logger.info("No trainer loaded, you should probably run `LMFineTuner.train(...)` first")
+            logger.info(
+                "No trainer loaded, you should probably run `LMFineTuner.train(...)` first"
+            )
             return None
         results = {}
 
@@ -186,7 +185,9 @@ class LMFineTuner:
         perplexity = math.exp(eval_output["eval_loss"])
         result = {"perplexity": perplexity}
 
-        output_eval_file = os.path.join(self.trainer.args.output_dir, "eval_results_lm.txt")
+        output_eval_file = os.path.join(
+            self.trainer.args.output_dir, "eval_results_lm.txt"
+        )
 
         with open(output_eval_file, "w") as writer:
             logger.info("***** Eval results *****")
@@ -205,11 +206,13 @@ class LMFineTuner:
         overwrite_cache: bool,
     ) -> Dataset:
         if line_by_line:
-            return LineByLineTextDataset(tokenizer=self.tokenizer, file_path=file_path, block_size=block_size)
+            return LineByLineTextDataset(
+                tokenizer=self.tokenizer, file_path=file_path, block_size=block_size
+            )
         else:
             return TextDataset(
-                tokenizer=self.tokenizer, file_path=file_path, block_size=block_size, overwrite_cache=overwrite_cache
+                tokenizer=self.tokenizer,
+                file_path=file_path,
+                block_size=block_size,
+                overwrite_cache=overwrite_cache,
             )
-    
-
-

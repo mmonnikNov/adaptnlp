@@ -8,7 +8,8 @@ from flair.data import Sentence
 class AdaptiveModel(ABC):
     @abstractmethod
     def load(
-        self, model_name_or_path: Union[str, Path],
+        self,
+        model_name_or_path: Union[str, Path],
     ):
         """ Load model into the `AdaptiveModel` object as alternative constructor """
         pass

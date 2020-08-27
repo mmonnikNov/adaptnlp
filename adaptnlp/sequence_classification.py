@@ -8,7 +8,7 @@ from torch.utils.data import TensorDataset, DataLoader
 import nlp
 from nlp import ClassLabel
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
-from flair.data import Sentence, DataPoint, Label
+from flair.data import Sentence, DataPoint
 from flair.models import TextClassifier
 from transformers import (
     AutoTokenizer,
@@ -24,15 +24,11 @@ from transformers import (
     XLNetForSequenceClassification,
     AlbertForSequenceClassification,
     TrainingArguments,
-    Trainer
+    Trainer,
 )
 
-from tqdm import tqdm as tqdm_base
-def tqdm(*args, **kwargs):
-    if hasattr(tqdm_base, '_instances'):
-        for instance in list(tqdm_base._instances):
-            tqdm_base._decr_instances(instance)
-    return tqdm_base(*args, **kwargs)
+from tqdm import tqdm
+
 
 from adaptnlp.model import AdaptiveModel
 
@@ -40,7 +36,7 @@ logger = logging.getLogger(__name__)
 
 
 class TransformersSequenceClassifier(AdaptiveModel):
-    """ Adaptive model for Transformer's Sequence Classification Model
+    """Adaptive model for Transformer's Sequence Classification Model
 
     Usage:
     ```python
@@ -65,7 +61,7 @@ class TransformersSequenceClassifier(AdaptiveModel):
 
     @classmethod
     def load(cls, model_name_or_path: str) -> AdaptiveModel:
-        """ Class method for loading and constructing this classifier
+        """Class method for loading and constructing this classifier
 
         * **model_name_or_path** - A key string of one of Transformer's pre-trained Sequence Classifier Model
         """
@@ -81,7 +77,7 @@ class TransformersSequenceClassifier(AdaptiveModel):
         use_tokenizer: bool = True,
         **kwargs,
     ) -> List[Sentence]:
-        """ Predict method for running inference using the pre-trained sequence classifier model
+        """Predict method for running inference using the pre-trained sequence classifier model
 
         * **text** - String, list of strings, sentences, or list of sentences to run inference on
         * **mini_batch_size** - Mini batch size
@@ -196,7 +192,7 @@ class TransformersSequenceClassifier(AdaptiveModel):
 
 
 class FlairSequenceClassifier(AdaptiveModel):
-    """ Adaptive Model for Flair's Sequence Classifier...very basic
+    """Adaptive Model for Flair's Sequence Classifier...very basic
 
     Usage:
     ```python
@@ -214,7 +210,7 @@ class FlairSequenceClassifier(AdaptiveModel):
 
     @classmethod
     def load(cls, model_name_or_path: str) -> AdaptiveModel:
-        """ Class method for loading a constructing this classifier
+        """Class method for loading a constructing this classifier
 
         * **model_name_or_path** - A key string of one of Flair's pre-trained Sequence Classifier Model
         """
@@ -228,7 +224,7 @@ class FlairSequenceClassifier(AdaptiveModel):
         use_tokenizer=True,
         **kwargs,
     ) -> List[Sentence]:
-        """ Predict method for running inference using the pre-trained sequence classifier model
+        """Predict method for running inference using the pre-trained sequence classifier model
 
         * **text** - String, list of strings, sentences, or list of sentences to run inference on
         * **mini_batch_size** - Mini batch size
@@ -243,7 +239,7 @@ class FlairSequenceClassifier(AdaptiveModel):
 
 
 class EasySequenceClassifier:
-    """ Sequence classification models
+    """Sequence classification models
 
     Usage:
 
@@ -264,7 +260,7 @@ class EasySequenceClassifier:
         mini_batch_size: int = 32,
         **kwargs,
     ) -> List[Sentence]:
-        """ Tags a text sequence with labels the sequence classification models have been trained on
+        """Tags a text sequence with labels the sequence classification models have been trained on
 
         * **text** - String, list of strings, `Sentence`, or list of `Sentence`s to be classified
         * **model_name_or_path** - The model name key or model path
@@ -285,7 +281,7 @@ class EasySequenceClassifier:
                 self.sequence_classifiers[
                     model_name_or_path
                 ] = FlairSequenceClassifier.load(model_name_or_path)
-            except:
+            except (NotADirectoryError, FileNotFoundError, IsADirectoryError):
                 logger.info(
                     f"{model_name_or_path} not a valid Flair pre-trained model...checking transformers repo"
                 )
@@ -298,7 +294,11 @@ class EasySequenceClassifier:
                     return [Sentence("")]
 
         classifier = self.sequence_classifiers[model_name_or_path]
-        return classifier.predict(text=text, mini_batch_size=mini_batch_size, **kwargs,)
+        return classifier.predict(
+            text=text,
+            mini_batch_size=mini_batch_size,
+            **kwargs,
+        )
 
     def tag_all(
         self,
@@ -306,7 +306,7 @@ class EasySequenceClassifier:
         mini_batch_size: int = 32,
         **kwargs,
     ) -> List[Sentence]:
-        """ Tags text with all labels from all sequence classification models
+        """Tags text with all labels from all sequence classification models
 
         * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
         * **mini_batch_size** - The mini batch size for running inference
@@ -328,11 +328,11 @@ class EasySequenceClassifier:
         training_args: TrainingArguments,
         train_dataset: nlp.Dataset,
         eval_dataset: nlp.Dataset,
-        model_name_or_path: str="bert-base-uncased",
+        model_name_or_path: str = "bert-base-uncased",
         text_col_nm: str = "text",
         label_col_nm: str = "label",
     ) -> None:
-        """ Trains and/or finetunes the sequence classification model
+        """Trains and/or finetunes the sequence classification model
 
         * **model_name_or_path** - The model name key or model path
         * **training_args** - Transformers `TrainingArguments` object model
@@ -350,7 +350,7 @@ class EasySequenceClassifier:
                 ] = TransformersSequenceClassifier.load(model_name_or_path)
             except ValueError:
                 logger.info("Try transformers model")
-        
+
         classifier = self.sequence_classifiers[model_name_or_path]
 
         # Set nlp.Dataset label values in sequence classifier configuration
@@ -359,33 +359,41 @@ class EasySequenceClassifier:
         class_label = train_dataset.features["label"]
         config_data = {
             "num_labels": class_label.num_classes,
-            "id2label": {v:n for v, n in enumerate(class_label.names)},
-            "label2id": {n:v for v, n in enumerate(class_label.names)},
+            "id2label": {v: n for v, n in enumerate(class_label.names)},
+            "label2id": {n: v for v, n in enumerate(class_label.names)},
         }
         classifier.model.config.update(config_data)
         self._mutate_model_head(classifier=classifier, class_label=class_label)
-        
+
         # Batch map datasets as torch tensors with tokenizer
         def tokenize(batch):
-            return classifier.tokenizer(batch[text_col_nm], padding=True, truncation=True)
-        train_dataset = train_dataset.map(tokenize, batch_size=len(train_dataset), batched=True)
-        eval_dataset = eval_dataset.map(tokenize, batch_size=len(eval_dataset), batched=True)
-        train_dataset.set_format('torch', columns=['input_ids', 'attention_mask', label_col_nm])
-        eval_dataset.set_format('torch', columns=['input_ids', 'attention_mask', label_col_nm])
+            return classifier.tokenizer(
+                batch[text_col_nm], padding=True, truncation=True
+            )
+
+        train_dataset = train_dataset.map(
+            tokenize, batch_size=len(train_dataset), batched=True
+        )
+        eval_dataset = eval_dataset.map(
+            tokenize, batch_size=len(eval_dataset), batched=True
+        )
+        train_dataset.set_format(
+            "torch", columns=["input_ids", "attention_mask", label_col_nm]
+        )
+        eval_dataset.set_format(
+            "torch", columns=["input_ids", "attention_mask", label_col_nm]
+        )
 
         # Setup default metrics for sequence classification training
         def compute_metrics(pred):
             labels = pred.label_ids
             preds = pred.predictions.argmax(-1)
-            precision, recall, f1, _ = precision_recall_fscore_support(labels, preds, average=None)
+            precision, recall, f1, _ = precision_recall_fscore_support(
+                labels, preds, average=None
+            )
             acc = accuracy_score(labels, preds)
-            return {
-                'accuracy': acc,
-                'f1': f1,
-                'precision': precision,
-                'recall': recall
-            }
-            
+            return {"accuracy": acc, "f1": f1, "precision": precision, "recall": recall}
+
         # Instantiate transformers trainer
         self.trainer = Trainer(
             model=classifier.model,
@@ -402,26 +410,33 @@ class EasySequenceClassifier:
 
     def evaluate(self) -> Dict[str, float]:
         if not self.trainer:
-            logger.info("No trainer loaded, you should probably run `classifier.train(...)` first")
+            logger.info(
+                "No trainer loaded, you should probably run `classifier.train(...)` first"
+            )
             return None
         return self.trainer.evaluate()
-    
 
-    def _mutate_model_head(self, classifier: PreTrainedModel, class_label: ClassLabel) -> None:
-        """ Manually intialize new linear layers for prediction heads on specific language models that we're trying to train on
-        """
-        if isinstance(classifier.model, (BertPreTrainedModel, DistilBertPreTrainedModel)):
-            classifier.model.classifier = nn.Linear(classifier.model.config.hidden_size, class_label.num_classes)
+    def _mutate_model_head(
+        self, classifier: PreTrainedModel, class_label: ClassLabel
+    ) -> None:
+        """Manually intialize new linear layers for prediction heads on specific language models that we're trying to train on"""
+        if isinstance(
+            classifier.model, (BertPreTrainedModel, DistilBertPreTrainedModel)
+        ):
+            classifier.model.classifier = nn.Linear(
+                classifier.model.config.hidden_size, class_label.num_classes
+            )
             classifier.model.num_labels = class_label.num_classes
         elif isinstance(classifier.model, XLMPreTrainedModel):
             classifier.model.num_labels = class_label.num_classes
         elif isinstance(classifier.model, XLNetPreTrainedModel):
-            classifier.model.logits_proj = nn.Linear(classifier.model.config.d_model, class_label.num_classes)
+            classifier.model.logits_proj = nn.Linear(
+                classifier.model.config.d_model, class_label.num_classes
+            )
             classifier.model.num_labels = class_label.num_classes
         elif isinstance(classifier.model, ElectraPreTrainedModel):
             classifier.model.num_labels = class_label.num_classes
         else:
-            logger.info(f"Sorry, can not train on a model of type {type(classifier.model)}")
-
-
-
+            logger.info(
+                f"Sorry, can not train on a model of type {type(classifier.model)}"
+            )

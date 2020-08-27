@@ -1168,7 +1168,9 @@ class LMFineTunerManual:
             self.model.to(self.device)
 
     def evaluate_all_checkpoints(
-        self, output_dir: str, per_gpu_eval_batch_size: int = 4,
+        self,
+        output_dir: str,
+        per_gpu_eval_batch_size: int = 4,
     ) -> dict:
         """
         * **output_dir** - The output directory where the model predictions and checkpoints will be written.
@@ -1213,7 +1215,10 @@ class LMFineTunerManual:
         return results
 
     def evaluate(
-        self, output_dir: str, per_gpu_eval_batch_size: int = 4, prefix: str = "",
+        self,
+        output_dir: str,
+        per_gpu_eval_batch_size: int = 4,
+        prefix: str = "",
     ) -> dict:
         """
         * **output_dir** - The output directory where the model predictions and checkpoints will be written.
@@ -1627,12 +1632,10 @@ class LMFineTunerManual:
             param.requires_grad = True
 
     def freeze(self) -> None:
-        """Freeze last classification layer group only
-        """
+        """Freeze last classification layer group only"""
         layers_len = len(list(self.model.cls.parameters()))
         self.freeze_to(-layers_len)
 
     def unfreeze(self) -> None:
-        """Unfreeze all layers
-        """
+        """Unfreeze all layers"""
         self.freeze_to(0)

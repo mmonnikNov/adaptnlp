@@ -98,7 +98,9 @@ class SequenceClassifierTrainer:
 
             # Create the text classifier
             classifier = TextClassifier(
-                document_embeddings, label_dictionary=label_dict, **kwargs,
+                document_embeddings,
+                label_dictionary=label_dict,
+                **kwargs,
             )
 
             # Initialize the text classifier trainer
