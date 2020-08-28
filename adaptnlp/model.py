@@ -12,7 +12,7 @@ class AdaptiveModel(ABC):
         model_name_or_path: Union[str, Path],
     ):
         """ Load model into the `AdaptiveModel` object as alternative constructor """
-        pass
+        raise NotImplementedError("Please Implement this method")
 
     @abstractmethod
     def predict(
@@ -22,4 +22,11 @@ class AdaptiveModel(ABC):
         **kwargs,
     ) -> List[Sentence]:
         """ Run inference on the model """
-        pass
+        raise NotImplementedError("Please Implement this method")
+
+    @abstractmethod
+    def train(
+        self,
+    ) -> None:
+        """ Run train on the model """
+        raise NotImplementedError("Please Implement this method")
