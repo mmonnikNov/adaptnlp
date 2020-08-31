@@ -238,6 +238,15 @@ class TransformersTokenTagger(AdaptiveModel):
 
         return answers
 
+    def train(
+        self,
+    ):
+        raise NotImplementedError
+
+    def evaluate(
+        self,
+    ):
+        raise NotImplementedError
 
 class FlairTokenTagger(AdaptiveModel):
     """Adaptive Model for Flair's Token Tagger...very basic
@@ -269,7 +278,6 @@ class FlairTokenTagger(AdaptiveModel):
         self,
         text: Union[List[Sentence], Sentence, List[str], str],
         mini_batch_size: int = 32,
-        use_tokenizer=True,
         **kwargs,
     ) -> List[Sentence]:
         """Predict method for running inference using the pre-trained token tagger model
@@ -278,13 +286,28 @@ class FlairTokenTagger(AdaptiveModel):
         * **mini_batch_size** - Mini batch size
         * **&ast;&ast;kwargs**(Optional) - Optional arguments for the Flair tagger
         """
-        return self.tagger.predict(
+
+        if isinstance(text, (Sentence, str)):
+            text = [text]
+        if isinstance(text[0], str):
+            text = [Sentence(s) for s in text]
+        self.tagger.predict(
             sentences=text,
             mini_batch_size=mini_batch_size,
-            use_tokenizer=use_tokenizer,
             **kwargs,
         )
+        return text
 
+    def train(
+        self,
+    ):
+        raise NotImplementedError
+
+    def evaluate(
+        self,
+    ):
+
+        raise NotImplementedError
 
 class EasyTokenTagger:
     """Token level classification models
@@ -344,7 +367,6 @@ class EasyTokenTagger:
         return tagger.predict(
             text=text,
             mini_batch_size=mini_batch_size,
-            use_tokenizer=True,
             **kwargs,
         )
 

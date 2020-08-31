@@ -158,6 +158,15 @@ class TransformersTranslator(AdaptiveModel):
 
         return dataset
 
+    def train(
+        self,
+    ):
+        raise NotImplementedError
+
+    def evaluate(
+        self,
+    ):
+        raise NotImplementedError
 
 class EasyTranslator:
     """Translation Module

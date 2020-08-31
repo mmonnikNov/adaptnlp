@@ -262,6 +262,16 @@ class TransformersQuestionAnswering(AdaptiveModel):
             examples.append(example)
         return examples
 
+    def train(
+        self,
+    ):
+        raise NotImplementedError
+
+    def evaluate(
+        self,
+    ):
+        raise NotImplementedError
+
 
 class EasyQuestionAnswering:
     """Question Answering Module

@@ -199,6 +199,15 @@ class TransformersTextGenerator(AdaptiveModel):
             for output in input_ids
         ]
 
+    def train(
+        self,
+    ):
+        raise NotImplementedError
+
+    def evaluate(
+        self,
+    ):
+        raise NotImplementedError
 
 class EasyTextGenerator:
     """Text Generation Module

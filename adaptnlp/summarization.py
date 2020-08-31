@@ -168,6 +168,17 @@ class TransformersSummarizer(AdaptiveModel):
         return dataset
 
 
+    def train(
+        self,
+    ):
+        raise NotImplementedError
+
+    def evaluate(
+        self,
+    ):
+        raise NotImplementedError
+
+
 class EasySummarizer:
     """Summarization Module
 
