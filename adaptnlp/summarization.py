@@ -153,17 +153,10 @@ class TransformersSummarizer(AdaptiveModel):
             )
 
         # Bart doesn't use `token_type_ids`
-        if isinstance(self.model, T5ForConditionalGeneration):
-            dataset = TensorDataset(
-                tokenized_text["input_ids"],
-                tokenized_text["attention_mask"],
-                tokenized_text["token_type_ids"],
-            )
-        else:
-            dataset = TensorDataset(
-                tokenized_text["input_ids"],
-                tokenized_text["attention_mask"],
-            )
+        dataset = TensorDataset(
+            tokenized_text["input_ids"],
+            tokenized_text["attention_mask"],
+        )
 
         return dataset
 
