@@ -8,6 +8,7 @@ from torch.utils.data import TensorDataset, DataLoader
 from transformers import (
     AutoTokenizer,
     AutoModelWithLMHead,
+    AutoModelForCausalLM,
     PreTrainedTokenizer,
     PreTrainedModel,
     T5ForConditionalGeneration,
@@ -51,7 +52,7 @@ class TransformersTextGenerator(AdaptiveModel):
         * **model_name_or_path** - A key string of one of Transformer's pre-trained Language Model
         """
         tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, pad_token="<PAD>")
-        model = AutoModelWithLMHead.from_pretrained(model_name_or_path)
+        model = AutoModelForCausalLM.from_pretrained(model_name_or_path)
         generator = cls(tokenizer, model)
         return generator
 
@@ -113,23 +114,13 @@ class TransformersTextGenerator(AdaptiveModel):
         tokenized_text = self.tokenizer.batch_encode_plus(
             text,
             return_tensors="pt",
-            max_length=512,
-            pad_to_max_length=True,
-            add_special_tokens=True,
+            padding='longest',
         )
 
-        # Bart doesn't use `token_type_ids`
-        if isinstance(self.model, T5ForConditionalGeneration):
-            dataset = TensorDataset(
-                tokenized_text["input_ids"],
-                tokenized_text["attention_mask"],
-                tokenized_text["token_type_ids"],
-            )
-        else:
-            dataset = TensorDataset(
-                tokenized_text["input_ids"],
-                tokenized_text["attention_mask"],
-            )
+        dataset = TensorDataset(
+            tokenized_text["input_ids"],
+            tokenized_text["attention_mask"],
+        )
 
         return dataset
 
