@@ -28,5 +28,12 @@ class AdaptiveModel(ABC):
     def train(
         self,
     ) -> None:
-        """ Run train on the model """
+        """ Evaluate on the model """
+        raise NotImplementedError("Please Implement this method")
+
+    @abstractmethod
+    def evaluate(
+        self,
+    ) -> None:
+        """ Evaluate on the model """
         raise NotImplementedError("Please Implement this method")

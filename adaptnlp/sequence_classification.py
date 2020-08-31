@@ -1,6 +1,7 @@
 import logging
-from typing import List, Dict, Union, Tuple
+from typing import List, Dict, Union, Tuple, Callable
 from collections import defaultdict
+from pathlib import Path
 
 import torch
 from torch import nn
@@ -54,6 +55,9 @@ class TransformersSequenceClassifier(AdaptiveModel):
         # Load up model and tokenizer
         self.tokenizer = tokenizer
         self.model = model
+
+        # Load empty trainer
+        self.trainer = None
 
         # Setup cuda and automatic allocation of model
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -197,6 +201,7 @@ class TransformersSequenceClassifier(AdaptiveModel):
         eval_dataset: nlp.Dataset,
         text_col_nm: str = "text",
         label_col_nm: str = "label",
+        compute_metrics: Callable = None,
     ) -> None:
         """Trains and/or finetunes the sequence classification model
 
@@ -205,13 +210,17 @@ class TransformersSequenceClassifier(AdaptiveModel):
         * **eval_dataset** - Eval `Dataset` class object from the nlp library
         * **text_col_nm** - Name of the text feature column used as training data (Default "text")
         * **label_col_nm** - Name of the label feature column (Default "label")
+        * **compute_metrics** - Custom metrics function callable for `transformers.Trainer`'s compute metrics
         * **return** - None
         """
+        # Set default metrics if None
+        if not compute_metrics:
+            compute_metrics = self._default_metrics
 
         # Set nlp.Dataset label values in sequence classifier configuration
         ## Important NOTE: Updating configurations do not update the sequence classification head module layer
         ## We are manually initializing a new linear layer for the "new" labels being trained
-        class_label = train_dataset.features["label"]
+        class_label = train_dataset.features[label_col_nm]
         config_data = {
             "num_labels": class_label.num_classes,
             "id2label": {v: n for v, n in enumerate(class_label.names)},
@@ -222,9 +231,7 @@ class TransformersSequenceClassifier(AdaptiveModel):
 
         # Batch map datasets as torch tensors with tokenizer
         def tokenize(batch):
-            return self.tokenizer(
-                batch[text_col_nm], padding=True, truncation=True
-            )
+            return self.tokenizer(batch[text_col_nm], padding=True, truncation=True)
 
         train_dataset = train_dataset.map(
             tokenize, batch_size=len(train_dataset), batched=True
@@ -238,16 +245,6 @@ class TransformersSequenceClassifier(AdaptiveModel):
         eval_dataset.set_format(
             "torch", columns=["input_ids", "attention_mask", label_col_nm]
         )
-
-        # Setup default metrics for sequence classification training
-        def compute_metrics(pred):
-            labels = pred.label_ids
-            preds = pred.predictions.argmax(-1)
-            precision, recall, f1, _ = precision_recall_fscore_support(
-                labels, preds, average=None
-            )
-            acc = accuracy_score(labels, preds)
-            return {"accuracy": acc, "f1": f1, "precision": precision, "recall": recall}
 
         # Instantiate transformers trainer
         self.trainer = Trainer(
@@ -264,27 +261,25 @@ class TransformersSequenceClassifier(AdaptiveModel):
         self.tokenizer.save_pretrained(training_args.output_dir)
 
     def evaluate(self) -> Dict[str, float]:
+        """Evaluates model specified
+
+        * **model_name_or_path** - The model name key or model path
+        """
         if not self.trainer:
-            logger.info(
-                "No trainer loaded, you should probably run `classifier.train(...)` first"
-            )
-            return None
+            logger.info("No trainer loaded, must run `classifier.train(...)` first")
+            ValueError("Trainer not found, must run train() method")
         return self.trainer.evaluate()
 
-    def _mutate_model_head(
-        self, class_label: ClassLabel
-    ) -> None:
+    def _mutate_model_head(self, class_label: ClassLabel) -> None:
         """Manually intialize new linear layers for prediction heads on specific language models that we're trying to train on"""
-        if isinstance(
-            self.model, (BertPreTrainedModel, DistilBertPreTrainedModel)
-        ):
+        if isinstance(self.model, (BertPreTrainedModel, DistilBertPreTrainedModel)):
             self.model.classifier = nn.Linear(
                 self.model.config.hidden_size, class_label.num_classes
             )
             self.model.num_labels = class_label.num_classes
         elif isinstance(self.model, XLMPreTrainedModel):
             self.model.num_labels = class_label.num_classes
-        elif isinstance(classifier.model, XLNetPreTrainedModel):
+        elif isinstance(self.model, XLNetPreTrainedModel):
             self.model.logits_proj = nn.Linear(
                 self.model.config.d_model, class_label.num_classes
             )
@@ -292,9 +287,17 @@ class TransformersSequenceClassifier(AdaptiveModel):
         elif isinstance(self.model, ElectraPreTrainedModel):
             self.model.num_labels = class_label.num_classes
         else:
-            logger.info(
-                f"Sorry, can not train on a model of type {type(self.model)}"
-            )
+            logger.info(f"Sorry, can not train on a model of type {type(self.model)}")
+
+    # Setup default metrics for sequence classification training
+    def _default_metrics(self, pred) -> Dict:
+        labels = pred.label_ids
+        preds = pred.predictions.argmax(-1)
+        precision, recall, f1, _ = precision_recall_fscore_support(
+            labels, preds, average=None
+        )
+        acc = accuracy_score(labels, preds)
+        return {"accuracy": acc, "f1": f1, "precision": precision, "recall": recall}
 
 
 class FlairSequenceClassifier(AdaptiveModel):
@@ -344,6 +347,9 @@ class FlairSequenceClassifier(AdaptiveModel):
         )
 
     def train(self):
+        pass
+
+    def evaluate(self):
         pass
 
 
@@ -431,26 +437,28 @@ class EasySequenceClassifier:
                 **kwargs,
             )
         return sentences
-        
+
     def train(
         self,
         training_args: TrainingArguments,
-        train_dataset: nlp.Dataset,
-        eval_dataset: nlp.Dataset,
+        train_dataset: Union[str, Path, nlp.Dataset],
+        eval_dataset: Union[str, Path, nlp.Dataset],
         model_name_or_path: str = "bert-base-uncased",
         text_col_nm: str = "text",
         label_col_nm: str = "label",
+        label_names: List[str] = None,
     ) -> None:
-        '''Trains and/or finetunes the sequence classification model
+        """Trains and/or finetunes the sequence classification model
 
         * **model_name_or_path** - The model name key or model path
         * **training_args** - Transformers `TrainingArguments` object model
-        * **train_dataset** - Training `Dataset` class object from the nlp library
-        * **eval_dataset** - Eval `Dataset` class object from the nlp library
+        * **train_dataset** - Training `Dataset` class object from the nlp library or path to CSV file (labels must be int values)
+        * **eval_dataset** - Eval `Dataset` class object from the nlp library or path to CSV file (labels must be int values)
         * **text_col_nm** - Name of the text feature column used as training data (Default "text")
         * **label_col_nm** - Name of the label feature column (Default "label")
+        * **label_names** - (Only when loading CSV) An ordered list of label strings with int label mapped to string via. index value
         * **return** - None
-        ''' 
+        """
 
         # Dynamically load sequence classifier
         if not self.sequence_classifiers[model_name_or_path]:
@@ -462,36 +470,51 @@ class EasySequenceClassifier:
                 logger.info("Try transformers model")
 
         classifier = self.sequence_classifiers[model_name_or_path]
+
+        # Check if csv filepath or `nlp.Dataset`
+        if not isinstance(train_dataset, nlp.Dataset):
+            train_dataset = self._csv2nlp(
+                data_path=train_dataset,
+                label_col_nm=label_col_nm,
+                label_names=label_names,
+            )
+        if not isinstance(eval_dataset, nlp.Dataset):
+            eval_dataset = self._csv2nlp(
+                data_path=eval_dataset,
+                label_col_nm=label_col_nm,
+                label_names=label_names,
+            )
 
         classifier.train(
             training_args=training_args,
             train_dataset=train_dataset,
             eval_dataset=eval_dataset,
             text_col_nm=text_col_nm,
-            label_col_nm=label_col_nm
+            label_col_nm=label_col_nm,
         )
 
-
-"""
-    def train(
+    def release_model(
         self,
-        training_args: TrainingArguments,
-        train_dataset: nlp.Dataset,
-        eval_dataset: nlp.Dataset,
-        model_name_or_path: str = "bert-base-uncased",
-        text_col_nm: str = "text",
-        label_col_nm: str = "label",
+        model_name_or_path: str,
     ) -> None:
-        '''Trains and/or finetunes the sequence classification model
+        """Unload model from classifier and empty cuda mem cache (may leave residual cache per pytorch documentation on torch.cuda.empty_cache())
+
+        * **model_name_or_path** - The model name or key path that you want to unload and release memory from
+        """
+        if self.sequence_classifiers[model_name_or_path].trainer:
+            del self.sequence_classifiers[model_name_or_path].trainer
+        del self.sequence_classifiers[model_name_or_path]
+        torch.cuda.empty_cache()
+
+    def evaluate(
+        self,
+        model_name_or_path: str = "bert-base-uncased",
+    ) -> Dict[str, float]:
+        """Evaluates model specified
 
         * **model_name_or_path** - The model name key or model path
-        * **training_args** - Transformers `TrainingArguments` object model
-        * **train_dataset** - Training `Dataset` class object from the nlp library
-        * **eval_dataset** - Eval `Dataset` class object from the nlp library
-        * **text_col_nm** - Name of the text feature column used as training data (Default "text")
-        * **label_col_nm** - Name of the label feature column (Default "label")
-        * **return** - None
-        ''' 
+        """
+
         # Dynamically load sequence classifier
         if not self.sequence_classifiers[model_name_or_path]:
             try:
@@ -503,92 +526,21 @@ class EasySequenceClassifier:
 
         classifier = self.sequence_classifiers[model_name_or_path]
 
-        # Set nlp.Dataset label values in sequence classifier configuration
-        ## Important NOTE: Updating configurations do not update the sequence classification head module layer
-        ## We are manually initializing a new linear layer for the "new" labels being trained
-        class_label = train_dataset.features["label"]
-        config_data = {
-            "num_labels": class_label.num_classes,
-            "id2label": {v: n for v, n in enumerate(class_label.names)},
-            "label2id": {n: v for v, n in enumerate(class_label.names)},
-        }
-        classifier.model.config.update(config_data)
-        self._mutate_model_head(classifier=classifier, class_label=class_label)
+        return classifier.evaluate()
 
-        # Batch map datasets as torch tensors with tokenizer
-        def tokenize(batch):
-            return classifier.tokenizer(
-                batch[text_col_nm], padding=True, truncation=True
+    def _csv2nlp(
+        self,
+        data_path: Union[str, Path],
+        label_col_nm: str,
+        label_names: List[str],
+    ) -> nlp.Dataset:
+        """Loads CSV path as an nlp.Dataset for downstream use"""
+        if not label_names:
+            raise ValueError(
+                "Must pass in `label_names` parameter for training when loading in CSV datasets."
             )
-
-        train_dataset = train_dataset.map(
-            tokenize, batch_size=len(train_dataset), batched=True
-        )
-        eval_dataset = eval_dataset.map(
-            tokenize, batch_size=len(eval_dataset), batched=True
-        )
-        train_dataset.set_format(
-            "torch", columns=["input_ids", "attention_mask", label_col_nm]
-        )
-        eval_dataset.set_format(
-            "torch", columns=["input_ids", "attention_mask", label_col_nm]
-        )
-
-        # Setup default metrics for sequence classification training
-        def compute_metrics(pred):
-            labels = pred.label_ids
-            preds = pred.predictions.argmax(-1)
-            precision, recall, f1, _ = precision_recall_fscore_support(
-                labels, preds, average=None
-            )
-            acc = accuracy_score(labels, preds)
-            return {"accuracy": acc, "f1": f1, "precision": precision, "recall": recall}
-
-        # Instantiate transformers trainer
-        self.trainer = Trainer(
-            model=classifier.model,
-            args=training_args,
-            train_dataset=train_dataset,
-            eval_dataset=eval_dataset,
-            compute_metrics=compute_metrics,
-        )
-
-        # Train and serialize
-        self.trainer.train()
-        self.trainer.save_model()
-        classifier.tokenizer.save_pretrained(training_args.output_dir)
-
-    def evaluate(self) -> Dict[str, float]:
-        if not self.trainer:
-            logger.info(
-                "No trainer loaded, you should probably run `classifier.train(...)` first"
-            )
-            return None
-        return self.trainer.evaluate()
-
-    def _mutate_model_head(
-        self, classifier: PreTrainedModel, class_label: ClassLabel
-    ) -> None:
-        '''Manually intialize new linear layers for prediction heads on specific language models that we're trying to train on'''
-        if isinstance(
-            classifier.model, (BertPreTrainedModel, DistilBertPreTrainedModel)
-        ):
-            classifier.model.classifier = nn.Linear(
-                classifier.model.config.hidden_size, class_label.num_classes
-            )
-            classifier.model.num_labels = class_label.num_classes
-        elif isinstance(classifier.model, XLMPreTrainedModel):
-            classifier.model.num_labels = class_label.num_classes
-        elif isinstance(classifier.model, XLNetPreTrainedModel):
-            classifier.model.logits_proj = nn.Linear(
-                classifier.model.config.d_model, class_label.num_classes
-            )
-            classifier.model.num_labels = class_label.num_classes
-        elif isinstance(classifier.model, ElectraPreTrainedModel):
-            classifier.model.num_labels = class_label.num_classes
-        else:
-            logger.info(
-                f"Sorry, can not train on a model of type {type(classifier.model)}"
-            )
-
-"""
+        class_label = nlp.ClassLabel(num_classes=len(label_names), names=label_names)
+        dataset = nlp.load_dataset("csv", data_files=data_path)
+        dataset = dataset["train"]
+        dataset.features[label_col_nm] = class_label
+        return dataset
