@@ -52,6 +52,7 @@ class LMFineTuner:
         self.tokenizer = AutoTokenizer.from_pretrained(
             model_name_or_path, use_fast=True
         )
+        # TODO: AutoModelWithLMHead deprecated, update to causal, mask, or seq2seq
         self.model = AutoModelWithLMHead.from_pretrained(model_name_or_path)
         self.trainer = None
 

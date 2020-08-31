@@ -7,7 +7,7 @@ from torch.utils.data import TensorDataset, DataLoader
 
 from transformers import (
     AutoTokenizer,
-    AutoModelWithLMHead,
+    AutoModelForSeq2SeqLM,
     PreTrainedTokenizer,
     PreTrainedModel,
     T5ForConditionalGeneration,
@@ -52,7 +52,7 @@ class TransformersTranslator(AdaptiveModel):
         * **model_name_or_path** - A key string of one of Transformer's pre-trained translator Model
         """
         tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
-        model = AutoModelWithLMHead.from_pretrained(model_name_or_path)
+        model = AutoModelForSeq2SeqLM.from_pretrained(model_name_or_path)
         translator = cls(tokenizer, model)
         return translator
 
@@ -139,7 +139,7 @@ class TransformersTranslator(AdaptiveModel):
             text,
             return_tensors="pt",
             max_length=512,
-            pad_to_max_length=True,
+            padding='max_length',
             add_special_tokens=True,
         )
 
