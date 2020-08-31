@@ -139,7 +139,7 @@ class TransformersTranslator(AdaptiveModel):
             text,
             return_tensors="pt",
             max_length=512,
-            padding='max_length',
+            padding="max_length",
             add_special_tokens=True,
         )
 
@@ -159,6 +159,7 @@ class TransformersTranslator(AdaptiveModel):
         self,
     ):
         raise NotImplementedError
+
 
 class EasyTranslator:
     """Translation Module

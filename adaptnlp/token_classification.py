@@ -248,6 +248,7 @@ class TransformersTokenTagger(AdaptiveModel):
     ):
         raise NotImplementedError
 
+
 class FlairTokenTagger(AdaptiveModel):
     """Adaptive Model for Flair's Token Tagger...very basic
 
@@ -308,6 +309,7 @@ class FlairTokenTagger(AdaptiveModel):
     ):
 
         raise NotImplementedError
+
 
 class EasyTokenTagger:
     """Token level classification models

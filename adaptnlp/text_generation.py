@@ -7,11 +7,9 @@ from torch.utils.data import TensorDataset, DataLoader
 
 from transformers import (
     AutoTokenizer,
-    AutoModelWithLMHead,
     AutoModelForCausalLM,
     PreTrainedTokenizer,
     PreTrainedModel,
-    T5ForConditionalGeneration,
 )
 
 from tqdm import tqdm
@@ -114,7 +112,7 @@ class TransformersTextGenerator(AdaptiveModel):
         tokenized_text = self.tokenizer.batch_encode_plus(
             text,
             return_tensors="pt",
-            padding='longest',
+            padding="longest",
         )
 
         dataset = TensorDataset(
@@ -199,6 +197,7 @@ class TransformersTextGenerator(AdaptiveModel):
         self,
     ):
         raise NotImplementedError
+
 
 class EasyTextGenerator:
     """Text Generation Module

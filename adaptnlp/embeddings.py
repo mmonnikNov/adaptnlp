@@ -10,7 +10,7 @@ from flair.embeddings import (
     FlairEmbeddings,
     DocumentPoolEmbeddings,
     DocumentRNNEmbeddings,
-    TransformerWordEmbeddings
+    TransformerWordEmbeddings,
 )
 
 logger = logging.getLogger(__name__)
@@ -150,7 +150,9 @@ class EasyWordEmbeddings:
                     self.models[model_name_or_path] = WordEmbeddings(model_name_or_path)
                 except ValueError:
                     try:
-                        self.models[model_name_or_path] = TransformerWordEmbeddings(model_name_or_path)
+                        self.models[model_name_or_path] = TransformerWordEmbeddings(
+                            model_name_or_path
+                        )
                     except ValueError:
                         raise ValueError(
                             f"Embeddings not found for the model key: {model_name_or_path}, check documentation or custom model path to verify specified model"
@@ -221,7 +223,9 @@ class EasyStackedEmbeddings:
                     self.embedding_stack.append(WordEmbeddings(model_name_or_path))
                 except ValueError:
                     try:
-                        self.embedding_stack.append(TransformerWordEmbeddings(model_name_or_path))
+                        self.embedding_stack.append(
+                            TransformerWordEmbeddings(model_name_or_path)
+                        )
                     except ValueError:
                         raise ValueError(
                             f"Embeddings not found for the model key: {model_name_or_path}, check documentation or custom model path to verify specified model"
@@ -331,7 +335,9 @@ class EasyDocumentEmbeddings:
                     self.embedding_stack.append(WordEmbeddings(model_name_or_path))
                 except ValueError:
                     try:
-                        self.embedding_stack.append(TransformerWordEmbeddings(model_name_or_path))
+                        self.embedding_stack.append(
+                            TransformerWordEmbeddings(model_name_or_path)
+                        )
                     except ValueError:
                         raise ValueError(
                             f"Embeddings not found for the model key: {model_name_or_path}, check documentation or custom model path to verify specified model"

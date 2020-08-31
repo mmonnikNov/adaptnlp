@@ -142,13 +142,13 @@ class TransformersSummarizer(AdaptiveModel):
                 return_tensors="pt",
                 max_length=1024,
                 add_special_tokens=True,
-                padding='max_length',
+                padding="max_length",
             )
         else:
             tokenized_text = self.tokenizer.batch_encode_plus(
                 text,
                 return_tensors="pt",
-                padding='max_length',
+                padding="max_length",
                 add_special_tokens=True,
             )
 
@@ -159,7 +159,6 @@ class TransformersSummarizer(AdaptiveModel):
         )
 
         return dataset
-
 
     def train(
         self,
