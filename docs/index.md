@@ -39,7 +39,8 @@ Learning Researchers and Scientists a modular and **adaptive** approach to a var
     - <em> More in development </em>
   - Training and Fine-tuning Interface
     - Jeremy's **[ULM-FIT](https://arxiv.org/abs/1801.06146)** approach for transfer learning in NLP
-    -  Fine-tuning Transformer's language models and task-specific predictive heads like Flair's `SequenceClassifier`
+    - Fine-tuning Transformer's language models and task-specific predictive heads like Flair's `SequenceClassifier`
+    - Integration with Transformer's Trainer Module for fast and easy transfer learning with custom datasets
   - [Rapid NLP Model Deployment](https://github.com/Novetta/adaptnlp/tree/master/rest) with Sebastián's [FastAPI](https://github.com/tiangolo/fastapi) Framework
     - Containerized FastAPI app
     - Immediately deploy any custom trained Flair or AdaptNLP model
@@ -115,23 +116,40 @@ Span [9]: "Virginia"  [− Labels: LOC (1.0)]
 
 ```python
 from adaptnlp import EasySequenceClassifier 
+from pprint import pprint
 
 ## Example Text
-example_text = "Novetta is a great company that was chosen as one of top 50 great places to work!"
+example_text = "This didn't work at all"
 
-## Load the sequence classifier module and classify sequence of text with the english sentiment model 
+## Load the sequence classifier module and classify sequence of text with the multi-lingual sentiment model 
 classifier = EasySequenceClassifier()
-sentences = classifier.tag_text(text=example_text, mini_batch_size=1, model_name_or_path="en-sentiment")
+sentences = classifier.tag_text(
+    text=example_text,
+    model_name_or_path="nlptown/bert-base-multilingual-uncased-sentiment",
+    mini_batch_size=1,
+)
 
 ## Output labeled text results in Flair's Sentence object model
+print("Tag Score Outputs:\n")
 for sentence in sentences:
-    print(sentence.labels)
+    pprint({sentence.to_original_text(): sentence.labels})
 
 ```
 <details class = "summary">
 <summary>Output</summary>
 ```python
-[POSITIVE (0.9983)]
+    2020-08-31 02:21:25,011 loading file nlptown/bert-base-multilingual-uncased-sentiment
+
+
+    Predicting text: 100%|██████████| 1/1 [00:00<00:00, 98.67it/s]
+
+    Tag Score Outputs:
+    
+    {"This didn't work at all": [1 star (0.8421),
+                                 2 stars (0.1379),
+                                 3 stars (0.018),
+                                 4 stars (0.0012),
+                                 5 stars (0.0007)]}
 ```
 </details>
 
