@@ -8,10 +8,11 @@ from flair.data import Sentence
 class AdaptiveModel(ABC):
     @abstractmethod
     def load(
-        self, model_name_or_path: Union[str, Path],
+        self,
+        model_name_or_path: Union[str, Path],
     ):
         """ Load model into the `AdaptiveModel` object as alternative constructor """
-        pass
+        raise NotImplementedError("Please Implement this method")
 
     @abstractmethod
     def predict(
@@ -21,4 +22,18 @@ class AdaptiveModel(ABC):
         **kwargs,
     ) -> List[Sentence]:
         """ Run inference on the model """
-        pass
+        raise NotImplementedError("Please Implement this method")
+
+    @abstractmethod
+    def train(
+        self,
+    ) -> None:
+        """ Evaluate on the model """
+        raise NotImplementedError("Please Implement this method")
+
+    @abstractmethod
+    def evaluate(
+        self,
+    ) -> None:
+        """ Evaluate on the model """
+        raise NotImplementedError("Please Implement this method")

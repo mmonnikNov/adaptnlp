@@ -7,7 +7,7 @@ from torch.utils.data import TensorDataset, DataLoader
 
 from transformers import (
     AutoTokenizer,
-    AutoModelWithLMHead,
+    AutoModelForSeq2SeqLM,
     PreTrainedTokenizer,
     PreTrainedModel,
     T5ForConditionalGeneration,
@@ -22,20 +22,20 @@ logger = logging.getLogger(__name__)
 
 
 class TransformersSummarizer(AdaptiveModel):
-    """ Adaptive model for Transformer's Conditional Generation or Language Models (Transformer's T5 and Bart
-        conditiional generation models have a language modeling head)
+    """Adaptive model for Transformer's Conditional Generation or Language Models (Transformer's T5 and Bart
+    conditiional generation models have a language modeling head)
 
-        Usage:
-        ```python
-        >>> summarizer = TransformersSummarizer.load("transformers-summarizer-model")
-        >>> summarizer.predict(text="Example text", mini_batch_size=32)
-        ```
+    Usage:
+    ```python
+    >>> summarizer = TransformersSummarizer.load("transformers-summarizer-model")
+    >>> summarizer.predict(text="Example text", mini_batch_size=32)
+    ```
 
-        **Parameters:**
+    **Parameters:**
 
-        * **tokenizer** - A tokenizer object from Huggingface's transformers (TODO)and tokenizers
-        * **model** - A transformers Conditional Generation (Bart or T5) or Language model
-        """
+    * **tokenizer** - A tokenizer object from Huggingface's transformers (TODO)and tokenizers
+    * **model** - A transformers Conditional Generation (Bart or T5) or Language model
+    """
 
     def __init__(self, tokenizer: PreTrainedTokenizer, model: PreTrainedModel):
         # Load up model and tokenizer
@@ -49,12 +49,12 @@ class TransformersSummarizer(AdaptiveModel):
 
     @classmethod
     def load(cls, model_name_or_path: str) -> AdaptiveModel:
-        """ Class method for loading and constructing this classifier
+        """Class method for loading and constructing this classifier
 
-         * **model_name_or_path** - A key string of one of Transformer's pre-trained Summarizer Model
+        * **model_name_or_path** - A key string of one of Transformer's pre-trained Summarizer Model
         """
         tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
-        model = AutoModelWithLMHead.from_pretrained(model_name_or_path)
+        model = AutoModelForSeq2SeqLM.from_pretrained(model_name_or_path)
         summarizer = cls(tokenizer, model)
         return summarizer
 
@@ -68,7 +68,7 @@ class TransformersSummarizer(AdaptiveModel):
         early_stopping: bool = True,
         **kwargs,
     ) -> List[str]:
-        """ Predict method for running inference using the pre-trained sequence classifier model
+        """Predict method for running inference using the pre-trained sequence classifier model
 
         * **text** - String, list of strings, sentences, or list of sentences to run inference on
         * **mini_batch_size** - Mini batch size
@@ -142,33 +142,37 @@ class TransformersSummarizer(AdaptiveModel):
                 return_tensors="pt",
                 max_length=1024,
                 add_special_tokens=True,
-                pad_to_max_length=True,
+                padding="max_length",
             )
         else:
             tokenized_text = self.tokenizer.batch_encode_plus(
                 text,
                 return_tensors="pt",
-                pad_to_max_length=True,
+                padding="max_length",
                 add_special_tokens=True,
             )
 
         # Bart doesn't use `token_type_ids`
-        if isinstance(self.model, T5ForConditionalGeneration):
-            dataset = TensorDataset(
-                tokenized_text["input_ids"],
-                tokenized_text["attention_mask"],
-                tokenized_text["token_type_ids"],
-            )
-        else:
-            dataset = TensorDataset(
-                tokenized_text["input_ids"], tokenized_text["attention_mask"],
-            )
+        dataset = TensorDataset(
+            tokenized_text["input_ids"],
+            tokenized_text["attention_mask"],
+        )
 
         return dataset
 
+    def train(
+        self,
+    ):
+        raise NotImplementedError
+
+    def evaluate(
+        self,
+    ):
+        raise NotImplementedError
+
 
 class EasySummarizer:
-    """ Summarization Module
+    """Summarization Module
 
     Usage:
 
@@ -193,10 +197,10 @@ class EasySummarizer:
         early_stopping: bool = True,
         **kwargs,
     ) -> List[str]:
-        """ Predict method for running inference using the pre-trained sequence classifier model
+        """Predict method for running inference using the pre-trained sequence classifier model
 
         * **text** - String, list of strings, sentences, or list of sentences to run inference on
-        * **model_name_or_path** - A String model id or path to a pre-trained model repository or custom trained model directory 
+        * **model_name_or_path** - A String model id or path to a pre-trained model repository or custom trained model directory
         * **mini_batch_size** - Mini batch size
         * **num_beams** - Number of beams for beam search. Must be between 1 and infinity. 1 means no beam search.  Default to 4.
         * **min_length** -  The min length of the sequence to be generated. Default to 0

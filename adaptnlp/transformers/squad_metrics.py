@@ -666,9 +666,9 @@ def compute_predictions_log_probs(
     output_nbest_file=None,
     output_null_log_odds_file=None,
 ):
-    """ XLNet write prediction logic (more complex than Bert's).
-        Write final predictions to the json file and log-odds of null if needed.
-        Requires utils_squad_evaluate.py
+    """XLNet write prediction logic (more complex than Bert's).
+    Write final predictions to the json file and log-odds of null if needed.
+    Requires utils_squad_evaluate.py
     """
     _PrelimPrediction = collections.namedtuple(  # pylint: disable=invalid-name
         "PrelimPrediction",

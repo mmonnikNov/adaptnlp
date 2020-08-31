@@ -7,7 +7,7 @@ from torch.utils.data import TensorDataset, DataLoader
 
 from transformers import (
     AutoTokenizer,
-    AutoModelWithLMHead,
+    AutoModelForSeq2SeqLM,
     PreTrainedTokenizer,
     PreTrainedModel,
     T5ForConditionalGeneration,
@@ -21,20 +21,20 @@ logger = logging.getLogger(__name__)
 
 
 class TransformersTranslator(AdaptiveModel):
-    """ Adaptive model for Transformer's Conditional Generation or Language Models (Transformer's T5 and Bart
-        conditional generation models have a language modeling head)
+    """Adaptive model for Transformer's Conditional Generation or Language Models (Transformer's T5 and Bart
+    conditional generation models have a language modeling head)
 
-        Usage:
-        ```python
-        >>> translator = TransformersTranslator.load("transformers-translator-model")
-        >>> translator.predict(text="Example text", mini_batch_size=32)
-        ```
+    Usage:
+    ```python
+    >>> translator = TransformersTranslator.load("transformers-translator-model")
+    >>> translator.predict(text="Example text", mini_batch_size=32)
+    ```
 
-        **Parameters:**
+    **Parameters:**
 
-        * **tokenizer** - A tokenizer object from Huggingface's transformers (TODO)and tokenizers
-        * **model** - A transformers Conditional Generation (Bart or T5) or Language model
-        """
+    * **tokenizer** - A tokenizer object from Huggingface's transformers (TODO)and tokenizers
+    * **model** - A transformers Conditional Generation (Bart or T5) or Language model
+    """
 
     def __init__(self, tokenizer: PreTrainedTokenizer, model: PreTrainedModel):
         # Load up model and tokenizer
@@ -47,12 +47,12 @@ class TransformersTranslator(AdaptiveModel):
 
     @classmethod
     def load(cls, model_name_or_path: str) -> AdaptiveModel:
-        """ Class method for loading and constructing this classifier
+        """Class method for loading and constructing this classifier
 
-         * **model_name_or_path** - A key string of one of Transformer's pre-trained translator Model
+        * **model_name_or_path** - A key string of one of Transformer's pre-trained translator Model
         """
         tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
-        model = AutoModelWithLMHead.from_pretrained(model_name_or_path)
+        model = AutoModelForSeq2SeqLM.from_pretrained(model_name_or_path)
         translator = cls(tokenizer, model)
         return translator
 
@@ -67,7 +67,7 @@ class TransformersTranslator(AdaptiveModel):
         early_stopping: bool = True,
         **kwargs,
     ) -> List[str]:
-        """ Predict method for running inference using the pre-trained sequence classifier model.  Keyword arguments
+        """Predict method for running inference using the pre-trained sequence classifier model.  Keyword arguments
         for parameters of the method `Transformers.PreTrainedModel.generate()` can be used as well.
 
         * **text** - String, list of strings, sentences, or list of sentences to run inference on
@@ -139,27 +139,30 @@ class TransformersTranslator(AdaptiveModel):
             text,
             return_tensors="pt",
             max_length=512,
-            pad_to_max_length=True,
+            padding="max_length",
             add_special_tokens=True,
         )
 
         # Bart doesn't use `token_type_ids`
-        if isinstance(self.model, T5ForConditionalGeneration):
-            dataset = TensorDataset(
-                tokenized_text["input_ids"],
-                tokenized_text["attention_mask"],
-                tokenized_text["token_type_ids"],
-            )
-        else:
-            dataset = TensorDataset(
-                tokenized_text["input_ids"], tokenized_text["attention_mask"],
-            )
-
+        dataset = TensorDataset(
+            tokenized_text["input_ids"],
+            tokenized_text["attention_mask"],
+        )
         return dataset
+
+    def train(
+        self,
+    ):
+        raise NotImplementedError
+
+    def evaluate(
+        self,
+    ):
+        raise NotImplementedError
 
 
 class EasyTranslator:
-    """ Translation Module
+    """Translation Module
 
     Usage:
 
@@ -185,11 +188,11 @@ class EasyTranslator:
         early_stopping: bool = True,
         **kwargs,
     ) -> List[str]:
-        """ Predict method for running inference using the pre-trained sequence classifier model. Keyword arguments
+        """Predict method for running inference using the pre-trained sequence classifier model. Keyword arguments
         for parameters of the method `Transformers.PreTrainedModel.generate()` can be used as well.
 
         * **text** - String, list of strings, sentences, or list of sentences to run inference on
-        * **model_name_or_path** - A String model id or path to a pre-trained model repository or custom trained model directory 
+        * **model_name_or_path** - A String model id or path to a pre-trained model repository or custom trained model directory
         * **t5_prefix**(Optional) - The pre-appended prefix for the specificied task. Only in use for T5-type models.
         * **mini_batch_size** - Mini batch size
         * **num_beams** - Number of beams for beam search. Must be between 1 and infinity. 1 means no beam search.  Default to 1.

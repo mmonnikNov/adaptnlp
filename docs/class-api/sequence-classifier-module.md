@@ -2,7 +2,7 @@
 
 ::: adaptnlp.EasySequenceClassifier
     :docstring:
-    :members: tag_text tag_all
+    :members: tag_text release_model train evaluate
 
 ## `FlairSequenceClassifier`
 

@@ -1,4 +1,4 @@
-from adaptnlp import LMFineTuner
+from adaptnlp import LMFineTunerManual
 
 
 def test_language_model_fine_tuner():
@@ -6,7 +6,7 @@ def test_language_model_fine_tuner():
     eval_data_file = "Path/to/test.csv"
 
     # Instantiate Finetuner with Desired Language Model
-    finetuner = LMFineTuner(
+    finetuner = LMFineTunerManual(
         train_data_file=train_data_file,
         eval_data_file=eval_data_file,
         model_type="bert",

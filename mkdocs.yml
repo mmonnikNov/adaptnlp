@@ -39,9 +39,11 @@ nav:
         - Question Answering: 'class-api/question-answering-module.md'
         - Summarizer: 'class-api/summarizer-module.md'
         - Translator: 'class-api/translator-module.md'
+        - Text Generator: 'class-api/text-generator-module.md'
       - Training and Fine-tuning:
         - Sequence Classifier Trainer: 'class-api/sequence-classifier-trainer-module.md'
-        - Language Model Fine-tuning: 'class-api/language-model-finetuner-module.md'
+        - Language Model Fine-tuning: 'class-api/language-model-module.md'
+        - Language Model Fine-tuning Manual: 'class-api/language-model-finetuner-module.md'
   - Contributing: 'contributing.md'
 
 markdown_extensions:

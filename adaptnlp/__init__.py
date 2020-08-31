@@ -17,10 +17,12 @@ from .question_answering import EasyQuestionAnswering, TransformersQuestionAnswe
 from .summarization import EasySummarizer, TransformersSummarizer
 from .translation import EasyTranslator, TransformersTranslator
 from .text_generation import EasyTextGenerator, TransformersTextGenerator
+from .language_model import LMFineTuner
 
 # Training and Fine-tuning Modules
+# TODO: Deprecating in 0.3.0+
 from .training import SequenceClassifierTrainer
-from .transformers.finetuning import LMFineTuner
+from .transformers.finetuning import LMFineTunerManual
 
 # global variable like flair's: cache_root
 cache_root = Path(Path.home(), ".adaptnlp")
@@ -48,4 +50,5 @@ __all__ = [
     "TransformersTextGenerator",
     "SequenceClassifierTrainer",
     "LMFineTuner",
+    "LMFineTunerManual",
 ]

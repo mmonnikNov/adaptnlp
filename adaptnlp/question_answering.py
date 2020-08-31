@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class TransformersQuestionAnswering(AdaptiveModel):
-    """ Adaptive Model for Transformers Question Answering Model
+    """Adaptive Model for Transformers Question Answering Model
 
     **Parameters**
 
@@ -53,7 +53,7 @@ class TransformersQuestionAnswering(AdaptiveModel):
 
     @classmethod
     def load(cls, model_name_or_path: str) -> AdaptiveModel:
-        """ Class method for loading and constructing this model
+        """Class method for loading and constructing this model
 
         * **model_name_or_path** - A key string of one of Transformer's pre-trained Question Answering (SQUAD) models
         """
@@ -78,7 +78,7 @@ class TransformersQuestionAnswering(AdaptiveModel):
         max_query_length: int = 64,
         **kwargs,
     ) -> Tuple[Tuple[str, List[OrderedDict]], Tuple[OrderedDict, OrderedDict]]:
-        """ Predict method for running inference using the pre-trained question answering model
+        """Predict method for running inference using the pre-trained question answering model
 
         * **query** - String or list of strings that specify the ordered questions corresponding to `context`
         * **context** - String or list of strings that specify the ordered contexts corresponding to `query`
@@ -235,7 +235,7 @@ class TransformersQuestionAnswering(AdaptiveModel):
     def _mini_squad_processor(
         self, query: List[str], context: List[str]
     ) -> List[SquadExample]:
-        """ Squad data processor to create `SquadExamples`
+        """Squad data processor to create `SquadExamples`
 
         * **query** - List of query strings, must be same length as `context`
         * **context** - List of context strings, must be same length as `query`
@@ -261,6 +261,16 @@ class TransformersQuestionAnswering(AdaptiveModel):
             )
             examples.append(example)
         return examples
+
+    def train(
+        self,
+    ):
+        raise NotImplementedError
+
+    def evaluate(
+        self,
+    ):
+        raise NotImplementedError
 
 
 class EasyQuestionAnswering:
@@ -288,7 +298,7 @@ class EasyQuestionAnswering:
     def predict_bert_qa(
         self, query: str, context: str, n_best_size: int = 20
     ) -> Tuple[str, List[OrderedDict]]:
-        """ Predicts top_n answer spans of query in regards to context
+        """Predicts top_n answer spans of query in regards to context
 
 
         * **query** - The question
@@ -312,7 +322,7 @@ class EasyQuestionAnswering:
         model_name_or_path: str = "bert-large-uncased-whole-word-masking-finetuned-squad",
         **kwargs,
     ) -> Tuple[Tuple[str, List[OrderedDict]], Tuple[OrderedDict, OrderedDict]]:
-        """ Predicts top_n answer spans of query in regards to context
+        """Predicts top_n answer spans of query in regards to context
 
         * **query** - String or list of strings that specify the ordered questions corresponding to `context`
         * **context** - String or list of strings that specify the ordered contexts corresponding to `query`

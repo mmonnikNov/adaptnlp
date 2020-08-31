@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class TransformersTokenTagger(AdaptiveModel):
-    """ Adaptive model for Transformer's Token Tagger Model
+    """Adaptive model for Transformer's Token Tagger Model
 
     Usage:
     ```python
@@ -53,7 +53,7 @@ class TransformersTokenTagger(AdaptiveModel):
 
     @classmethod
     def load(cls, model_name_or_path: str) -> AdaptiveModel:
-        """ Class method for loading and constructing this tagger 
+        """Class method for loading and constructing this tagger
 
         * **model_name_or_path** - A key string of one of Transformer's pre-trained Token Tagger Model
         """
@@ -69,13 +69,13 @@ class TransformersTokenTagger(AdaptiveModel):
         grouped_entities: bool = True,
         **kwargs,
     ) -> List[List[Dict]]:
-        """ Predict method for running inference using the pre-trained token tagger model.
+        """Predict method for running inference using the pre-trained token tagger model.
         Returns a list of lists of tagged entities.
 
         * **text** - String, list of strings, sentences, or list of sentences to run inference on
         * **mini_batch_size** - Mini batch size
         * **grouped_entities** - Set True to get whole entity span strings (Default True)
-        * **&ast;&ast;kwargs**(Optional) - Optional arguments for the Transformers tagger 
+        * **&ast;&ast;kwargs**(Optional) - Optional arguments for the Transformers tagger
         """
         if isinstance(text, str):
             text = [text]
@@ -121,7 +121,9 @@ class TransformersTokenTagger(AdaptiveModel):
         """ Batch tokenizes text and produces a `TensorDataset` with them """
 
         tokenized_text = self.tokenizer.batch_encode_plus(
-            sentences, return_tensors="pt", pad_to_max_length=True,
+            sentences,
+            return_tensors="pt",
+            pad_to_max_length=True,
         )
 
         # Bart, XLM, DistilBERT, RoBERTa, and XLM-RoBERTa don't use token_type_ids
@@ -236,9 +238,19 @@ class TransformersTokenTagger(AdaptiveModel):
 
         return answers
 
+    def train(
+        self,
+    ):
+        raise NotImplementedError
+
+    def evaluate(
+        self,
+    ):
+        raise NotImplementedError
+
 
 class FlairTokenTagger(AdaptiveModel):
-    """ Adaptive Model for Flair's Token Tagger...very basic
+    """Adaptive Model for Flair's Token Tagger...very basic
 
     Usage:
     ```python
@@ -256,7 +268,7 @@ class FlairTokenTagger(AdaptiveModel):
 
     @classmethod
     def load(cls, model_name_or_path: str) -> AdaptiveModel:
-        """ Class method for loading a constructing this tagger 
+        """Class method for loading a constructing this tagger
 
         * **model_name_or_path** - A key string of one of Flair's pre-trained Token tagger Model
         """
@@ -267,25 +279,40 @@ class FlairTokenTagger(AdaptiveModel):
         self,
         text: Union[List[Sentence], Sentence, List[str], str],
         mini_batch_size: int = 32,
-        use_tokenizer=True,
         **kwargs,
     ) -> List[Sentence]:
-        """ Predict method for running inference using the pre-trained token tagger model
+        """Predict method for running inference using the pre-trained token tagger model
 
         * **text** - String, list of strings, sentences, or list of sentences to run inference on
         * **mini_batch_size** - Mini batch size
-        * **&ast;&ast;kwargs**(Optional) - Optional arguments for the Flair tagger 
+        * **&ast;&ast;kwargs**(Optional) - Optional arguments for the Flair tagger
         """
-        return self.tagger.predict(
+
+        if isinstance(text, (Sentence, str)):
+            text = [text]
+        if isinstance(text[0], str):
+            text = [Sentence(s) for s in text]
+        self.tagger.predict(
             sentences=text,
             mini_batch_size=mini_batch_size,
-            use_tokenizer=use_tokenizer,
             **kwargs,
         )
+        return text
+
+    def train(
+        self,
+    ):
+        raise NotImplementedError
+
+    def evaluate(
+        self,
+    ):
+
+        raise NotImplementedError
 
 
 class EasyTokenTagger:
-    """ Token level classification models
+    """Token level classification models
 
     Usage:
 
@@ -305,7 +332,7 @@ class EasyTokenTagger:
         mini_batch_size: int = 32,
         **kwargs,
     ) -> List[Sentence]:
-        """ Tags tokens with labels the token classification models have been trained on
+        """Tags tokens with labels the token classification models have been trained on
 
         * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
         * **model_name_or_path** - The hosted model name key or model path
@@ -340,7 +367,9 @@ class EasyTokenTagger:
 
         tagger = self.token_taggers[model_name_or_path]
         return tagger.predict(
-            text=text, mini_batch_size=mini_batch_size, use_tokenizer=True, **kwargs,
+            text=text,
+            mini_batch_size=mini_batch_size,
+            **kwargs,
         )
 
     def tag_all(
@@ -349,7 +378,7 @@ class EasyTokenTagger:
         mini_batch_size: int = 32,
         **kwargs,
     ) -> List[Sentence]:
-        """ Tags tokens with all labels from all token classification models
+        """Tags tokens with all labels from all token classification models
 
         * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
         * **mini_batch_size** - The mini batch size for running inference

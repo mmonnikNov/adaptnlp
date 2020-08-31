@@ -417,7 +417,7 @@ class BertQuestionAnsweringModel(QuestionAnsweringModel):
     def predict(
         self, query: str, context: str, n_best_size: int = 20
     ) -> Tuple[str, List[OrderedDict]]:
-        """ Predicts top_n answer spans of query in regards to context
+        """Predicts top_n answer spans of query in regards to context
 
         Args:
             query: The question
@@ -769,7 +769,7 @@ class XLNetQuestionAnsweringModel(QuestionAnsweringModel):
     def predict(
         self, query: str, context: str, n_best_size: int = 20, as_dict: bool = False
     ) -> Union[List[str], dict]:
-        """ Predicts top_n answer spans of query in regards to context
+        """Predicts top_n answer spans of query in regards to context
 
         Args:
             query: The question
@@ -1130,7 +1130,7 @@ class XLMQuestionAnsweringModel(QuestionAnsweringModel):
     def predict(
         self, query: str, context: str, n_best_size: int = 20, as_dict: bool = False
     ) -> Union[List[str], dict]:
-        """ Predicts top_n answer spans of query in regards to context
+        """Predicts top_n answer spans of query in regards to context
 
         Args:
             query: The question
