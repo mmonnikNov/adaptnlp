@@ -78,7 +78,6 @@ class TransformersSequenceClassifier(AdaptiveModel):
         self,
         text: Union[List[Sentence], Sentence, List[str], str],
         mini_batch_size: int = 32,
-        use_tokenizer: bool = True,
         **kwargs,
     ) -> List[Sentence]:
         """Predict method for running inference using the pre-trained sequence classifier model
@@ -330,7 +329,6 @@ class FlairSequenceClassifier(AdaptiveModel):
         self,
         text: Union[List[Sentence], Sentence, List[str], str],
         mini_batch_size: int = 32,
-        use_tokenizer=True,
         **kwargs,
     ) -> List[Sentence]:
         """Predict method for running inference using the pre-trained sequence classifier model
@@ -339,10 +337,13 @@ class FlairSequenceClassifier(AdaptiveModel):
         * **mini_batch_size** - Mini batch size
         * **&ast;&ast;kwargs**(Optional) - Optional arguments for the Flair classifier
         """
+        if isinstance(text, (Sentence, str)):
+            text = [text]
+        if isinstance(text[0], str):
+            text = [Sentence(s) for s in text]
         return self.classifier.predict(
             sentences=text,
             mini_batch_size=mini_batch_size,
-            use_tokenizer=use_tokenizer,
             **kwargs,
         )
 
