@@ -36,11 +36,12 @@ Learning Researchers and Scientists a modular and **adaptive** approach to a var
     - Question Answering
     - Summarization
     - Translation
+    - Text Generation
     - <em> More in development </em>
   - Training and Fine-tuning Interface
+    - Integration with Transformer's Trainer Module for fast and easy transfer learning with custom datasets
     - Jeremy's **[ULM-FIT](https://arxiv.org/abs/1801.06146)** approach for transfer learning in NLP
     - Fine-tuning Transformer's language models and task-specific predictive heads like Flair's `SequenceClassifier`
-    - Integration with Transformer's Trainer Module for fast and easy transfer learning with custom datasets
   - [Rapid NLP Model Deployment](https://github.com/Novetta/adaptnlp/tree/master/rest) with Sebastián's [FastAPI](https://github.com/tiangolo/fastapi) Framework
     - Containerized FastAPI app
     - Immediately deploy any custom trained Flair or AdaptNLP model
@@ -157,6 +158,7 @@ for sentence in sentences:
 
 ```python
 from adaptnlp import EasyQuestionAnswering 
+from pprint import pprint
 
 ## Example Query and Context 
 query = "What is the meaning of life?"
@@ -169,7 +171,7 @@ best_answer, best_n_answers = qa.predict_qa(query=query, context=context, n_best
 
 ## Output top answer as well as top 5 answers
 print(best_answer)
-print(best_n_answers)
+pprint(best_n_answers)
 ```
 <details class = "summary">
 <summary>Output</summary>
@@ -244,7 +246,7 @@ and straight forward use cases:
   1. [Token Classification: NER, POS, Chunk, and Frame Tagging](tutorials/1.%20Token%20Classification)
       - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/1.%20Token%20Classification/token_tagging.ipynb)
   2. [Sequence Classification: Sentiment](tutorials/2.%20Sequence%20Classification)
-      - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/2.%20Sequence%20Classification/sequence_classification.ipynb)
+      - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/2.%20Sequence%20Classification/Easy%20Sequence%20Classifier.ipynb)
   3. [Embeddings: Transformer Embeddings e.g. BERT, XLM, GPT2, XLNet, roBERTa, ALBERT](tutorials/3.%20Embeddings)
       - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/3.%20Embeddings/embeddings.ipynb)
   4. [Question Answering: Span-based Question Answering Model](tutorials/4.%20Question%20Answering)
@@ -256,10 +258,8 @@ and straight forward use cases:
 
 **[Custom Fine-Tuning and Training with Transformer Models](tutorials/Finetuning%20and%20Training%20(Advanced))**
 
- - Training a Sequence Classifier
-   - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/Finetuning%20and%20Training%20(Advanced)/sequence_classification_training.ipynb)
  - Fine-tuning a Transformers Language Model
-   - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/Finetuning%20and%20Training%20(Advanced)/fine_tuning.ipynb)
+   - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/Finetuning%20and%20Training%20(Advanced)/Fine-tuning%20Language%20Model.ipynb)
   
 Checkout the [documentation](https://novetta.github.io/adaptnlp) for more information.
   
@@ -316,60 +316,3 @@ updates and NLP dialogue.
 
 This project is licensed under the terms of the Apache 2.0 license.
  
-<!-- ##### Sequence Classification Training `SequenceClassifier`
-```python
-from adaptnlp import EasyDocumentEmbeddings, SequenceClassifierTrainer 
-
-# Specify corpus data directory and model output directory
-corpus = "Path/to/data/directory" 
-OUTPUT_DIR = "Path/to/output/directory" 
-
-# Instantiate AdaptNLP easy document embeddings module, which can take in a variable number of embeddings to make `Stacked Embeddings`.  
-# You may also use custom Transformers LM models by specifying the path the the language model
-doc_embeddings = EasyDocumentEmbeddings(model_name_or_path="bert-base-cased", methods = ["rnn"])
-
-# Instantiate Sequence Classifier Trainer by loading in the data, data column map, and embeddings as an encoder
-sc_trainer = SequenceClassifierTrainer(corpus=corpus, encoder=doc_embeddings, column_name_map={0: "text", 1:"label"})
-
-# Find Learning Rate
-learning_rate = sc_trainer.find_learning_rate(output_dir=OUTPUT_DIR)
-
-# Train Using Flair's Sequence Classification Head
-sc_trainer.train(output_dir=OUTPUT_DIR, learning_rate=learning_rate, max_epochs=150)
-
-
-# Predict text labels with the trained model using `EasySequenceClassifier`
-from adaptnlp import EasySequenceClassifier
-example_text = '''Where was the Queen's wedding held? '''
-classifier = EasySequenceClassifier()
-sentences = classifier.tag_text(example_text, model_name_or_path=OUTPUT_DIR / "final-model.pt")
-print("Label output:\n")
-for sentence in sentences:
-    print(sentence.labels)
-```
-
-##### Transformers Language Model Fine Tuning `LMFineTuner`
-
-```python
-from adaptnlp import LMFineTuner
-
-# Specify Text Data File Paths
-train_data_file = "Path/to/train.csv"
-eval_data_file = "Path/to/test.csv"
-
-# Instantiate Finetuner with Desired Language Model
-finetuner = LMFineTuner(train_data_file=train_data_file, eval_data_file=eval_data_file, model_type="bert", model_name_or_path="bert-base-cased")
-finetuner.freeze()
-
-# Find Optimal Learning Rate
-learning_rate = finetuner.find_learning_rate(base_path="Path/to/base/directory")
-finetuner.freeze()
-
-# Train and Save Fine Tuned Language Models
-finetuner.train_one_cycle(output_dir="Path/to/output/directory", learning_rate=learning_rate)
-
-``` -->
-
-
-
-
