@@ -114,6 +114,7 @@ tensor([ 0.5633,  0.4789, -0.2232,  ..., -0.1454,  0.2486,  0.5163])
 
 ```python
 from adaptnlp import EasyQuestionAnswering 
+from pprint import pprint
 
 ## Example Query and Context 
 query = "What is the meaning of life?"
@@ -126,7 +127,7 @@ best_answer, best_n_answers = qa.predict_qa(query=query, context=context, n_best
 
 ## Output top answer as well as top 5 answers
 print(best_answer)
-print(best_n_answers)
+pprint(best_n_answers)
 ```
 <details class = "summary">
 <summary>Output</summary>
@@ -134,56 +135,3 @@ print(best_n_answers)
 [OrderedDict([('text', 'Machine Learning'), ('probability', 0.9924118248851219), ('start_logit', 8.646799087524414), ('end_logit', 8.419432640075684), ('start_index', 0), ('end_index', 1)]), OrderedDict([('text', 'Learning'), ('probability', 0.004796293656050888), ('start_logit', 3.314504384994507), ('end_logit', 8.419432640075684), ('start_index', 1), ('end_index', 1)]), OrderedDict([('text', 'Machine Learning is the meaning of life.'), ('probability', 0.0018383556202966893), ('start_logit', 8.646799087524414), ('end_logit', 2.1281659603118896), ('start_index', 0), ('end_index', 6)]), OrderedDict([('text', 'Machine'), ('probability', 0.0009446411263795704), ('start_logit', 8.646799087524414), ('end_logit', 1.4623442888259888), ('start_index', 0), ('end_index', 0)]), OrderedDict([('text', 'Learning is the meaning of life.'), ('probability', 8.884712150840367e-06), ('start_logit', 3.314504384994507), ('end_logit', 2.1281659603118896), ('start_index', 1), ('end_index', 6)])]
 ```
 </detais>
-
-<!-- 
-##### Sequence Classification Training `SequenceClassifier`
-```python
-from adaptnlp import EasyDocumentEmbeddings, SequenceClassifierTrainer 
-
-# Specify corpus data directory and model output directory
-corpus = "Path/to/data/directory" 
-OUTPUT_DIR = "Path/to/output/directory" 
-
-# Instantiate AdaptNLP easy document embeddings module, which can take in a variable number of embeddings to make `Stacked Embeddings`.  
-# You may also use custom Transformers LM models by specifying the path the the language model
-doc_embeddings = EasyDocumentEmbeddings(model_name_or_path="bert-base-cased", methods = ["rnn"])
-
-# Instantiate Sequence Classifier Trainer by loading in the data, data column map, and embeddings as an encoder
-sc_trainer = SequenceClassifierTrainer(corpus=corpus, encoder=doc_embeddings, column_name_map={0: "text", 1:"label"})
-
-# Find Learning Rate
-learning_rate = sc_trainer.find_learning_rate(output_dir-OUTPUT_DIR)
-
-# Train Using Flair's Sequence Classification Head
-sc_trainer.train(output_dir=OUTPUT_DIR, learning_rate=learning_rate, max_epochs=150)
-
-
-# Predict text labels with the trained model using `EasySequenceClassifier`
-from adaptnlp import EasySequenceClassifier
-example_text = '''Where was the Queen's wedding held? '''
-classifier = EasySequenceClassifier()
-sentences = classifier.tag_text(example_text, model_name_or_path=OUTPUT_DIR / "final-model.pt")
-print("Label output:\n")
-for sentence in sentences:
-    print(sentence.labels)
-```
-
-##### Transformers Language Model Fine Tuning `LMFineTuner`
-
-```python
-from adaptnlp import LMFineTuner
-
-# Specify Text Data File Paths
-train_data_file = "Path/to/train.csv"
-eval_data_file = "Path/to/test.csv"
-
-# Instantiate Finetuner with Desired Language Model
-finetuner = LMFineTuner(train_data_file=train_data_file, eval_data_file=eval_data_file, model_type="bert", model_name_or_path="bert-base-cased")
-finetuner.freeze()
-
-# Find Optimal Learning Rate
-learning_rate = finetuner.find_learning_rate(base_path="Path/to/base/directory")
-finetuner.freeze()
-
-# Train and Save Fine Tuned Language Models
-finetuner.train_one_cycle(output_dir="Path/to/output/directory", learning_rate=learning_rate) -->
