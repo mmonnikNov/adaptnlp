@@ -1,3 +1,8 @@
+# Text Generation
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/7.%20Text%20Generation/Easy%20Text%20Generator.ipynb)
+
+
 Text generation is the NLP task of generating a coherent sequence of words, usually from a language model. The current leading methods, most notably OpenAI’s GPT-2 and GPT-3, rely on feeding tokens (words or characters) into a pre-trained language model which then uses this seed data to construct a sequence of text. AdaptNLP provides simple methods to easily fine-tune these state-of-the-art models and generate text for any use case. 
 
 Below, we'll walk through how we can use AdaptNLP's `EasyTextGenerator` module to generate text to complete a given String.

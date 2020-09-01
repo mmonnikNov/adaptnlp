@@ -1,5 +1,7 @@
 # What is Sequence Classification?
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/2.%20Sequence%20Classification/Easy%20Sequence%20Classifier.ipynb)
+
 Sequence Classification (or Text Classification) is the NLP task of predicting a label for a sequence of words.
 
 For example, a string of `That movie was terrible because the acting was bad` could be tagged with a label of `negative`. A string of `That movie was great because the acting was good` could be tagged with a label of `positive`.

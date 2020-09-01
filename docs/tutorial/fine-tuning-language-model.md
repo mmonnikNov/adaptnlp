@@ -1,5 +1,7 @@
 # What is a language model?
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/Finetuning%20and%20Training%20(Advanced)/Fine-tuning%20Language%20Model.ipynb)
+
 Language modeling is the task of generating a probability distribution over a sequence of words. The language models that we are using can assign the probabilitiy of an upcoming word(s) given a sequence of words. The GPT2 language model is a good example of a *Causal Language Model* which can predict words following a sequence of words. This predicted word can then be used along the given sequence of words to predict another word and so on. This is how we actually a variant of how we produce models for the NLP task of text generation.
 
 # Why would you want to fine-tune a language model? 
