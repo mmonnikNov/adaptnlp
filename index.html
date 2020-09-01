@@ -1044,13 +1044,14 @@ Learning Researchers and Scientists a modular and <strong>adaptive</strong> appr
 <li>Question Answering</li>
 <li>Summarization</li>
 <li>Translation</li>
+<li>Text Generation</li>
 <li><em> More in development </em></li>
 </ul>
 </li>
 <li>Training and Fine-tuning Interface<ul>
+<li>Integration with Transformer's Trainer Module for fast and easy transfer learning with custom datasets</li>
 <li>Jeremy's <strong><a href="https://arxiv.org/abs/1801.06146">ULM-FIT</a></strong> approach for transfer learning in NLP</li>
 <li>Fine-tuning Transformer's language models and task-specific predictive heads like Flair's <code>SequenceClassifier</code></li>
-<li>Integration with Transformer's Trainer Module for fast and easy transfer learning with custom datasets</li>
 </ul>
 </li>
 <li><a href="https://github.com/Novetta/adaptnlp/tree/master/rest">Rapid NLP Model Deployment</a> with Sebastián's <a href="https://github.com/tiangolo/fastapi">FastAPI</a> Framework<ul>
@@ -1164,6 +1165,7 @@ system specifies:</p>
 
 <h5 id="span-based-question-answering-easyquestionanswering">Span-based Question Answering <code>EasyQuestionAnswering</code><a class="headerlink" href="#span-based-question-answering-easyquestionanswering" title="Permanent link">&para;</a></h5>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasyQuestionAnswering</span> 
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
 
 <span class="c1">## Example Query and Context </span>
 <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;What is the meaning of life?&quot;</span>
@@ -1176,7 +1178,7 @@ system specifies:</p>
 
 <span class="c1">## Output top answer as well as top 5 answers</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">best_answer</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">best_n_answers</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">best_n_answers</span><span class="p">)</span>
 </code></pre></div>
 
 
@@ -1260,7 +1262,7 @@ and straight forward use cases:</p>
 </ul>
 </li>
 <li><a href="tutorials/2.%20Sequence%20Classification">Sequence Classification: Sentiment</a><ul>
-<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/2.%20Sequence%20Classification/sequence_classification.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
+<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/2.%20Sequence%20Classification/Easy%20Sequence%20Classifier.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
 </ul>
 </li>
 <li><a href="tutorials/3.%20Embeddings">Embeddings: Transformer Embeddings e.g. BERT, XLM, GPT2, XLNet, roBERTa, ALBERT</a><ul>
@@ -1282,10 +1284,8 @@ and straight forward use cases:</p>
 </ol>
 <p><strong><a href="tutorials/Finetuning%20and%20Training%20(Advanced)">Custom Fine-Tuning and Training with Transformer Models</a></strong></p>
 <ul>
-<li>Training a Sequence Classifier</li>
-<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/Finetuning%20and%20Training%20(Advanced)/sequence_classification_training.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
 <li>Fine-tuning a Transformers Language Model</li>
-<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/Finetuning%20and%20Training%20(Advanced)/fine_tuning.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
+<li><a href="https://colab.research.google.com/github/Novetta/adaptnlp/blob/master/tutorials/Finetuning%20and%20Training%20(Advanced)/Fine-tuning%20Language%20Model.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></li>
 </ul>
 <p>Checkout the <a href="https://novetta.github.io/adaptnlp">documentation</a> for more information.</p>
 <h2 id="rest-service">REST Service<a class="headerlink" href="#rest-service" title="Permanent link">&para;</a></h2>
@@ -1328,61 +1328,6 @@ docker run -it --rm achangnovetta/adaptnlp:latest
 updates and NLP dialogue.</p>
 <h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
 <p>This project is licensed under the terms of the Apache 2.0 license.</p>
-<!-- ##### Sequence Classification Training `SequenceClassifier`
-
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasyDocumentEmbeddings</span><span class="p">,</span> <span class="n">SequenceClassifierTrainer</span> 
-
-<span class="c1"># Specify corpus data directory and model output directory</span>
-<span class="n">corpus</span> <span class="o">=</span> <span class="s2">&quot;Path/to/data/directory&quot;</span> 
-<span class="n">OUTPUT_DIR</span> <span class="o">=</span> <span class="s2">&quot;Path/to/output/directory&quot;</span> 
-
-<span class="c1"># Instantiate AdaptNLP easy document embeddings module, which can take in a variable number of embeddings to make `Stacked Embeddings`.  </span>
-<span class="c1"># You may also use custom Transformers LM models by specifying the path the the language model</span>
-<span class="n">doc_embeddings</span> <span class="o">=</span> <span class="n">EasyDocumentEmbeddings</span><span class="p">(</span><span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;bert-base-cased&quot;</span><span class="p">,</span> <span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;rnn&quot;</span><span class="p">])</span>
-
-<span class="c1"># Instantiate Sequence Classifier Trainer by loading in the data, data column map, and embeddings as an encoder</span>
-<span class="n">sc_trainer</span> <span class="o">=</span> <span class="n">SequenceClassifierTrainer</span><span class="p">(</span><span class="n">corpus</span><span class="o">=</span><span class="n">corpus</span><span class="p">,</span> <span class="n">encoder</span><span class="o">=</span><span class="n">doc_embeddings</span><span class="p">,</span> <span class="n">column_name_map</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="s2">&quot;label&quot;</span><span class="p">})</span>
-
-<span class="c1"># Find Learning Rate</span>
-<span class="n">learning_rate</span> <span class="o">=</span> <span class="n">sc_trainer</span><span class="o">.</span><span class="n">find_learning_rate</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="n">OUTPUT_DIR</span><span class="p">)</span>
-
-<span class="c1"># Train Using Flair&#39;s Sequence Classification Head</span>
-<span class="n">sc_trainer</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="n">OUTPUT_DIR</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
-
-
-<span class="c1"># Predict text labels with the trained model using `EasySequenceClassifier`</span>
-<span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasySequenceClassifier</span>
-<span class="n">example_text</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;Where was the Queen&#39;s wedding held? &#39;&#39;&#39;</span>
-<span class="n">classifier</span> <span class="o">=</span> <span class="n">EasySequenceClassifier</span><span class="p">()</span>
-<span class="n">sentences</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">tag_text</span><span class="p">(</span><span class="n">example_text</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="n">OUTPUT_DIR</span> <span class="o">/</span> <span class="s2">&quot;final-model.pt&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Label output:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
-</code></pre></div>
-
-
-
-##### Transformers Language Model Fine Tuning `LMFineTuner`
-
-```python
-from adaptnlp import LMFineTuner
-
-# Specify Text Data File Paths
-train_data_file = "Path/to/train.csv"
-eval_data_file = "Path/to/test.csv"
-
-# Instantiate Finetuner with Desired Language Model
-finetuner = LMFineTuner(train_data_file=train_data_file, eval_data_file=eval_data_file, model_type="bert", model_name_or_path="bert-base-cased")
-finetuner.freeze()
-
-# Find Optimal Learning Rate
-learning_rate = finetuner.find_learning_rate(base_path="Path/to/base/directory")
-finetuner.freeze()
-
-# Train and Save Fine Tuned Language Models
-finetuner.train_one_cycle(output_dir="Path/to/output/directory", learning_rate=learning_rate)
-
-``` -->
                 
               
               
