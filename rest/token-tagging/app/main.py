@@ -54,6 +54,23 @@ async def token_tagger(token_tagging_request: TokenTaggingRequest):
         text=text, model_name_or_path=_TOKEN_TAGGING_MODEL
     )
 
+    # Check if transformers model return type
+    if len(sentences)>0 and isinstance(sentences, List):
+        payload = [{"text": text, "labels": [], "entities": s} for s in sentences]
+
+        # Need a better way to serialize
+        for p in payload:
+            entities = p["entities"]
+            for e in entities:
+                e["text"] = e["word"]
+                e["start_pos"] = e["offsets"][0]
+                e["end_pos"] = e["offsets"][1]
+                e["value"] = e["entity_group"]
+                e["confidence"] = e["score"]
+        return payload
+
+
+
     payload = [sentence.to_dict(tag_type=_TOKEN_TAGGING_MODE) for sentence in sentences]
 
     # Need a better way to serialize
