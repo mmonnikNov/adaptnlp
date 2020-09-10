@@ -27,30 +27,57 @@ To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA
 docker run -itp 5000:5000 --gpus all adaptnlp-rest:latest bash
 ```
 
-#### 2. Docker Run Env Arg Entries
-If you'd like to specify the models as environment variables in docker post-build, run the below instead:
+**Token Tagger**
 ```
-docker build -t adaptnlp-rest:latest .
+docker build -t token-classification:latest --build-arg TOKEN_TAGGING_MODE=ner \
+                                     --build-arg TOKEN_TAGGING_MODEL=ner-ontonotes-fast .
+docker run -itp 5000:5000 adaptnlp-rest:latest bash
+```
+To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA drivers
+```
+docker run -itp 5000:5000 --gpus all token-classification:latest bash
+```
+
+**Sequence Classifier**
+```
+docker build -t sequence-classification:latest --build-arg SEQUENCE_CLASSIFICATION_MODEL=nlptown/bert-base-multilingual-uncased-sentiment .
+docker run -itp 5000:5000 sequence-classification:latest bash
+```
+To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA drivers
+```
+docker run -itp 5000:5000 --gpus all sequence-classification:latest bash
+```
+
+**Question Answering**
+```
+docker build -t question-answering:latest --build-arg QUESTION_ANSWERING_MODEL=distilbert-base-uncased-distilled-squad .
+docker run -itp 5000:5000 question-answering:latest bash
+```
+To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA drivers
+```
+docker run -itp 5000:5000 --gpus all question-answering:latest bash
+```
+
+#### 2. Docker Run Env Arg Entries
+Sometimes you may wont to specify the models as environment variables in docker post-build for convience or other reasons. To do so use the below commands to deploy any of the above NLP task services. The example below runs the token classification service.
+```
+docker build -t token-classification:latest .
 docker run -itp 5000:5000 -e TOKEN_TAGGING_MODE='ner' \
                           -e TOKEN_TAGGING_MODEL='ner-ontonotes-fast' \
-                          -e SEQUENCE_CLASSIFICATION_MODEL='en-sentiment' \
-                          -e QUESTION_ANSWERING_MODEL='distilbert-base-uncased-distilled-squad' \
-                          adaptnlp-rest:latest \
+                          token-classification:latest \
                           bash
 ```
 To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA drivers
 ```
 docker run -itp 5000:5000 --gpus all -e TOKEN_TAGGING_MODE='ner' \
                                      -e TOKEN_TAGGING_MODEL='ner-ontonotes-fast' \
-                                     -e SEQUENCE_CLASSIFICATION_MODEL='en-sentiment' \
-                                     -e QUESTION_ANSWERING_MODEL='distilbert-base-uncased-distilled-squad' \
-                                     adaptnlp-rest:latest \
+                                     token-classification:latest \
                                      bash
 ```                                                           
 
 #### Manual
 If you just want to run the rest services locally in an environment that has AdaptNLP installed, you can 
-run the following in this directory:
+run the following in whichever NLP task directory youw ould like.
 
 ```
 pip install -r requirements
