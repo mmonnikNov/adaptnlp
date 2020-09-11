@@ -417,19 +417,32 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#getting-started" class="md-nav__link">
-    Getting Started
+  <a href="#quick-start" class="md-nav__link">
+    Quick Start
   </a>
   
-    <nav class="md-nav" aria-label="Getting Started">
+    <nav class="md-nav" aria-label="Quick Start">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#docker" class="md-nav__link">
-    Docker
+  <a href="#docker-hub" class="md-nav__link">
+    Docker Hub
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-and-run" class="md-nav__link">
+    Build and Run
+  </a>
+  
+    <nav class="md-nav" aria-label="Build and Run">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#1-docker-build-env-arg-entries" class="md-nav__link">
@@ -446,8 +459,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#manual" class="md-nav__link">
-    Manual
+  <a href="#3-local" class="md-nav__link">
+    3. Local
   </a>
   
 </li>
@@ -705,19 +718,32 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#getting-started" class="md-nav__link">
-    Getting Started
+  <a href="#quick-start" class="md-nav__link">
+    Quick Start
   </a>
   
-    <nav class="md-nav" aria-label="Getting Started">
+    <nav class="md-nav" aria-label="Quick Start">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#docker" class="md-nav__link">
-    Docker
+  <a href="#docker-hub" class="md-nav__link">
+    Docker Hub
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-and-run" class="md-nav__link">
+    Build and Run
+  </a>
+  
+    <nav class="md-nav" aria-label="Build and Run">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#1-docker-build-env-arg-entries" class="md-nav__link">
@@ -734,8 +760,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#manual" class="md-nav__link">
-    Manual
+  <a href="#3-local" class="md-nav__link">
+    3. Local
   </a>
   
 </li>
@@ -769,32 +795,66 @@
                 
                 
                 <h1 id="adaptnlp-rest-api">AdaptNLP-Rest API<a class="headerlink" href="#adaptnlp-rest-api" title="Permanent link">&para;</a></h1>
-<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
-<h4 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h4>
+<h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
+<h3 id="docker-hub">Docker Hub<a class="headerlink" href="#docker-hub" title="Permanent link">&para;</a></h3>
 <p>The docker image of AdaptNLP is built with the <code>achangnovetta/adaptnlp:latest</code> image.</p>
-<p>To build and run the rest services by running one of the following methods in this directory:</p>
-<h4 id="1-docker-build-env-arg-entries">1. Docker Build Env Arg Entries<a class="headerlink" href="#1-docker-build-env-arg-entries" title="Permanent link">&para;</a></h4>
-<p>Specify the pretrained models you want to use for the endpoints.  This can be one of Flair's pretrained models or your own
-custom trained models with a path pointing to the model.  (The model must be in this directory)</p>
-<div class="codehilite"><pre><span></span><code>docker build -t adaptnlp-rest:latest --build-arg TOKEN_TAGGING_MODE=ner \
-                                     --build-arg TOKEN_TAGGING_MODEL=ner-ontonotes-fast \
-                                     --build-arg SEQUENCE_CLASSIFICATION_MODEL=en-sentiment .
-docker run -itp 5000:5000 adaptnlp-rest:latest bash
+<p>The docker image of AdaptNLP's NLP task rest services are hosted on Docker Hub as well <a href="https://hub.docker.com/r/achangnovetta">here</a>.</p>
+<p>Every image can be pulled and run by running the following:</p>
+<ul>
+<li>Token Tagging</li>
+<li><code>docker run -itp 5000:5000 -e TOKEN_TAGGING_MODE=ner -e TOKEN_TAGGING_MODEe=ner-ontonotes-fast achangnovetta/token-tagging:latest bash</code></li>
+<li>Sequence Classification</li>
+<li><code>docker run -itp 5000:5000 -e SEQUENCE_CLASSIFICATION_MODEL=nlptown/bert-base-multilingual-uncased-sentiment achangnovetta/sequence-classification:latest bash</code></li>
+<li>Question Answering</li>
+<li><code>docker run -itp 5000:5000 -e QUESTION_ANSWERING_MODEL=distilbert-base-uncased-distilled-squad achangnovetta/question-answering:latest bash</code></li>
+</ul>
+<p>Note: Add the <code>--gpus</code> arg parameter if you'd like the images and endpoints to run with GPUs. You need to have NVIDIA Docker installed with a CUDA-compatible GPU.</p>
+<h2 id="build-and-run">Build and Run<a class="headerlink" href="#build-and-run" title="Permanent link">&para;</a></h2>
+<p>Manually build and run your own docker images and deploy endpoints by following one of the below methods:</p>
+<h3 id="1-docker-build-env-arg-entries">1. Docker Build Env Arg Entries<a class="headerlink" href="#1-docker-build-env-arg-entries" title="Permanent link">&para;</a></h3>
+<p>Specify the pretrained models you want to use for the endpoints.  These can be Transformers pre-trained models, Flair's pre-trained models,
+or your own custom trained models with a path pointing to the model.  (The model must be in the directory you are building your image from for your
+respective NLP task)</p>
+<p><strong>Token Tagger</strong></p>
+<div class="codehilite"><pre><span></span><code>docker build -t token-tagging:latest --build-arg TOKEN_TAGGING_MODE=ner \
+                                     --build-arg TOKEN_TAGGING_MODEL=ner-ontonotes-fast .
+docker run -itp 5000:5000 token-tagging:latest bash
 </code></pre></div>
 
 
 <p>To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA drivers</p>
-<div class="codehilite"><pre><span></span><code>docker run -itp 5000:5000 --gpus all adaptnlp-rest:latest bash
+<div class="codehilite"><pre><span></span><code>docker run -itp 5000:5000 --gpus all token-tagging:latest bash
 </code></pre></div>
 
 
-<h4 id="2-docker-run-env-arg-entries">2. Docker Run Env Arg Entries<a class="headerlink" href="#2-docker-run-env-arg-entries" title="Permanent link">&para;</a></h4>
-<p>If you'd like to specify the models as environment variables in docker post-build, run the below instead:</p>
-<div class="codehilite"><pre><span></span><code>docker build -t adaptnlp-rest:latest .
+<p><strong>Sequence Classifier</strong></p>
+<div class="codehilite"><pre><span></span><code>docker build -t sequence-classification:latest --build-arg SEQUENCE_CLASSIFICATION_MODEL=nlptown/bert-base-multilingual-uncased-sentiment .
+docker run -itp 5000:5000 sequence-classification:latest bash
+</code></pre></div>
+
+
+<p>To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA drivers</p>
+<div class="codehilite"><pre><span></span><code>docker run -itp 5000:5000 --gpus all sequence-classification:latest bash
+</code></pre></div>
+
+
+<p><strong>Question Answering</strong></p>
+<div class="codehilite"><pre><span></span><code>docker build -t question-answering:latest --build-arg QUESTION_ANSWERING_MODEL=distilbert-base-uncased-distilled-squad .
+docker run -itp 5000:5000 question-answering:latest bash
+</code></pre></div>
+
+
+<p>To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA drivers</p>
+<div class="codehilite"><pre><span></span><code>docker run -itp 5000:5000 --gpus all question-answering:latest bash
+</code></pre></div>
+
+
+<h3 id="2-docker-run-env-arg-entries">2. Docker Run Env Arg Entries<a class="headerlink" href="#2-docker-run-env-arg-entries" title="Permanent link">&para;</a></h3>
+<p>Sometimes you may wont to specify the models as environment variables in docker post-build for convience or other reasons. To do so use the below commands to deploy any of the above NLP task services. The example below runs the token classification service.</p>
+<div class="codehilite"><pre><span></span><code>docker build -t token-tagging:latest .
 docker run -itp 5000:5000 -e TOKEN_TAGGING_MODE=&#39;ner&#39; \
                           -e TOKEN_TAGGING_MODEL=&#39;ner-ontonotes-fast&#39; \
-                          -e SEQUENCE_CLASSIFICATION_MODEL=&#39;en-sentiment&#39; \
-                          adaptnlp-rest:latest \
+                          token-tagging:latest \
                           bash
 </code></pre></div>
 
@@ -802,19 +862,19 @@ docker run -itp 5000:5000 -e TOKEN_TAGGING_MODE=&#39;ner&#39; \
 <p>To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA drivers</p>
 <div class="codehilite"><pre><span></span><code>docker run -itp 5000:5000 --gpus all -e TOKEN_TAGGING_MODE=&#39;ner&#39; \
                                      -e TOKEN_TAGGING_MODEL=&#39;ner-ontonotes-fast&#39; \
-                                     -e SEQUENCE_CLASSIFICATION_MODEL=&#39;en-sentiment&#39; \
-                                     adaptnlp-rest:latest \
+                                     token-tagging:latest \
                                      bash
 </code></pre></div>
 
 
-<h4 id="manual">Manual<a class="headerlink" href="#manual" title="Permanent link">&para;</a></h4>
+<h3 id="3-local">3. Local<a class="headerlink" href="#3-local" title="Permanent link">&para;</a></h3>
 <p>If you just want to run the rest services locally in an environment that has AdaptNLP installed, you can 
-run the following in this directory:</p>
+run the following in whichever NLP task directory you would like.</p>
 <div class="codehilite"><pre><span></span><code>pip install -r requirements
 export TOKEN_TAGGING_MODE=ner
 export TOKEN_TAGGING_MODEL=ner-ontonotes-fast
 export SEQUENCE_CLASSIFICATION_MODEL=en-sentiment
+export QUESTION_ANSWERING_MODEL=distilbert-base-uncased-distilled-squad
 uvicorn app.main:app --host 0.0.0.0 --port 5000
 </code></pre></div>
 
