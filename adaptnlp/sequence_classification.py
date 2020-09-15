@@ -244,6 +244,13 @@ class TransformersSequenceClassifier(AdaptiveModel):
         eval_dataset.set_format(
             "torch", columns=["input_ids", "attention_mask", label_col_nm]
         )
+        # Rename label col name to match model forward signature of "labels" or ["label","label_ids"] since these are addressed by the default collator from transformers
+        train_dataset.rename_column_(
+            original_column_name=label_col_nm, new_column_name="labels"
+        )
+        eval_dataset.rename_column_(
+            original_column_name=label_col_nm, new_column_name="labels"
+        )
 
         # Instantiate transformers trainer
         self.trainer = Trainer(
