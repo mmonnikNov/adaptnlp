@@ -6,8 +6,8 @@ from pathlib import Path
 import torch
 from torch import nn
 from torch.utils.data import TensorDataset, DataLoader
-import nlp
-from nlp import ClassLabel
+import datasets
+from datasets import ClassLabel
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 from flair.data import Sentence, DataPoint
 from flair.models import TextClassifier
@@ -196,8 +196,8 @@ class TransformersSequenceClassifier(AdaptiveModel):
     def train(
         self,
         training_args: TrainingArguments,
-        train_dataset: nlp.Dataset,
-        eval_dataset: nlp.Dataset,
+        train_dataset: datasets.Dataset,
+        eval_dataset: datasets.Dataset,
         text_col_nm: str = "text",
         label_col_nm: str = "label",
         compute_metrics: Callable = None,
@@ -205,8 +205,8 @@ class TransformersSequenceClassifier(AdaptiveModel):
         """Trains and/or finetunes the sequence classification model
 
         * **training_args** - Transformers `TrainingArguments` object model
-        * **train_dataset** - Training `Dataset` class object from the nlp library
-        * **eval_dataset** - Eval `Dataset` class object from the nlp library
+        * **train_dataset** - Training `Dataset` class object from the datasets library
+        * **eval_dataset** - Eval `Dataset` class object from the datasets library
         * **text_col_nm** - Name of the text feature column used as training data (Default "text")
         * **label_col_nm** - Name of the label feature column (Default "label")
         * **compute_metrics** - Custom metrics function callable for `transformers.Trainer`'s compute metrics
@@ -216,7 +216,7 @@ class TransformersSequenceClassifier(AdaptiveModel):
         if not compute_metrics:
             compute_metrics = self._default_metrics
 
-        # Set nlp.Dataset label values in sequence classifier configuration
+        # Set datasets.Dataset label values in sequence classifier configuration
         ## Important NOTE: Updating configurations do not update the sequence classification head module layer
         ## We are manually initializing a new linear layer for the "new" labels being trained
         class_label = train_dataset.features[label_col_nm]
@@ -238,18 +238,21 @@ class TransformersSequenceClassifier(AdaptiveModel):
         eval_dataset = eval_dataset.map(
             tokenize, batch_size=len(eval_dataset), batched=True
         )
-        train_dataset.set_format(
-            "torch", columns=["input_ids", "attention_mask", label_col_nm]
-        )
-        eval_dataset.set_format(
-            "torch", columns=["input_ids", "attention_mask", label_col_nm]
-        )
+
         # Rename label col name to match model forward signature of "labels" or ["label","label_ids"] since these are addressed by the default collator from transformers
         train_dataset.rename_column_(
             original_column_name=label_col_nm, new_column_name="labels"
         )
         eval_dataset.rename_column_(
             original_column_name=label_col_nm, new_column_name="labels"
+        )
+
+        # Set format as torch tensors for training
+        train_dataset.set_format(
+            "torch", columns=["input_ids", "attention_mask", "labels"]
+        )
+        eval_dataset.set_format(
+            "torch", columns=["input_ids", "attention_mask", "labels"]
         )
 
         # Instantiate transformers trainer
@@ -449,8 +452,8 @@ class EasySequenceClassifier:
     def train(
         self,
         training_args: TrainingArguments,
-        train_dataset: Union[str, Path, nlp.Dataset],
-        eval_dataset: Union[str, Path, nlp.Dataset],
+        train_dataset: Union[str, Path, datasets.Dataset],
+        eval_dataset: Union[str, Path, datasets.Dataset],
         model_name_or_path: str = "bert-base-uncased",
         text_col_nm: str = "text",
         label_col_nm: str = "label",
@@ -460,8 +463,8 @@ class EasySequenceClassifier:
 
         * **model_name_or_path** - The model name key or model path
         * **training_args** - Transformers `TrainingArguments` object model
-        * **train_dataset** - Training `Dataset` class object from the nlp library or path to CSV file (labels must be int values)
-        * **eval_dataset** - Eval `Dataset` class object from the nlp library or path to CSV file (labels must be int values)
+        * **train_dataset** - Training `Dataset` class object from the datasets library or path to CSV file (labels must be int values)
+        * **eval_dataset** - Eval `Dataset` class object from the datasets library or path to CSV file (labels must be int values)
         * **text_col_nm** - Name of the text feature column used as training data (Default "text")
         * **label_col_nm** - Name of the label feature column (Default "label")
         * **label_names** - (Only when loading CSV) An ordered list of label strings with int label mapped to string via. index value
@@ -479,15 +482,15 @@ class EasySequenceClassifier:
 
         classifier = self.sequence_classifiers[model_name_or_path]
 
-        # Check if csv filepath or `nlp.Dataset`
-        if not isinstance(train_dataset, nlp.Dataset):
-            train_dataset = self._csv2nlp(
+        # Check if csv filepath or `datasets.Dataset`
+        if not isinstance(train_dataset, datasets.Dataset):
+            train_dataset = self._csv2dataset(
                 data_path=train_dataset,
                 label_col_nm=label_col_nm,
                 label_names=label_names,
             )
-        if not isinstance(eval_dataset, nlp.Dataset):
-            eval_dataset = self._csv2nlp(
+        if not isinstance(eval_dataset, datasets.Dataset):
+            eval_dataset = self._csv2dataset(
                 data_path=eval_dataset,
                 label_col_nm=label_col_nm,
                 label_names=label_names,
@@ -536,19 +539,21 @@ class EasySequenceClassifier:
 
         return classifier.evaluate()
 
-    def _csv2nlp(
+    def _csv2dataset(
         self,
         data_path: Union[str, Path],
         label_col_nm: str,
         label_names: List[str],
-    ) -> nlp.Dataset:
-        """Loads CSV path as an nlp.Dataset for downstream use"""
+    ) -> datasets.Dataset:
+        """Loads CSV path as an datasets.Dataset for downstream use"""
         if not label_names:
             raise ValueError(
                 "Must pass in `label_names` parameter for training when loading in CSV datasets."
             )
-        class_label = nlp.ClassLabel(num_classes=len(label_names), names=label_names)
-        dataset = nlp.load_dataset("csv", data_files=data_path)
+        class_label = datasets.ClassLabel(
+            num_classes=len(label_names), names=label_names
+        )
+        dataset = datasets.load_dataset("csv", data_files=data_path)
         dataset = dataset["train"]
         dataset.features[label_col_nm] = class_label
         return dataset
