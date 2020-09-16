@@ -742,8 +742,8 @@
 <ul>
 <li><strong>model_name_or_path</strong> - The model name key or model path</li>
 <li><strong>training_args</strong> - Transformers <code>TrainingArguments</code> object model</li>
-<li><strong>train_dataset</strong> - Training <code>Dataset</code> class object from the nlp library or path to CSV file (labels must be int values)</li>
-<li><strong>eval_dataset</strong> - Eval <code>Dataset</code> class object from the nlp library or path to CSV file (labels must be int values)</li>
+<li><strong>train_dataset</strong> - Training <code>Dataset</code> class object from the datasets library or path to CSV file (labels must be int values)</li>
+<li><strong>eval_dataset</strong> - Eval <code>Dataset</code> class object from the datasets library or path to CSV file (labels must be int values)</li>
 <li><strong>text_col_nm</strong> - Name of the text feature column used as training data (Default "text")</li>
 <li><strong>label_col_nm</strong> - Name of the label feature column (Default "label")</li>
 <li><strong>label_names</strong> - (Only when loading CSV) An ordered list of label strings with int label mapped to string via. index value</li>
@@ -826,8 +826,8 @@
 <div class="autodoc-docstring"><p>Trains and/or finetunes the sequence classification model</p>
 <ul>
 <li><strong>training_args</strong> - Transformers <code>TrainingArguments</code> object model</li>
-<li><strong>train_dataset</strong> - Training <code>Dataset</code> class object from the nlp library</li>
-<li><strong>eval_dataset</strong> - Eval <code>Dataset</code> class object from the nlp library</li>
+<li><strong>train_dataset</strong> - Training <code>Dataset</code> class object from the datasets library</li>
+<li><strong>eval_dataset</strong> - Eval <code>Dataset</code> class object from the datasets library</li>
 <li><strong>text_col_nm</strong> - Name of the text feature column used as training data (Default "text")</li>
 <li><strong>label_col_nm</strong> - Name of the label feature column (Default "label")</li>
 <li><strong>compute_metrics</strong> - Custom metrics function callable for <code>transformers.Trainer</code>'s compute metrics</li>

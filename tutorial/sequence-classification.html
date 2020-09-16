@@ -908,10 +908,10 @@
 <p>With the easy sequence classifier, you can take advantage of transfer learning by fine-tuning pre-trained models on your own custom datasets.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code>EasySequenceClassifier</code> is integrated heavily with the <code>nlp.Dataset</code> and <code>transformers.Trainer</code> class objects, so please check out the <a href="https://huggingface.co/nlp">nlp</a> and <a href="https://huggingface.co/transformers">transformers</a> documentation for more information.</p>
+<p>The <code>EasySequenceClassifier</code> is integrated heavily with the <code>datasets.Dataset</code> and <code>transformers.Trainer</code> class objects, so please check out the <a href="https://huggingface.co/datasets">datasets</a> and <a href="https://huggingface.co/transformers">transformers</a> documentation for more information.</p>
 </div>
-<p>We'll first need a "custom" dataset to start training our model. Our <code>EasySequenceClassifier.train()</code> method can run with either <code>nlp.Dataset</code> objects or CSV data file paths. Since the nlp library makes it so easy, we'll use the <code>nlp.load_dataset()</code> method to load in the IMDB Sentiment dataset. We'll show an example with a CSV later. </p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">nlp</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+<p>We'll first need a "custom" dataset to start training our model. Our <code>EasySequenceClassifier.train()</code> method can run with either <code>datasets.Dataset</code> objects or CSV data file paths. Since the datasets library makes it so easy, we'll use the <code>datasets.load_dataset()</code> method to load in the IMDB Sentiment dataset. We'll show an example with a CSV later. </p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
 
 <span class="n">train_dataset</span><span class="p">,</span> <span class="n">eval_dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;imdb&#39;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">])</span>
 <span class="c1"># Uncomment below if you want to use less data so you don&#39;t spend an hour+ on training and evaluation</span>
@@ -1069,7 +1069,7 @@
 </code></pre></div>
 
 
-<p>Uncomment below to see training done with CSV files. The cell below will just save the <code>nlp.Dataset</code> objects you have in <code>train_dataset</code> and <code>eval_dataset</code> as CSVs and will train the model with the CSV file paths. Ignore to just continue to training.</p>
+<p>Uncomment below to see training done with CSV files. The cell below will just save the <code>datasets.Dataset</code> objects you have in <code>train_dataset</code> and <code>eval_dataset</code> as CSVs and will train the model with the CSV file paths. Ignore to just continue to training.</p>
 <div class="codehilite"><pre><span></span><code><span class="c1">#train_dataset.set_format(type=&quot;pandas&quot;, columns=[&quot;text&quot;, &quot;label&quot;])</span>
 <span class="c1">#eval_dataset.set_format(type=&quot;pandas&quot;, columns=[&quot;text&quot;, &quot;label&quot;])</span>
 
