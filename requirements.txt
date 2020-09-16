@@ -3,6 +3,6 @@ jupyter
 jupyterlab
 torch>=1.4.0,<2.0.0
 transformers>=3.0.0,<4.0.0
-nlp>=0.4.0,<1.0.0
+datasets>=1.0.0,<2.0.0
 flair>=0.6.0,<1.0.0
 pandas>=1.0.0,<2.0.0

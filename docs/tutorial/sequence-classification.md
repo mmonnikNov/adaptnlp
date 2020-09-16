@@ -242,13 +242,13 @@ Let's imagine you have your own dataset with text/label pairs you'd like to crea
 With the easy sequence classifier, you can take advantage of transfer learning by fine-tuning pre-trained models on your own custom datasets.
 
 !!!note
-    The `EasySequenceClassifier` is integrated heavily with the `nlp.Dataset` and `transformers.Trainer` class objects, so please check out the [nlp](https://huggingface.co/nlp) and [transformers](https://huggingface.co/transformers) documentation for more information.
+    The `EasySequenceClassifier` is integrated heavily with the `datasets.Dataset` and `transformers.Trainer` class objects, so please check out the [datasets](https://huggingface.co/datasets) and [transformers](https://huggingface.co/transformers) documentation for more information.
 
-We'll first need a "custom" dataset to start training our model. Our `EasySequenceClassifier.train()` method can run with either `nlp.Dataset` objects or CSV data file paths. Since the nlp library makes it so easy, we'll use the `nlp.load_dataset()` method to load in the IMDB Sentiment dataset. We'll show an example with a CSV later. 
+We'll first need a "custom" dataset to start training our model. Our `EasySequenceClassifier.train()` method can run with either `datasets.Dataset` objects or CSV data file paths. Since the datasets library makes it so easy, we'll use the `datasets.load_dataset()` method to load in the IMDB Sentiment dataset. We'll show an example with a CSV later. 
 
 
 ```python
-from nlp import load_dataset
+from datasets import load_dataset
 
 train_dataset, eval_dataset = load_dataset('imdb', split=['train', 'test'])
 # Uncomment below if you want to use less data so you don't spend an hour+ on training and evaluation
@@ -405,7 +405,7 @@ train_dataset[:]
 train_dataset.set_format(columns=["text", "label"])
 ```
 
-Uncomment below to see training done with CSV files. The cell below will just save the `nlp.Dataset` objects you have in `train_dataset` and `eval_dataset` as CSVs and will train the model with the CSV file paths. Ignore to just continue to training.
+Uncomment below to see training done with CSV files. The cell below will just save the `datasets.Dataset` objects you have in `train_dataset` and `eval_dataset` as CSVs and will train the model with the CSV file paths. Ignore to just continue to training.
 
 
 ```python
