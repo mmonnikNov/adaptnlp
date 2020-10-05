@@ -12,6 +12,7 @@ class QASpanLabel(BaseModel):
     start_index: int
     end_index: int
 
+
 # Question Answering
 class QuestionAnsweringRequest(BaseModel):
     query: str

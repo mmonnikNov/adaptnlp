@@ -55,7 +55,7 @@ async def token_tagger(token_tagging_request: TokenTaggingRequest):
     )
 
     # Check if transformers model return type
-    if len(sentences)>0 and isinstance(sentences[0], List):
+    if len(sentences) > 0 and isinstance(sentences[0], List):
         payload = [{"text": text, "labels": [], "entities": s} for s in sentences]
 
         # Need a better way to serialize
@@ -68,8 +68,6 @@ async def token_tagger(token_tagging_request: TokenTaggingRequest):
                 e["value"] = e["entity_group"]
                 e["confidence"] = e["score"]
         return payload
-
-
 
     payload = [sentence.to_dict(tag_type=_TOKEN_TAGGING_MODE) for sentence in sentences]
 
