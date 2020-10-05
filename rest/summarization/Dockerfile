@@ -9,9 +9,9 @@ ENV SERVER_HOST 0.0.0.0
 ENV PYTHONUNBUFFERED True
 
 # Default ARG vars for model configuration
-ARG QUESTION_ANSWERING_MODEL=distilbert-base-uncased-distilled-squad
+ARG SUMMARIZATION_MODEL=facebook/bart-large-cnn
 
-ENV QUESTION_ANSWERING_MODEL ${QUESTION_ANSWERING_MODEL}
+ENV SUMMARIZATION_MODEL=${SUMMARIZATION_MODEL}
 
 # Expose typical endpoints
 EXPOSE 8888

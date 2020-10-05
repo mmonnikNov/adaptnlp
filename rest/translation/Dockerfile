@@ -9,9 +9,9 @@ ENV SERVER_HOST 0.0.0.0
 ENV PYTHONUNBUFFERED True
 
 # Default ARG vars for model configuration
-ARG QUESTION_ANSWERING_MODEL=distilbert-base-uncased-distilled-squad
+ARG TRANSLATION_MODEL=Helsinki-NLP/opus-mt-ar-en
 
-ENV QUESTION_ANSWERING_MODEL ${QUESTION_ANSWERING_MODEL}
+ENV TRANSLATION_MODEL=${TRANSLATION_MODEL}
 
 # Expose typical endpoints
 EXPOSE 8888

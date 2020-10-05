@@ -16,9 +16,11 @@ class Entities(BaseModel):
     value: str
     confidence: float
 
+
 # Token Tagging Data Model
 class TokenTaggingRequest(BaseModel):
     text: str
+
 
 class TokenTaggingResponse(BaseModel):
     text: str

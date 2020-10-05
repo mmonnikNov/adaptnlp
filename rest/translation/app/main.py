@@ -8,8 +8,8 @@ import uvicorn
 from fastapi import FastAPI
 
 from .data_models import (
-    SequenceClassificationRequest,
-    SequenceClassificationResponse,
+    TranslationRequest,
+    TranslationResponse,
 )
 
 app = FastAPI()
@@ -27,17 +27,22 @@ logging.basicConfig(
 )
 
 # Global Modules
-_SEQUENCE_CLASSIFIER = adaptnlp.EasySequenceClassifier()
+_TRANSLATOR = adaptnlp.EasyTranslator()
 
 # Get Model Configurations From ENV VARS
-_SEQUENCE_CLASSIFICATION_MODEL = os.environ["SEQUENCE_CLASSIFICATION_MODEL"]
+_TRANSLATION_MODEL = os.environ["TRANSLATION_MODEL"]
 
 
 # Event Handling
 @app.on_event("startup")
 async def initialize_nlp_task_modules():
-    _SEQUENCE_CLASSIFIER.tag_text(
-        text="", mini_batch_size=1, model_name_or_path=_SEQUENCE_CLASSIFICATION_MODEL
+    _TRANSLATOR.translate(
+        text="",
+        mini_batch_size=1,
+        model_name_or_path=_TRANSLATION_MODEL,
+        min_length=0,
+        max_length=500,
+        num_beams=1,
     )
 
 
@@ -49,17 +54,21 @@ async def root():
     return {"message": "Welcome to AdaptNLP"}
 
 
-@app.post(
-    "/api/sequence-classifier", response_model=List[SequenceClassificationResponse]
-)
-async def sequence_classifier(
-    sequence_classification_request: SequenceClassificationRequest,
+@app.post("/api/translator", response_model=TranslationResponse)
+async def translator(
+    translator_request: TranslationRequest,
 ):
-    text = sequence_classification_request.text
-    sentences = _SEQUENCE_CLASSIFIER.tag_text(
-        text=text, mini_batch_size=1, model_name_or_path=_SEQUENCE_CLASSIFICATION_MODEL
+    text = translator_request.text
+    translations = _TRANSLATOR.translate(
+        text=text,
+        mini_batch_size=1,
+        model_name_or_path=_TRANSLATION_MODEL,
+        min_length=0,
+        max_length=500,
+        num_beams=1,
     )
-    payload = [sentence.to_dict() for sentence in sentences]
+    payload = {"text": translations}
+    print(payload)
     return payload
 
 
