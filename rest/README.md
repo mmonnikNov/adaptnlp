@@ -15,6 +15,12 @@ Every image can be pulled and run by running the following:
   - `docker run -itp 5000:5000 -e SEQUENCE_CLASSIFICATION_MODEL=nlptown/bert-base-multilingual-uncased-sentiment achangnovetta/sequence-classification:latest bash`
 - Question Answering
   - `docker run -itp 5000:5000 -e QUESTION_ANSWERING_MODEL=distilbert-base-uncased-distilled-squad achangnovetta/question-answering:latest bash`
+- Translation 
+  - `docker run -itp 5000:5000 -e TRANSLATION_MODEL=Helsinki-NLP/opus-mt-ar-e achangnovetta/translation:latest bash`
+- Summarization 
+  - `docker run -itp 5000:5000 -e SUMMARIZATION_MODEL=facebook/bart-large-cnn achangnovetta/summarization:latest bash`
+- Text Generation 
+  - `docker run -itp 5000:5000 -e TEXT_GENERATION_MODEL=gpt2 achangnovetta/text-generation:latest bash`
 
 Note: Add the `--gpus` arg parameter if you'd like the images and endpoints to run with GPUs. You need to have NVIDIA Docker installed with a CUDA-compatible GPU.
 
@@ -56,6 +62,37 @@ To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA
 ```
 docker run -itp 5000:5000 --gpus all question-answering:latest bash
 ```
+
+**Translation**
+```
+docker build -t translation:latest --build-arg TRANSLATION_MODEL=Helsinki-NLP/opus-mt-ar-e .
+docker run -itp 5000:5000 translation:latest bash
+```
+To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA drivers
+```
+docker run -itp 5000:5000 --gpus all translation:latest bash
+```
+
+**Summarization**
+```
+docker build -t summarization:latest --build-arg SUMMARIZATION_MODEL=facebook/bart-large-cnn .
+docker run -itp 5000:5000 summarization:latest bash
+```
+To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA drivers
+```
+docker run -itp 5000:5000 --gpus all summarization:latest bash
+```
+
+**Text Generation**
+```
+docker build -t text-generation:latest --build-arg TEXT_GENERATION_MODEL=gpt2 .
+docker run -itp 5000:5000 text-generation:latest bash
+```
+To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA drivers
+```
+docker run -itp 5000:5000 --gpus all text-generation:latest bash
+```
+
 
 ### 2. Docker Run Env Arg Entries
 Sometimes you may wont to specify the models as environment variables in docker post-build for convience or other reasons. To do so use the below commands to deploy any of the above NLP task services. The example below runs the token classification service.
