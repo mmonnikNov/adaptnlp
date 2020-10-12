@@ -66,7 +66,8 @@ async def question_answering(qa_request: QuestionAnsweringRequest):
         model_name_or_path=_QUESTION_ANSWERING_MODEL,
     )
     payload = QuestionAnsweringResponse(
-        best_answer=best_answer, best_n_answers=best_n_answers
+        best_answer=list(best_answer.values()),
+        best_n_answers=list(best_n_answers.values()),
     )
     return payload
 
