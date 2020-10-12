@@ -743,7 +743,6 @@ state-of-the-art models.</p>
 <span class="n">summarizer</span> <span class="o">=</span> <span class="n">EasySummarizer</span><span class="p">()</span>
 </code></pre></div>
 
-
 <h3 id="summarizing-with-summarizetext-str-model_name_or_path-str-mini_batch_size-int-num_beamsint-min_length-int-max_length-int-early_stopping-bool-kwargs">Summarizing with <code>summarize(text: str, model_name_or_path: str, mini_batch_size: int, num_beams:int, min_length: int, max_length: int, early_stopping: bool **kwargs)</code><a class="headerlink" href="#summarizing-with-summarizetext-str-model_name_or_path-str-mini_batch_size-int-num_beamsint-min_length-int-max_length-int-early_stopping-bool-kwargs" title="Permanent link">&para;</a></h3>
 <p>Now that we have the summarizer instantiated, we are ready to load in a model and compress the text 
 with the built-in <code>summarize()</code> method.  </p>
@@ -765,12 +764,11 @@ the path of a custom trained Transformers <code>xxxWithLMHead</code> model.</p>
     <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 
-
 <details class = "summary">
 <summary>Output</summary>
 
-<div class="codehilite"><pre><span></span><code>Einstein was left at a boardinghouse in Munich and expected to finish his education . in 1894, after his company failed to get an important contract to electrify the city of Munich, Hermann Einstein moved to Milan to work with a relative . his parents realized the enormous problems he faced as a school dropout and draft dodger with no employable skills . 
-Einstein was mystified invisible forces could deflect the needle . the second wonder came at age 12 when he discovered a book of geometry . Einstein became deeply religious at age 12 . 
+<div class="codehilite"><pre><span></span><code><span class="err">Einstein was left at a boardinghouse in Munich and expected to finish his education . in 1894, after his company failed to get an important contract to electrify the city of Munich, Hermann Einstein moved to Milan to work with a relative . his parents realized the enormous problems he faced as a school dropout and draft dodger with no employable skills . </span>
+<span class="err">Einstein was mystified invisible forces could deflect the needle . the second wonder came at age 12 when he discovered a book of geometry . Einstein became deeply religious at age 12 . </span>
 </code></pre></div>
 
 
@@ -785,13 +783,12 @@ Einstein was mystified invisible forces could deflect the needle . the second wo
     <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 
-
 <details class = "summary">
 <summary>Output</summary>
 
-<div class="codehilite"><pre><span></span><code>Einstein&#39;s education was disrupted by his father&#39;s repeated failures at business. He ran away at 16 to escape the prospect of military duty. He went to a special high school run by Jost Winteler in Aarau, Switzerland. 
+<div class="codehilite"><pre><span></span><code><span class="n">Einstein</span><span class="s1">&#39;s education was disrupted by his father&#39;</span><span class="n">s</span> <span class="n">repeated</span> <span class="n">failures</span> <span class="k">at</span> <span class="n">business</span><span class="p">.</span> <span class="n">He</span> <span class="n">ran</span> <span class="n">away</span> <span class="k">at</span> <span class="mi">16</span> <span class="k">to</span> <span class="k">escape</span> <span class="n">the</span> <span class="n">prospect</span> <span class="k">of</span> <span class="n">military</span> <span class="n">duty</span><span class="p">.</span> <span class="n">He</span> <span class="n">went</span> <span class="k">to</span> <span class="n">a</span> <span class="n">special</span> <span class="n">high</span> <span class="n">school</span> <span class="n">run</span> <span class="k">by</span> <span class="n">Jost</span> <span class="n">Winteler</span> <span class="k">in</span> <span class="n">Aarau</span><span class="p">,</span> <span class="n">Switzerland</span><span class="p">.</span> 
 
-Einstein would write that two ‘wonders’ deeply affected his early years. The first was his encounter with a compass at age five. The second wonder came at age 12 when he discovered a book of geometry. 
+<span class="n">Einstein</span> <span class="n">would</span> <span class="k">write</span> <span class="n">that</span> <span class="n">two</span> <span class="err">‘</span><span class="n">wonders</span><span class="err">’</span> <span class="n">deeply</span> <span class="n">affected</span> <span class="n">his</span> <span class="n">early</span> <span class="n">years</span><span class="p">.</span> <span class="n">The</span> <span class="k">first</span> <span class="n">was</span> <span class="n">his</span> <span class="n">encounter</span> <span class="k">with</span> <span class="n">a</span> <span class="n">compass</span> <span class="k">at</span> <span class="n">age</span> <span class="n">five</span><span class="p">.</span> <span class="n">The</span> <span class="k">second</span> <span class="n">wonder</span> <span class="n">came</span> <span class="k">at</span> <span class="n">age</span> <span class="mi">12</span> <span class="k">when</span> <span class="n">he</span> <span class="n">discovered</span> <span class="n">a</span> <span class="n">book</span> <span class="k">of</span> <span class="n">geometry</span><span class="p">.</span> 
 </code></pre></div>
 
 

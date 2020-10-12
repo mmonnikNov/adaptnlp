@@ -753,7 +753,6 @@ v2.2.2 of the Transformers library.</p>
                                                                               <span class="c1"># methods to avoid loading both.</span>
 </code></pre></div>
 
-
 <p>Then we want to instantiate the trainer with the following parameters</p>
 <div class="codehilite"><pre><span></span><code><span class="n">sc_configs</span> <span class="o">=</span> <span class="p">{</span>
               <span class="s2">&quot;corpus&quot;</span><span class="p">:</span> <span class="n">corpus</span><span class="p">,</span>
@@ -764,7 +763,6 @@ v2.2.2 of the Transformers library.</p>
              <span class="p">}</span>
 <span class="n">sc_trainer</span> <span class="o">=</span> <span class="n">SequenceClassifierTrainer</span><span class="p">(</span><span class="o">**</span><span class="n">sc_configs</span><span class="p">)</span>
 </code></pre></div>
-
 
 <details class = "summary">
 <summary>Output</summary>
@@ -793,7 +791,6 @@ cyclical learning rates method.</p>
 <span class="p">}</span>
 <span class="n">learning_rate</span> <span class="o">=</span> <span class="n">sc_trainer</span><span class="o">.</span><span class="n">find_learning_rate</span><span class="p">(</span><span class="o">**</span><span class="n">sc_lr_configs</span><span class="p">)</span>
 </code></pre></div>
-
 
 <details class = "summary">
 <summary>Output</summary>
@@ -912,7 +909,6 @@ cyclical learning rates method.</p>
 <span class="p">}</span>
 <span class="n">sc_trainer</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="o">**</span><span class="n">sc_train_configs</span><span class="p">)</span>
 </code></pre></div>
-
 
 <details class = "summary">
 <summary>Output</summary>
@@ -2658,7 +2654,6 @@ instance and start running inference.</p>
 <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
 </code></pre></div>
-
 
 <details class = "summary">
 <summary>Output</summary>

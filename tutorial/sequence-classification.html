@@ -705,7 +705,6 @@
 <span class="n">classifier</span> <span class="o">=</span> <span class="n">EasySequenceClassifier</span><span class="p">()</span>
 </code></pre></div>
 
-
 <p>You can dynamically load models as you run inference.</p>
 <p>Let's check out the Hugging Face's model repository for some pre-trained sequence classification models that some wonderful people have uploaded. The repository can be found <a href="https://huggingface.co/models?search=&amp;sort=downloads&amp;filter=text-classification">here</a></p>
 <p>Let's tag some text with a model that <a href="https://www.nlp.town/">NLP Town</a> has trained called <code>nlptown/bert-base-multilingual-uncased-sentiment</code>.</p>
@@ -723,7 +722,6 @@
 <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
     <span class="n">pprint</span><span class="p">({</span><span class="n">sentence</span><span class="o">.</span><span class="n">to_original_text</span><span class="p">():</span> <span class="n">sentence</span><span class="o">.</span><span class="n">labels</span><span class="p">})</span>
 </code></pre></div>
-
 
 <details class = "summary">
 <summary>Output</summary>
@@ -760,7 +758,6 @@
 <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
     <span class="n">pprint</span><span class="p">({</span><span class="n">sentence</span><span class="o">.</span><span class="n">to_original_text</span><span class="p">():</span> <span class="n">sentence</span><span class="o">.</span><span class="n">labels</span><span class="p">})</span>
 </code></pre></div>
-
 
 <details class = "summary">
 <summary>Output</summary>
@@ -817,7 +814,6 @@
     <span class="n">pprint</span><span class="p">({</span><span class="n">sentence</span><span class="o">.</span><span class="n">to_original_text</span><span class="p">():</span> <span class="n">sentence</span><span class="o">.</span><span class="n">labels</span><span class="p">})</span>
 </code></pre></div>
 
-
 <details class = "summary">
 <summary>Output</summary>
 
@@ -862,7 +858,6 @@
     <span class="n">pprint</span><span class="p">({</span><span class="n">sentence</span><span class="o">.</span><span class="n">to_original_text</span><span class="p">():</span> <span class="n">sentence</span><span class="o">.</span><span class="n">labels</span><span class="p">})</span>
 </code></pre></div>
 
-
 <details class = "summary">
 <summary>Output</summary>
 
@@ -899,7 +894,6 @@
 <div class="codehilite"><pre><span></span><code><span class="n">classifier</span><span class="o">.</span><span class="n">release_model</span><span class="p">(</span><span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;oliverguhr/german-sentiment-bert&quot;</span><span class="p">)</span>
 </code></pre></div>
 
-
 <h1 id="2-train-and-fine-tune-a-pre-trained-model-on-your-own-dataset">2. Train and fine-tune a pre-trained model on your own dataset<a class="headerlink" href="#2-train-and-fine-tune-a-pre-trained-model-on-your-own-dataset" title="Permanent link">&para;</a></h1>
 <p>Let's imagine you have your own dataset with text/label pairs you'd like to create a sequence classification model for.</p>
 <p>With the easy sequence classifier, you can take advantage of transfer learning by fine-tuning pre-trained models on your own custom datasets.</p>
@@ -916,7 +910,6 @@
 
 <span class="n">pprint</span><span class="p">(</span><span class="nb">vars</span><span class="p">(</span><span class="n">train_dataset</span><span class="o">.</span><span class="n">info</span><span class="p">))</span>
 </code></pre></div>
-
 
 <details class = "summary">
 <summary>Output</summary>
@@ -971,7 +964,6 @@
 <div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span><span class="o">.</span><span class="n">set_format</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;pandas&quot;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">])</span>
 <span class="n">train_dataset</span><span class="p">[:]</span>
 </code></pre></div>
-
 
 <details class = "summary">
 <summary>Output</summary>
@@ -1065,7 +1057,6 @@
 <span class="n">train_dataset</span><span class="o">.</span><span class="n">set_format</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">])</span>
 </code></pre></div>
 
-
 <p>Uncomment below to see training done with CSV files. The cell below will just save the <code>datasets.Dataset</code> objects you have in <code>train_dataset</code> and <code>eval_dataset</code> as CSVs and will train the model with the CSV file paths. Ignore to just continue to training.</p>
 <div class="codehilite"><pre><span></span><code><span class="c1">#train_dataset.set_format(type=&quot;pandas&quot;, columns=[&quot;text&quot;, &quot;label&quot;])</span>
 <span class="c1">#eval_dataset.set_format(type=&quot;pandas&quot;, columns=[&quot;text&quot;, &quot;label&quot;])</span>
@@ -1076,7 +1067,6 @@
 <span class="c1">#train_dataset = &quot;./IMDB train.csv&quot;</span>
 <span class="c1">#eval_dataset = &quot;./IMDB eval.csv&quot;</span>
 </code></pre></div>
-
 
 <p>One of the first things we'll need to specify before we start training are the training arguments. Training arguments consist mainly of the hyperparameters we want to provide the model. These may include batch size, initial learning rate, number of epochs, etc.</p>
 <p>We will be using the <code>transformers.TrainingArguments</code> data class to store our training args. These are compatible with the <code>transformers.Trainer</code> as well as AdaptNLP's train methods. For more documention on the <code>TrainingArguments</code> class, please look <a href="https://huggingface.co/transformers/main_classes/trainer.html#trainingarguments">here</a>. There are a lot of arguments available, but we will pass in the important args and use default values for the rest.</p>
@@ -1096,7 +1086,6 @@
 <span class="p">)</span>
 </code></pre></div>
 
-
 <p>Now we can run the built-in <code>train()</code> method by passing in the training arguments. The training method will also be where you specify your data arguments which include the your train and eval datasets, the pre-trained model ID (this should have been loaded from your earlier cells, but can be loaded dynamically), text column name, label column name, and ordered label names (only required if loading in paths to CSV data file for dataset args).</p>
 <p>Please checkout AdaptNLP's package reference for more information <a href="https://novetta.github.io/adaptnlp/class-api/sequence-classifier-module.html">here</a>.</p>
 <div class="codehilite"><pre><span></span><code><span class="n">classifier</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">training_args</span><span class="o">=</span><span class="n">training_args</span><span class="p">,</span>
@@ -1109,17 +1098,14 @@
                 <span class="p">)</span>
 </code></pre></div>
 
-
 <h1 id="evaluate-your-model">Evaluate your model<a class="headerlink" href="#evaluate-your-model" title="Permanent link">&para;</a></h1>
 <p>After training, you can evaluate the model with the eval dataset you passed in for training.</p>
 <div class="codehilite"><pre><span></span><code><span class="n">classifier</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;nlptown/bert-base-multilingual-uncased-sentiment&quot;</span><span class="p">)</span>
 </code></pre></div>
 
-
 <p>Now you can see it's a little weird that we're still using the <code>model_name_or_path</code> of the pre-trained model we fine-tuned and took advantage of via. transfer learning. We can release the model we've fine-tuned, and then load it back in using the directory that we've serialized the fine-tuned model. </p>
 <div class="codehilite"><pre><span></span><code><span class="n">classifier</span><span class="o">.</span><span class="n">release_model</span><span class="p">(</span><span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;nlptown/bert-base-multilingual-uncased-sentiment&quot;</span><span class="p">)</span>
 </code></pre></div>
-
 
 <div class="codehilite"><pre><span></span><code><span class="n">sentences</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">tag_text</span><span class="p">(</span>
     <span class="n">multiple_text</span><span class="p">,</span>
@@ -1131,7 +1117,6 @@
 <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
     <span class="n">pprint</span><span class="p">({</span><span class="n">sentence</span><span class="o">.</span><span class="n">to_original_text</span><span class="p">():</span> <span class="n">sentence</span><span class="o">.</span><span class="n">labels</span><span class="p">})</span>
 </code></pre></div>
-
 
 <details class = "summary">
 <summary>Output</summary>

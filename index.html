@@ -1012,7 +1012,6 @@
 <p align="center">
 <strong> A high level framework and library for running, training, and deploying state-of-the-art Natural Language Processing (NLP) models for end to end tasks.</strong>
 </p>
-
 <p align="center">
     <a href="https://circleci.com/gh/Novetta/adaptnlp">
         <img src="https://img.shields.io/circleci/build/github/Novetta/adaptnlp/master">
@@ -1067,15 +1066,13 @@ Learning Researchers and Scientists a modular and <strong>adaptive</strong> appr
 <p>To avoid dependency clustering and issues, it would be wise to install AdaptNLP in a virtual environment.
 To create a new python 3.6+ virtual environment, run this command and then activate it however your operating
 system specifies:</p>
-<div class="codehilite"><pre><span></span><code>python -m venv venv-adaptnlp
+<div class="codehilite"><pre><span></span><code><span class="err">python -m venv venv-adaptnlp</span>
 </code></pre></div>
-
 
 <h5 id="adaptnlp-install">AdaptNLP Install<a class="headerlink" href="#adaptnlp-install" title="Permanent link">&para;</a></h5>
 <p>Install using pip in your virtual environment:</p>
-<div class="codehilite"><pre><span></span><code>pip install adaptnlp
+<div class="codehilite"><pre><span></span><code><span class="err">pip install adaptnlp</span>
 </code></pre></div>
-
 
 <p>If you want to work on AdaptNLP, <code>pip install adaptnlp[dev]</code> will install its development tools.</p>
 <h4 id="requirements-and-installation-for-windows">Requirements and Installation for Windows<a class="headerlink" href="#requirements-and-installation-for-windows" title="Permanent link">&para;</a></h4>
@@ -1083,9 +1080,8 @@ system specifies:</p>
 <p>PyTorch needs to manually installed on Windows environments. If it's not already installed, proceed to http://pytorch.org/get-started/locally to select your preferences and then run the given install command. Note that the current version of PyTorch we use relies on cuda 10.1.</p>
 <h5 id="adaptnlp-install_1">AdaptNLP Install<a class="headerlink" href="#adaptnlp-install_1" title="Permanent link">&para;</a></h5>
 <p>Install using pip:</p>
-<div class="codehilite"><pre><span></span><code>pip install adaptnlp
+<div class="codehilite"><pre><span></span><code><span class="err">pip install adaptnlp</span>
 </code></pre></div>
-
 
 <p>If you want to work on AdaptNLP, <code>pip install adaptnlp[dev]</code> will install its development tools.</p>
 <h4 id="examples-and-general-use">Examples and General Use<a class="headerlink" href="#examples-and-general-use" title="Permanent link">&para;</a></h4>
@@ -1106,7 +1102,6 @@ system specifies:</p>
         <span class="nb">print</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
 </code></pre></div>
 
-
 <details class = "summary">
  <summary>Output</summary>
 
@@ -1117,7 +1112,6 @@ system specifies:</p>
 
 
 </details>
-
 <h5 id="english-sentiment-classifier-easysequenceclassifier">English Sentiment Classifier <code>EasySequenceClassifier</code><a class="headerlink" href="#english-sentiment-classifier-easysequenceclassifier" title="Permanent link">&para;</a></h5>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasySequenceClassifier</span> 
 <span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
@@ -1138,7 +1132,6 @@ system specifies:</p>
 <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
     <span class="n">pprint</span><span class="p">({</span><span class="n">sentence</span><span class="o">.</span><span class="n">to_original_text</span><span class="p">():</span> <span class="n">sentence</span><span class="o">.</span><span class="n">labels</span><span class="p">})</span>
 </code></pre></div>
-
 
 <details class = "summary">
 <summary>Output</summary>
@@ -1178,7 +1171,6 @@ system specifies:</p>
 <span class="n">pprint</span><span class="p">(</span><span class="n">best_n_answers</span><span class="p">)</span>
 </code></pre></div>
 
-
 <details class = "summary">
 <summary>Output</summary>
 
@@ -1187,7 +1179,6 @@ system specifies:</p>
 
 
 </details>
-
 <h5 id="summarization-easysummarizer">Summarization <code>EasySummarizer</code><a class="headerlink" href="#summarization-easysummarizer" title="Permanent link">&para;</a></h5>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">adaptnlp</span> <span class="kn">import</span> <span class="n">EasySummarizer</span>
 
@@ -1212,11 +1203,10 @@ system specifies:</p>
     <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 
-
 <details class="summary">
 <summary>Output</summary>
 
-<div class="codehilite"><pre><span></span><code>Einstein was mystified invisible forces could deflect the needle . the second wonder came at age 12 when he discovered a book of geometry . Einstein became deeply religious at age 12 . 
+<div class="codehilite"><pre><span></span><code><span class="err">Einstein was mystified invisible forces could deflect the needle . the second wonder came at age 12 when he discovered a book of geometry . Einstein became deeply religious at age 12 . </span>
 </code></pre></div>
 
 
@@ -1238,12 +1228,11 @@ system specifies:</p>
     <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 
-
 <details class="summary">
 <summary>Output</summary>
 
-<div class="codehilite"><pre><span></span><code>Das Maschinelle Lernen wird die Welt in Kürze übernehmen. 
-Maschinen können in vielen Sprachen sprechen. 
+<div class="codehilite"><pre><span></span><code><span class="err">Das Maschinelle Lernen wird die Welt in Kürze übernehmen. </span>
+<span class="err">Maschinen können in vielen Sprachen sprechen. </span>
 </code></pre></div>
 
 
@@ -1296,28 +1285,24 @@ fast way.</p>
 <p>Images can build with GPU support if NVIDA-Docker is correctly installed.</p>
 <h4 id="pull-and-run-adaptnlp-immediately">Pull and Run AdaptNLP Immediately<a class="headerlink" href="#pull-and-run-adaptnlp-immediately" title="Permanent link">&para;</a></h4>
 <p>Simply run an image with AdaptNLP installed from source in developer mode by running:</p>
-<div class="codehilite"><pre><span></span><code>docker run -it --rm achangnovetta/adaptnlp:latest
+<div class="codehilite"><pre><span></span><code><span class="err">docker run -it --rm achangnovetta/adaptnlp:latest</span>
 </code></pre></div>
-
 
 <p>Run an image with AdaptNLP running on GPUs if you have nvidia drivers and nvidia-docker 19.03+ installed:</p>
-<div class="codehilite"><pre><span></span><code>docker run -it --rm --gpus all achangnovetta/adaptnlp:latest
+<div class="codehilite"><pre><span></span><code><span class="err">docker run -it --rm --gpus all achangnovetta/adaptnlp:latest</span>
 </code></pre></div>
-
 
 <h4 id="build">Build<a class="headerlink" href="#build" title="Permanent link">&para;</a></h4>
 <p>Build docker image and run container with the following commands in the directory of the Dockerfile
 to create a container with adaptnlp installed and ready to go</p>
 <p>Note: A container with GPUs enabled requires Docker version 19.03+ and nvida-docker installed</p>
-<div class="codehilite"><pre><span></span><code>docker build -t achangnovetta/adaptnlp:latest .
-docker run -it --rm achangnovetta/adaptnlp:latest
+<div class="codehilite"><pre><span></span><code><span class="err">docker build -t achangnovetta/adaptnlp:latest .</span>
+<span class="err">docker run -it --rm achangnovetta/adaptnlp:latest</span>
 </code></pre></div>
-
 
 <p>If you want to use CUDA compatible GPUs </p>
-<div class="codehilite"><pre><span></span><code>docker run -it --rm --gpus all achangnovetta/adaptnlp:latest
+<div class="codehilite"><pre><span></span><code><span class="err">docker run -it --rm --gpus all achangnovetta/adaptnlp:latest</span>
 </code></pre></div>
-
 
 <h2 id="contact">Contact<a class="headerlink" href="#contact" title="Permanent link">&para;</a></h2>
 <p>Please contact the author Andrew Chang at achang@novetta.com with questions or comments regarding AdaptNLP.</p>

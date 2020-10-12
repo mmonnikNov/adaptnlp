@@ -721,7 +721,6 @@ state-of-the-art models.</p>
 <span class="n">translator</span> <span class="o">=</span> <span class="n">EasyTranslator</span><span class="p">()</span>
 </code></pre></div>
 
-
 <h3 id="translating-with-translatetext-str-model_name_or_path-str-mini_batch_size-int-num_beamsint-min_length-int-max_length-int-early_stopping-bool-kwargs">Translating with <code>translate(text: str, model_name_or_path: str, mini_batch_size: int, num_beams:int, min_length: int, max_length: int, early_stopping: bool **kwargs)</code><a class="headerlink" href="#translating-with-translatetext-str-model_name_or_path-str-mini_batch_size-int-num_beamsint-min_length-int-max_length-int-early_stopping-bool-kwargs" title="Permanent link">&para;</a></h3>
 <p>Now that we have the translator instantiated, we are ready to load in a model and translate the text 
 with the built-in <code>translate()</code> method.  </p>
@@ -743,13 +742,12 @@ the path of a custom trained Transformers <code>xxxWithLMHead</code> model.</p>
     <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 
-
 <details class = "summary">
 <summary>Output</summary>
 
-<div class="codehilite"><pre><span></span><code>Das Maschinelle Lernen wird die Welt in Kürze übernehmen. 
+<div class="codehilite"><pre><span></span><code><span class="n">Das</span> <span class="n">Maschinelle</span> <span class="n">Lernen</span> <span class="n">wird</span> <span class="n">die</span> <span class="n">Welt</span> <span class="k">in</span> <span class="n">Kürze</span> <span class="err">ü</span><span class="n">bernehmen</span><span class="p">.</span> 
 
-Maschinen können in vielen Sprachen sprechen. 
+<span class="n">Maschinen</span> <span class="n">können</span> <span class="k">in</span> <span class="n">vielen</span> <span class="n">Sprachen</span> <span class="n">sprechen</span><span class="p">.</span> 
 </code></pre></div>
 
 

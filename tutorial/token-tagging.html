@@ -820,7 +820,6 @@ state-of-the-art token tagging models.</p>
 <span class="n">tagger</span> <span class="o">=</span> <span class="n">EasyTokenTagger</span><span class="p">()</span>
 </code></pre></div>
 
-
 <h3 id="tagging-with-tag_texttext-str-model_name_or_path-str-kwargs">Tagging with <code>tag_text(text: str, model_name_or_path: str, **kwargs)</code><a class="headerlink" href="#tagging-with-tag_texttext-str-model_name_or_path-str-kwargs" title="Permanent link">&para;</a></h3>
 <p>Now that we have the tagger instantiated, we are ready to load in a token tagging model and tag the text with 
 the built-in <code>tag_text()</code> method.  </p>
@@ -831,7 +830,6 @@ the built-in <code>tag_text()</code> method.  </p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Tag the string</span>
 <span class="n">sentences</span> <span class="o">=</span> <span class="n">tagger</span><span class="o">.</span><span class="n">tag_text</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">example_text</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;ner-ontonotes&quot;</span><span class="p">)</span>
 </code></pre></div>
-
 
 <p>All of Flair's pretrained token taggers are available for loading through the <code>model_name_or_path</code> parameter, 
 and they can be found <a href="https://github.com/flairNLP/flair/blob/master/resources/docs/TUTORIAL_2_TAGGING.md">here</a>.</p>
@@ -1057,11 +1055,10 @@ and they can be found <a href="https://github.com/flairNLP/flair/blob/master/res
     <span class="nb">print</span><span class="p">(</span><span class="n">sen</span><span class="o">.</span><span class="n">to_tagged_string</span><span class="p">())</span>
 </code></pre></div>
 
-
 <details class = "summary">
 <summary>Output</summary>
 
-<div class="codehilite"><pre><span></span><code>Novetta &lt;B-ORG&gt; Solutions &lt;E-ORG&gt; is the best . Albert &lt;B-PERSON&gt; Einstein &lt;E-PERSON&gt; used to be employed at Novetta &lt;B-ORG&gt; Solutions &lt;E-ORG&gt; . The Wright &lt;S-PERSON&gt; brothers loved to visit the JBF &lt;S-ORG&gt; headquarters , and they would have a chat with Albert &lt;S-PERSON&gt; .
+<div class="codehilite"><pre><span></span><code><span class="err">Novetta &lt;B-ORG&gt; Solutions &lt;E-ORG&gt; is the best . Albert &lt;B-PERSON&gt; Einstein &lt;E-PERSON&gt; used to be employed at Novetta &lt;B-ORG&gt; Solutions &lt;E-ORG&gt; . The Wright &lt;S-PERSON&gt; brothers loved to visit the JBF &lt;S-ORG&gt; headquarters , and they would have a chat with Albert &lt;S-PERSON&gt; .</span>
 </code></pre></div>
 
 
@@ -1074,7 +1071,6 @@ and they can be found <a href="https://github.com/flairNLP/flair/blob/master/res
     <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">sen</span><span class="o">.</span><span class="n">get_spans</span><span class="p">(</span><span class="n">label_type</span><span class="o">=</span><span class="s2">&quot;ner&quot;</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
 </code></pre></div>
-
 
 <details class = "summary">
 <summary>Output</summary>
@@ -1133,14 +1129,12 @@ tagger.  See an example below:</p>
 <span class="n">sentences</span> <span class="o">=</span> <span class="n">tagger</span><span class="o">.</span><span class="n">tag_all</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">example_text</span><span class="p">)</span>
 </code></pre></div>
 
-
 <p>Now we can see below that you get a list of Flair sentences tagged with the "ner-ontonotes" AND "pos" model:</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;List entities tagged:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">sen</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">sen</span><span class="o">.</span><span class="n">get_spans</span><span class="p">(</span><span class="n">label_type</span><span class="o">=</span><span class="s2">&quot;pos&quot;</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
 </code></pre></div>
-
 
 <details class = "summary">
 <summary>Output </summary>
@@ -1190,7 +1184,6 @@ tagger.  See an example below:</p>
     <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">sen</span><span class="o">.</span><span class="n">get_spans</span><span class="p">(</span><span class="n">label_type</span><span class="o">=</span><span class="s2">&quot;ner&quot;</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
 </code></pre></div>
-
 
 <details class = "summary">
 <summary>Output </summary>

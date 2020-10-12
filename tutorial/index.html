@@ -769,9 +769,8 @@ level of the AdaptNLP library.</p>
 <p>You could also run the code snippets in these tutorials straight through the python interpreter as well.</p>
 <h2 id="install-and-setup">Install and Setup<a class="headerlink" href="#install-and-setup" title="Permanent link">&para;</a></h2>
 <p>You will first need to install AdaptNLP with Python 3.6+ using the following command:</p>
-<div class="codehilite"><pre><span></span><code>pip install adaptnlp
+<div class="codehilite"><pre><span></span><code><span class="err">pip install adaptnlp</span>
 </code></pre></div>
-
 
 <p>AdaptNLP is largely built on top of Flair, Transformers, and PyTorch, and dependencies will be handled on install.</p>
 <p>AdaptNLP can be used with or without GPUs.  AdaptNLP will automatically make use of GPU VRAM in environment with
@@ -795,7 +794,6 @@ CUAD-compatible NVIDIA GPUs and NVIDIA drivers installed.  GPU-less environments
     <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">sentence</span><span class="o">.</span><span class="n">get_spans</span><span class="p">(</span><span class="s2">&quot;ner&quot;</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
 </code></pre></div>
-
 
 <details class = "summary">
  <summary>Output</summary>
@@ -823,7 +821,6 @@ CUAD-compatible NVIDIA GPUs and NVIDIA drivers installed.  GPU-less environments
     <span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
 </code></pre></div>
 
-
 <details class = "summary">
 <summary>Output</summary>
 
@@ -848,7 +845,6 @@ CUAD-compatible NVIDIA GPUs and NVIDIA drivers installed.  GPU-less environments
     <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">get_embedding</span><span class="p">())</span>
 </code></pre></div>
-
 
 <details class = "summary">
 <summary>Output</summary>
@@ -882,7 +878,6 @@ CUAD-compatible NVIDIA GPUs and NVIDIA drivers installed.  GPU-less environments
 <span class="nb">print</span><span class="p">(</span><span class="n">best_answer</span><span class="p">)</span>
 <span class="n">pprint</span><span class="p">(</span><span class="n">best_n_answers</span><span class="p">)</span>
 </code></pre></div>
-
 
 <details class = "summary">
 <summary>Output</summary>

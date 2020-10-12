@@ -707,7 +707,6 @@ as of v2.2.2 of the Transformers library.</p>
 <span class="n">eval_file</span> <span class="o">=</span> <span class="s2">&quot;./wikitext-2-raw/wiki.test.raw&quot;</span>
 </code></pre></div>
 
-
 <details class = "summary">
 <summary>Output</summary>
 
@@ -752,7 +751,6 @@ as of v2.2.2 of the Transformers library.</p>
 <span class="p">)</span>
 </code></pre></div>
 
-
 <h1 id="2-language-model-training">2. Language model training<a class="headerlink" href="#2-language-model-training" title="Permanent link">&para;</a></h1>
 <p>Now that we have our data and training arguments, let's instantiate the <code>LMFineTuner</code> and load in a pre-trained language model we would like to fine-tune. In this case, we will use the <code>gpt2</code> pre-trained language model.</p>
 <p>Note: You can load in any model with the allowable architecture that we've specified above. You can even load in custom pre-trained models or models that you find in the Hugging Face repository that have already been fine-tuned and trained on NLP target tasks.</p>
@@ -760,7 +758,6 @@ as of v2.2.2 of the Transformers library.</p>
 
 <span class="n">finetuner</span> <span class="o">=</span> <span class="n">LMFineTuner</span><span class="p">(</span><span class="n">model_name_or_path</span><span class="o">=</span><span class="s2">&quot;gpt2&quot;</span><span class="p">)</span>
 </code></pre></div>
-
 
 <p>Now we can run the built-in <code>train()</code> method by passing in the training arguments. The training method will also be where you specify your data arguments which include the your train and eval datasets, the pre-trained model ID (this should have been loaded from your earlier cells, but can be loaded dynamically), text column name, label column name, and ordered label names (only required if loading in paths to CSV data file for dataset args).</p>
 <p>Notice how we pass the <code>mlm</code> argument as False? The mlm argument should be true if we are using a masked language model variant such as BERT architecture language models. More information can be found on Hugging Face's documentation <a href="https://huggingface.co/transformers/master/task_summary.html#masked-language-modeling">here</a></p>
@@ -773,7 +770,6 @@ as of v2.2.2 of the Transformers library.</p>
     <span class="n">overwrite_cache</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
 </code></pre></div>
-
 
 <details class = "summary">
 <summary>Output</summary>
@@ -857,7 +853,6 @@ as of v2.2.2 of the Transformers library.</p>
 <div class="codehilite"><pre><span></span><code><span class="n">finetuner</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
 </code></pre></div>
 
-
 <p>And now you have your very own pre-trained language model that's been fine-tuned on your personal domain data!</p>
 <p>Since we've just fine-tuned a causal language model, we can actually load this straight into an <code>EasyTextGenerator</code> class object and play around with our language model to evaluate it qualitatively with our own "eyes".</p>
 <p>All we have to do is pass in the directory that we've output our trained language model, in this case it's located in "./models"</p>
@@ -868,7 +863,6 @@ as of v2.2.2 of the Transformers library.</p>
 <span class="n">generator</span> <span class="o">=</span> <span class="n">EasyTextGenerator</span><span class="p">()</span>
 </code></pre></div>
 
-
 <div class="codehilite"><pre><span></span><code><span class="c1"># Generate</span>
 <span class="n">generated_text</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
     <span class="n">text</span><span class="p">,</span> 
@@ -878,7 +872,6 @@ as of v2.2.2 of the Transformers library.</p>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">generated_text</span><span class="p">)</span>
 </code></pre></div>
-
 
 <details class = "summary">
 <summary>Output</summary>
@@ -901,7 +894,6 @@ as of v2.2.2 of the Transformers library.</p>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">generated_text</span><span class="p">)</span>
 </code></pre></div>
-
 
 <details class = "summary">
 <summary>Output</summary>
