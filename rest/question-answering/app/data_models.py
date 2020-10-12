@@ -15,11 +15,11 @@ class QASpanLabel(BaseModel):
 
 # Question Answering
 class QuestionAnsweringRequest(BaseModel):
-    query: str
-    context: str
+    query: List[str]
+    context: List[str]
     top_n: int = 10
 
 
 class QuestionAnsweringResponse(BaseModel):
-    best_answer: str
-    best_n_answers: List[QASpanLabel]
+    best_answer: List[str]
+    best_n_answers: List[List[QASpanLabel]]
