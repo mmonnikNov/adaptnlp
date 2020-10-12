@@ -73,7 +73,7 @@ If you want to work on AdaptNLP, `pip install adaptnlp[dev]` will install its de
 #### Requirements and Installation for Windows
 
 ##### PyTorch Install
-PyTorch needs to manually installed on Windows environments. If it's not already installed, proceed to http://pytorch.org/get-started/locally to select your preferences and then run the given install command. Note that the current version of PyTorch we use relies on cuda 10.1.
+PyTorch needs to be manually installed on Windows environments. If it's not already installed, proceed to http://pytorch.org/get-started/locally to select your preferences and then run the given install command. Note that the current version of PyTorch we use relies on cuda 10.1.
 
 ##### AdaptNLP Install
 Install using pip:
