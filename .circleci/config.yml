@@ -2,7 +2,7 @@ version: 2
 jobs:
   cache_and_run_tests:
     docker:
-      - image: circleci/python:3.6
+      - image: circleci/python:3.7
     resource_class: xlarge
     working_directory: ~/adaptnlp
     steps:
@@ -30,7 +30,7 @@ jobs:
             python3 -m pytest
   deploy_doc:
     docker:
-      - image: circleci/python:3.6
+      - image: circleci/python:3.7
     working_directory: ~/adaptnlp
     steps:
       - checkout
