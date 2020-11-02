@@ -53,9 +53,11 @@ Learning Researchers and Scientists a modular and **adaptive** approach to a var
 
 #### Requirements and Installation for Linux/Mac
 
+Note: AdaptNLP will be using the latest stable torch version (v1.7 as of 11/2/20) which requires Python 3.7+. Please downgrade torch<=1.6 if using Python 3.6
+
 ##### Virtual Environment
 To avoid dependency clustering and issues, it would be wise to install AdaptNLP in a virtual environment.
-To create a new python 3.6+ virtual environment, run this command and then activate it however your operating
+To create a new python 3.7+ virtual environment, run this command and then activate it however your operating
 system specifies:
 
 ```
