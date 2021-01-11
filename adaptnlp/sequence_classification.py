@@ -351,11 +351,15 @@ class FlairSequenceClassifier(AdaptiveModel):
             text = [text]
         if isinstance(text[0], str):
             text = [Sentence(s) for s in text]
-        return self.classifier.predict(
+            
+        self.classifier.predict(
             sentences=text,
             mini_batch_size=mini_batch_size,
             **kwargs,
         )
+
+
+        return text
 
     def train(self):
         pass
