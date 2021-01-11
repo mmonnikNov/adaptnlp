@@ -1339,11 +1339,11 @@ running the tutorial and workshop notebooks.</p>
 <p>Images can build with GPU support if NVIDA-Docker is correctly installed.</p>
 <h4 id="pull-and-run-adaptnlp-immediately">Pull and Run AdaptNLP Immediately<a class="headerlink" href="#pull-and-run-adaptnlp-immediately" title="Permanent link">&para;</a></h4>
 <p>Simply run an image with AdaptNLP installed from source in developer mode by running:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker run -itp 8888:8888 achangnovetta/adaptnlp:latest bash</span>
+<div class="codehilite"><pre><span></span><code><span class="err">docker run -itp 8888:8888 achangnovetta/adaptnlp:latest</span>
 </code></pre></div>
 
 <p>Run an image with AdaptNLP running on GPUs if you have nvidia drivers and nvidia-docker 19.03+ installed:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker run -itp 8888:8888 --gpus all achangnovetta/adaptnlp:latest bash</span>
+<div class="codehilite"><pre><span></span><code><span class="err">docker run -itp 8888:8888 --gpus all achangnovetta/adaptnlp:latest</span>
 </code></pre></div>
 
 <p>Check <code>localhost:8888</code> or <code>localhost:8888/lab</code> to access the container notebook servers.</p>
@@ -1352,7 +1352,7 @@ running the tutorial and workshop notebooks.</p>
 <p>Note: A container with GPUs enabled requires Docker version 19.03+ and nvida-docker installed</p>
 <div class="codehilite"><pre><span></span><code><span class="err"># From the repo directory</span>
 <span class="err">docker build -t achangnovetta/adaptnlp:latest -f docker/runtime/Dockerfile.cuda11.0-runtime-ubuntu18.04-py3.8 .</span>
-<span class="err">docker run -itp 8888:8888 achangnovetta/adaptnlp:latest bash</span>
+<span class="err">docker run -itp 8888:8888 achangnovetta/adaptnlp:latest</span>
 </code></pre></div>
 
 <p>If you want to use CUDA compatible GPUs </p>
