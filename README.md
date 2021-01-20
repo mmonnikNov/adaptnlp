@@ -235,34 +235,40 @@ fast way.
 
 AdaptNLP official docker images are up on [Docker Hub](https://hub.docker.com/r/achangnovetta/adaptnlp).
 
-Images have AdaptNLP installed from source in developer mode with tutorial notebooks available.
- 
+Images have AdaptNLP installed from source in developer mode with tutorial notebooks available, and will default to launching a jupyter server from where you can start 
+running the tutorial and workshop notebooks.
+
 Images can build with GPU support if NVIDA-Docker is correctly installed.
 
 #### Pull and Run AdaptNLP Immediately
 Simply run an image with AdaptNLP installed from source in developer mode by running:
 ```
-docker run -it --rm achangnovetta/adaptnlp:latest
+docker run -itp 8888:8888 achangnovetta/adaptnlp:latest
 ```
 Run an image with AdaptNLP running on GPUs if you have nvidia drivers and nvidia-docker 19.03+ installed:
 ```
-docker run -it --rm --gpus all achangnovetta/adaptnlp:latest
+docker run -itp 8888:8888 --gpus all achangnovetta/adaptnlp:latest
 ```
+
+Check `localhost:8888` or `localhost:8888/lab` to access the container notebook servers.
+
 
 #### Build
 
-Build docker image and run container with the following commands in the directory of the Dockerfile
-to create a container with adaptnlp installed and ready to go
+Refer to the `docker/` directory and run the following to build and run adaptnlp from the available images.
 
 Note: A container with GPUs enabled requires Docker version 19.03+ and nvida-docker installed
 ```
-docker build -t achangnovetta/adaptnlp:latest .
-docker run -it --rm achangnovetta/adaptnlp:latest
+# From the repo directory
+docker build -t achangnovetta/adaptnlp:latest -f docker/runtime/Dockerfile.cuda11.0-runtime-ubuntu18.04-py3.8 .
+docker run -itp 8888:8888 achangnovetta/adaptnlp:latest
 ```
 If you want to use CUDA compatible GPUs 
 ```
-docker run -it --rm --gpus all achangnovetta/adaptnlp:latest
+docker run -itp 8888:8888 --gpus all achangnovetta/adaptnlp:latest
 ```
+
+Check `localhost:8888` or `localhost:8888/lab` to access the container notebook servers.
 
 ## Contact
 
