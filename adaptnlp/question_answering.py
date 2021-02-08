@@ -20,7 +20,6 @@ from transformers import (
 )
 from transformers.data.processors.squad import SquadResult
 
-from adaptnlp.transformers import BertQuestionAnsweringModel
 from adaptnlp.model import AdaptiveModel
 from adaptnlp.transformers.squad_metrics import (
     compute_predictions_log_probs,
@@ -57,7 +56,8 @@ class TransformersQuestionAnswering(AdaptiveModel):
 
         * **model_name_or_path** - A key string of one of Transformer's pre-trained Question Answering (SQUAD) models
         """
-        tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
+        # QA tokenizers not compatible with fast tokenizers yet
+        tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, use_fast=False)
         model = AutoModelForQuestionAnswering.from_pretrained(model_name_or_path)
         qa_model = cls(tokenizer, model)
         return qa_model
@@ -162,7 +162,7 @@ class TransformersQuestionAnswering(AdaptiveModel):
                     eval_feature = features[example_index.item()]
                     unique_id = int(eval_feature.unique_id)
 
-                    output = [self.to_list(output[i]) for output in outputs]
+                    output = [self.to_list(outputs[output][i]) for output in outputs]
 
                     if isinstance(self.model, self.xmodel_instances):
                         # Some models like the ones in `self.xmodel_instances` use 5 arguments for their predictions
@@ -286,32 +286,6 @@ class EasyQuestionAnswering:
 
     def __init__(self):
         self.models: Dict[AdaptiveModel] = defaultdict(bool)
-
-        # Soon to deprecated
-        self.bert_qa = None
-
-    # Dynamic Loaders
-    def _load_bert_qa(self) -> None:
-        self.bert_qa = BertQuestionAnsweringModel()
-
-    # Soon to be deprecated
-    def predict_bert_qa(
-        self, query: str, context: str, n_best_size: int = 20
-    ) -> Tuple[str, List[OrderedDict]]:
-        """Predicts top_n answer spans of query in regards to context
-
-
-        * **query** - The question
-        * **context** - The context of which the question is asking
-        * **n_best_size** - The top n answers returned
-
-        **return** - Either a list of string answers or a dict of the results
-        """
-
-        self._load_bert_qa() if not self.bert_qa else None
-        return self.bert_qa.predict(
-            query=query, context=context, n_best_size=n_best_size
-        )
 
     def predict_qa(
         self,

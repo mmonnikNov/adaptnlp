@@ -353,7 +353,7 @@ class EasyTokenTagger:
                 self.token_taggers[model_name_or_path] = FlairTokenTagger.load(
                     model_name_or_path
                 )
-            except FileNotFoundError:
+            except (FileNotFoundError, KeyError):
                 logger.info(
                     f"{model_name_or_path} not a valid Flair pre-trained model...checking transformers repo"
                 )
