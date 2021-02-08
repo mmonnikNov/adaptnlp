@@ -7,10 +7,10 @@ def test_easy_word_embeddings():
 
 
 def test_easy_stacked_embeddings():
-    embeddings = EasyStackedEmbeddings("bert-base-cased", "xlnet-base-cased")
+    embeddings = EasyStackedEmbeddings("bert-base-cased", "distilbert-base-cased")
     embeddings.embed_text(text="Test")
 
 
 def test_easy_document_embeddings():
-    embeddings = EasyDocumentEmbeddings("bert-base-cased", "xlnet-base-cased")
+    embeddings = EasyDocumentEmbeddings("bert-base-cased", "distilbert-base-cased")
     embeddings.embed_pool(text="Test")
