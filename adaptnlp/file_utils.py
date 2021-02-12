@@ -54,11 +54,12 @@ def filename_to_url(filename: str, cache_dir: str = None) -> Tuple[str, str]:
     if cache_dir is None:
         cache_dir = CACHE_DIRECTORY
     if not isinstance(cache_dir, Path): cache_dir = Path(cache_dir)
-
-    if not cache_dir.exists():
+    
+    cache_path = cache_dir/fname
+    if not cache_path.exists():
         raise FileNotFoundError(f"file {cache_dir} not found")
 
-    meta_path = Path(f'{cache_dir}.json')
+    meta_path = Path(f'{cache_path}.json')
     if not meta_path.exists():
         raise FileNotFoundError(f"file {meta_path} not found")
 
