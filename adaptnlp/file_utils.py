@@ -2,7 +2,6 @@
 Utilities for working with the local dataset cache.  Adapted from AllenNLP.
 """
 
-import os
 import logging
 import shutil
 import tempfile
