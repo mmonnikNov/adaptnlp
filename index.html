@@ -1108,12 +1108,12 @@ Learning Researchers and Scientists a modular and <strong>adaptive</strong> appr
 <p>To avoid dependency clustering and issues, it would be wise to install AdaptNLP in a virtual environment.
 To create a new python 3.7+ virtual environment, run this command and then activate it however your operating
 system specifies:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">python -m venv venv-adaptnlp</span>
+<div class="codehilite"><pre><span></span><code>python -m venv venv-adaptnlp
 </code></pre></div>
 
 <h5 id="adaptnlp-install">AdaptNLP Install<a class="headerlink" href="#adaptnlp-install" title="Permanent link">&para;</a></h5>
 <p>Install using pip in your virtual environment:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">pip install adaptnlp</span>
+<div class="codehilite"><pre><span></span><code>pip install adaptnlp
 </code></pre></div>
 
 <p>If you want to work on AdaptNLP, <code>pip install adaptnlp[dev]</code> will install its development tools.</p>
@@ -1122,7 +1122,7 @@ system specifies:</p>
 <p>PyTorch needs to manually installed on Windows environments. If it's not already installed, proceed to http://pytorch.org/get-started/locally to select your preferences and then run the given install command. Note that the current version of PyTorch we use relies on cuda 10.1.</p>
 <h5 id="adaptnlp-install_1">AdaptNLP Install<a class="headerlink" href="#adaptnlp-install_1" title="Permanent link">&para;</a></h5>
 <p>Install using pip:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">pip install adaptnlp</span>
+<div class="codehilite"><pre><span></span><code>pip install adaptnlp
 </code></pre></div>
 
 <p>If you want to work on AdaptNLP, <code>pip install adaptnlp[dev]</code> will install its development tools.</p>
@@ -1248,7 +1248,7 @@ system specifies:</p>
 <details class="summary">
 <summary>Output</summary>
 
-<div class="codehilite"><pre><span></span><code><span class="err">Einstein was mystified invisible forces could deflect the needle . the second wonder came at age 12 when he discovered a book of geometry . Einstein became deeply religious at age 12 . </span>
+<div class="codehilite"><pre><span></span><code>Einstein was mystified invisible forces could deflect the needle . the second wonder came at age 12 when he discovered a book of geometry . Einstein became deeply religious at age 12 . 
 </code></pre></div>
 
 
@@ -1273,8 +1273,8 @@ system specifies:</p>
 <details class="summary">
 <summary>Output</summary>
 
-<div class="codehilite"><pre><span></span><code><span class="err">Das Maschinelle Lernen wird die Welt in Kürze übernehmen. </span>
-<span class="err">Maschinen können in vielen Sprachen sprechen. </span>
+<div class="codehilite"><pre><span></span><code>Das Maschinelle Lernen wird die Welt in Kürze übernehmen. 
+Maschinen können in vielen Sprachen sprechen. 
 </code></pre></div>
 
 
@@ -1328,24 +1328,24 @@ running the tutorial and workshop notebooks.</p>
 <p>Images can build with GPU support if NVIDA-Docker is correctly installed.</p>
 <h4 id="pull-and-run-adaptnlp-immediately">Pull and Run AdaptNLP Immediately<a class="headerlink" href="#pull-and-run-adaptnlp-immediately" title="Permanent link">&para;</a></h4>
 <p>Simply run an image with AdaptNLP installed from source in developer mode by running:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker run -itp 8888:8888 achangnovetta/adaptnlp:latest</span>
+<div class="codehilite"><pre><span></span><code>docker run -itp 8888:8888 achangnovetta/adaptnlp:latest
 </code></pre></div>
 
 <p>Run an image with AdaptNLP running on GPUs if you have nvidia drivers and nvidia-docker 19.03+ installed:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker run -itp 8888:8888 --gpus all achangnovetta/adaptnlp:latest</span>
+<div class="codehilite"><pre><span></span><code>docker run -itp 8888:8888 --gpus all achangnovetta/adaptnlp:latest
 </code></pre></div>
 
 <p>Check <code>localhost:8888</code> or <code>localhost:8888/lab</code> to access the container notebook servers.</p>
 <h4 id="build">Build<a class="headerlink" href="#build" title="Permanent link">&para;</a></h4>
 <p>Refer to the <code>docker/</code> directory and run the following to build and run adaptnlp from the available images.</p>
 <p>Note: A container with GPUs enabled requires Docker version 19.03+ and nvida-docker installed</p>
-<div class="codehilite"><pre><span></span><code><span class="err"># From the repo directory</span>
-<span class="err">docker build -t achangnovetta/adaptnlp:latest -f docker/runtime/Dockerfile.cuda11.0-runtime-ubuntu18.04-py3.8 .</span>
-<span class="err">docker run -itp 8888:8888 achangnovetta/adaptnlp:latest</span>
+<div class="codehilite"><pre><span></span><code># From the repo directory
+docker build -t achangnovetta/adaptnlp:latest -f docker/runtime/Dockerfile.cuda11.0-runtime-ubuntu18.04-py3.8 .
+docker run -itp 8888:8888 achangnovetta/adaptnlp:latest
 </code></pre></div>
 
 <p>If you want to use CUDA compatible GPUs </p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker run -itp 8888:8888 --gpus all achangnovetta/adaptnlp:latest</span>
+<div class="codehilite"><pre><span></span><code>docker run -itp 8888:8888 --gpus all achangnovetta/adaptnlp:latest
 </code></pre></div>
 
 <p>Check <code>localhost:8888</code> or <code>localhost:8888/lab</code> to access the container notebook servers.</p>

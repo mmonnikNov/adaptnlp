@@ -860,74 +860,74 @@
 or your own custom trained models with a path pointing to the model.  (The model must be in the directory you are building your image from for your
 respective NLP task)</p>
 <p><strong>Token Tagger</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker build -t token-tagging:latest --build-arg TOKEN_TAGGING_MODE=ner \</span>
-<span class="err">                                     --build-arg TOKEN_TAGGING_MODEL=ner-ontonotes-fast .</span>
-<span class="err">docker run -itp 5000:5000 token-tagging:latest bash</span>
+<div class="codehilite"><pre><span></span><code>docker build -t token-tagging:latest --build-arg TOKEN_TAGGING_MODE=ner \
+                                     --build-arg TOKEN_TAGGING_MODEL=ner-ontonotes-fast .
+docker run -itp 5000:5000 token-tagging:latest bash
 </code></pre></div>
 
 <p>To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA drivers</p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker run -itp 5000:5000 --gpus all token-tagging:latest bash</span>
+<div class="codehilite"><pre><span></span><code>docker run -itp 5000:5000 --gpus all token-tagging:latest bash
 </code></pre></div>
 
 <p><strong>Sequence Classifier</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker build -t sequence-classification:latest --build-arg SEQUENCE_CLASSIFICATION_MODEL=nlptown/bert-base-multilingual-uncased-sentiment .</span>
-<span class="err">docker run -itp 5000:5000 sequence-classification:latest bash</span>
+<div class="codehilite"><pre><span></span><code>docker build -t sequence-classification:latest --build-arg SEQUENCE_CLASSIFICATION_MODEL=nlptown/bert-base-multilingual-uncased-sentiment .
+docker run -itp 5000:5000 sequence-classification:latest bash
 </code></pre></div>
 
 <p>To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA drivers</p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker run -itp 5000:5000 --gpus all sequence-classification:latest bash</span>
+<div class="codehilite"><pre><span></span><code>docker run -itp 5000:5000 --gpus all sequence-classification:latest bash
 </code></pre></div>
 
 <p><strong>Question Answering</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker build -t question-answering:latest --build-arg QUESTION_ANSWERING_MODEL=distilbert-base-uncased-distilled-squad .</span>
-<span class="err">docker run -itp 5000:5000 question-answering:latest bash</span>
+<div class="codehilite"><pre><span></span><code>docker build -t question-answering:latest --build-arg QUESTION_ANSWERING_MODEL=distilbert-base-uncased-distilled-squad .
+docker run -itp 5000:5000 question-answering:latest bash
 </code></pre></div>
 
 <p>To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA drivers</p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker run -itp 5000:5000 --gpus all question-answering:latest bash</span>
+<div class="codehilite"><pre><span></span><code>docker run -itp 5000:5000 --gpus all question-answering:latest bash
 </code></pre></div>
 
 <p><strong>Translation</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker build -t translation:latest --build-arg TRANSLATION_MODEL=Helsinki-NLP/opus-mt-ar-e .</span>
-<span class="err">docker run -itp 5000:5000 translation:latest bash</span>
+<div class="codehilite"><pre><span></span><code>docker build -t translation:latest --build-arg TRANSLATION_MODEL=Helsinki-NLP/opus-mt-ar-e .
+docker run -itp 5000:5000 translation:latest bash
 </code></pre></div>
 
 <p>To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA drivers</p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker run -itp 5000:5000 --gpus all translation:latest bash</span>
+<div class="codehilite"><pre><span></span><code>docker run -itp 5000:5000 --gpus all translation:latest bash
 </code></pre></div>
 
 <p><strong>Summarization</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker build -t summarization:latest --build-arg SUMMARIZATION_MODEL=facebook/bart-large-cnn .</span>
-<span class="err">docker run -itp 5000:5000 summarization:latest bash</span>
+<div class="codehilite"><pre><span></span><code>docker build -t summarization:latest --build-arg SUMMARIZATION_MODEL=facebook/bart-large-cnn .
+docker run -itp 5000:5000 summarization:latest bash
 </code></pre></div>
 
 <p>To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA drivers</p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker run -itp 5000:5000 --gpus all summarization:latest bash</span>
+<div class="codehilite"><pre><span></span><code>docker run -itp 5000:5000 --gpus all summarization:latest bash
 </code></pre></div>
 
 <p><strong>Text Generation</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker build -t text-generation:latest --build-arg TEXT_GENERATION_MODEL=gpt2 .</span>
-<span class="err">docker run -itp 5000:5000 text-generation:latest bash</span>
+<div class="codehilite"><pre><span></span><code>docker build -t text-generation:latest --build-arg TEXT_GENERATION_MODEL=gpt2 .
+docker run -itp 5000:5000 text-generation:latest bash
 </code></pre></div>
 
 <p>To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA drivers</p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker run -itp 5000:5000 --gpus all text-generation:latest bash</span>
+<div class="codehilite"><pre><span></span><code>docker run -itp 5000:5000 --gpus all text-generation:latest bash
 </code></pre></div>
 
 <h3 id="2-docker-run-env-arg-entries">2. Docker Run Env Arg Entries<a class="headerlink" href="#2-docker-run-env-arg-entries" title="Permanent link">&para;</a></h3>
 <p>Sometimes you may wont to specify the models as environment variables in docker post-build for convience or other reasons. To do so use the below commands to deploy any of the above NLP task services. The example below runs the token classification service.</p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker build -t token-tagging:latest .</span>
-<span class="err">docker run -itp 5000:5000 -e TOKEN_TAGGING_MODE=&#39;ner&#39; \</span>
-<span class="err">                          -e TOKEN_TAGGING_MODEL=&#39;ner-ontonotes-fast&#39; \</span>
-<span class="err">                          token-tagging:latest \</span>
-<span class="err">                          bash</span>
+<div class="codehilite"><pre><span></span><code>docker build -t token-tagging:latest .
+docker run -itp 5000:5000 -e TOKEN_TAGGING_MODE=&#39;ner&#39; \
+                          -e TOKEN_TAGGING_MODEL=&#39;ner-ontonotes-fast&#39; \
+                          token-tagging:latest \
+                          bash
 </code></pre></div>
 
 <p>To run with GPUs if you have nvidia-docker installed with with compatible NVIDIA drivers</p>
-<div class="codehilite"><pre><span></span><code><span class="err">docker run -itp 5000:5000 --gpus all -e TOKEN_TAGGING_MODE=&#39;ner&#39; \</span>
-<span class="err">                                     -e TOKEN_TAGGING_MODEL=&#39;ner-ontonotes-fast&#39; \</span>
-<span class="err">                                     token-tagging:latest \</span>
-<span class="err">                                     bash</span>
+<div class="codehilite"><pre><span></span><code>docker run -itp 5000:5000 --gpus all -e TOKEN_TAGGING_MODE=&#39;ner&#39; \
+                                     -e TOKEN_TAGGING_MODEL=&#39;ner-ontonotes-fast&#39; \
+                                     token-tagging:latest \
+                                     bash
 </code></pre></div>
 
 <h3 id="3-local">3. Local<a class="headerlink" href="#3-local" title="Permanent link">&para;</a></h3>
