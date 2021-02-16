@@ -2,7 +2,6 @@
 Utilities for working with the local dataset cache.  Adapted from AllenNLP.
 """
 
-import os
 import logging
 import shutil
 import tempfile
@@ -26,7 +25,7 @@ import adaptnlp
 logger = logging.getLogger(__name__)
 
 CACHE_ROOT = adaptnlp.cache_root
-CACHE_DIRECTORY = str(CACHE_ROOT / "cache")
+CACHE_DIRECTORY = CACHE_ROOT / "cache"
 
 
 def url_to_filename(url: str, etag: str = None) -> str:
@@ -54,14 +53,15 @@ def filename_to_url(filename: str, cache_dir: str = None) -> Tuple[str, str]:
     """
     if cache_dir is None:
         cache_dir = CACHE_DIRECTORY
+    if not isinstance(cache_dir, Path): cache_dir = Path(cache_dir)
+    
+    cache_path = cache_dir/fname
+    if not cache_path.exists():
+        raise FileNotFoundError(f"file {cache_dir} not found")
 
-    cache_path = os.path.join(cache_dir, filename)
-    if not os.path.exists(cache_path):
-        raise FileNotFoundError("file {} not found".format(cache_path))
-
-    meta_path = cache_path + ".json"
-    if not os.path.exists(meta_path):
-        raise FileNotFoundError("file {} not found".format(meta_path))
+    meta_path = Path(f'{cache_path}.json')
+    if not meta_path.exists():
+        raise FileNotFoundError(f"file {meta_path} not found")
 
     with open(meta_path) as meta_file:
         metadata = json.load(meta_file)
@@ -80,25 +80,25 @@ def cached_path(url_or_filename: Union[str, Path], cache_dir: str = None) -> str
     """
     if cache_dir is None:
         cache_dir = CACHE_DIRECTORY
-    if isinstance(url_or_filename, Path):
-        url_or_filename = str(url_or_filename)
-
-    url_or_filename = os.path.expanduser(url_or_filename)
-    parsed = urlparse(url_or_filename)
+    if not isinstance(url_or_filename, Path):
+        url_or_filename = Path(url_or_filename)
+    
+    url_or_filename = url_or_filename.expanduser()
+    parsed = urlparse(str(url_or_filename))
 
     if parsed.scheme in ("http", "https", "s3"):
         # URL, so get it from the cache (downloading if necessary)
         return get_from_cache(url_or_filename, cache_dir)
-    elif os.path.exists(url_or_filename):
+    elif url_or_filename.exists():
         # File, and it exists.
         return url_or_filename
     elif parsed.scheme == "":
         # File, but it doesn't exist.
-        raise FileNotFoundError("file {} not found".format(url_or_filename))
+        raise FileNotFoundError(f"file {url_or_filename} not found")
     else:
         # Something unknown
         raise ValueError(
-            "unable to parse {} as a URL or as a local path".format(url_or_filename)
+            f"unable to parse {url_or_filename} as a URL or as a local path"
         )
 
 
@@ -109,9 +109,9 @@ def is_url_or_existing_file(url_or_filename: Union[str, Path, None]) -> bool:
     """
     if url_or_filename is None:
         return False
-    url_or_filename = os.path.expanduser(str(url_or_filename))
-    parsed = urlparse(url_or_filename)
-    return parsed.scheme in ("http", "https", "s3") or os.path.exists(url_or_filename)
+    url_or_filename = Path(url_or_filename).expanduser()
+    parsed = urlparse(str(url_or_filename))
+    return parsed.scheme in ("http", "https", "s3") or url_or_fname.exists()
 
 
 def split_s3_path(url: str) -> Tuple[str, str]:
@@ -211,8 +211,9 @@ def get_from_cache(url: str, cache_dir: str = None) -> str:
     """
     if cache_dir is None:
         cache_dir = CACHE_DIRECTORY
-
-    os.makedirs(cache_dir, exist_ok=True)
+    if not isinstance(cache_dir, Path): cache_dir = Path(cache_dir)
+        
+    cache_dir.mkdir(exist_ok=True)
 
     # Get eTag to add to filename, if it exists.
     if url.startswith("s3://"):
@@ -231,9 +232,9 @@ def get_from_cache(url: str, cache_dir: str = None) -> str:
     filename = url_to_filename(url, etag)
 
     # get cache path to put the file
-    cache_path = os.path.join(cache_dir, filename)
+    cache_path = cache_dir/filename
 
-    if not os.path.exists(cache_path):
+    if not cache_path.exists():
         # Download to temporary file, then copy to cache dir once finished.
         # Otherwise you get corrupt cache entries if the download gets interrupted.
         with tempfile.NamedTemporaryFile() as temp_file:
@@ -277,9 +278,9 @@ def read_set_from_file(filename: str) -> Set[str]:
     return collection
 
 
-def get_file_extension(path: str, dot=True, lower: bool = True):
-    ext = os.path.splitext(path)[1]
-    ext = ext if dot else ext[1:]
+def get_file_extension(path:str, dot=True, lower:bool=True) -> str:
+    ext = Path(path).suffix
+    if not dot: ext = ext.strip('.')
     return ext.lower() if lower else ext
 
 
