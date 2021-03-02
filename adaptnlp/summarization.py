@@ -14,9 +14,15 @@ from transformers import (
     BartForConditionalGeneration,
 )
 
-from tqdm import tqdm
-
+from adaptnlp.callback import GeneratorCallback
 from adaptnlp.model import AdaptiveModel
+
+from fastcore.basics import store_attr
+from fastcore.meta import delegates
+
+from fastai_minima.callback.core import Callback, CancelBatchException
+from fastai_minima.utils import apply
+
 
 logger = logging.getLogger(__name__)
 
@@ -38,14 +44,15 @@ class TransformersSummarizer(AdaptiveModel):
     """
 
     def __init__(self, tokenizer: PreTrainedTokenizer, model: PreTrainedModel):
-        # Load up model and tokenizer
+        # Load up tokenizer
         self.tokenizer = tokenizer
-        self.model = model
+        
+        super().__init__()
+        # Sets internal model
+        super().set_model(model)
 
-        # Setup cuda and automatic allocation of model
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-        self.model.to(self.device)
+        # Set inputs to come in as `dict`
+        super().set_as_dict(True)
 
     @classmethod
     def load(cls, model_name_or_path: str) -> AdaptiveModel:
@@ -78,57 +85,39 @@ class TransformersSummarizer(AdaptiveModel):
         * **early_stopping** - if set to True beam search is stopped when at least num_beams sentences finished per batch.
         * **&ast;&ast;kwargs**(Optional) - Optional arguments for the Transformers `PreTrainedModel.generate()` method
         """
-        with torch.no_grad():
 
-            # Make all inputs lists
-            if isinstance(text, str):
-                text = [text]
+        # Make all inputs list
+        if isinstance(text, str):
+            text = [text]
 
-            # T5 requires "summarize: " precursor text for pre-trained summarizer
-            if isinstance(self.model, T5ForConditionalGeneration):
-                text = [f"summarize: {t}" for t in text]
+        # T5 requires 'summarize: ' precursor text for pre-trained summarizer
+        if isinstance(self.model, T5ForConditionalGeneration):
+            text = [f'summarize: {t}' for t in text]
 
-            dataset = self._tokenize(text)
-            dataloader = DataLoader(dataset, batch_size=mini_batch_size)
-            summaries = []
+        dataset = self._tokenize(text)
+        dl = DataLoader(dataset, batch_size=mini_batch_size)
 
-            logger.info(f"Running summarizer on {len(dataset)} text sequences")
-            logger.info(f"Batch size = {mini_batch_size}")
-            for batch in tqdm(dataloader, desc="Summarizing"):
-                self.model.eval()
-                batch = tuple(t.to(self.device) for t in batch)
+        summaries = []
 
-                if len(batch) == 3:
-                    inputs = {
-                        "input_ids": batch[0],
-                        "attention_mask": batch[1],
-                        "token_type_ids": batch[2],
-                    }
-                else:
-                    inputs = {
-                        "input_ids": batch[0],
-                        "attention_mask": batch[1],
-                    }
-                outputs = self.model.generate(
-                    input_ids=inputs["input_ids"],
-                    attention_mask=inputs["attention_mask"],
-                    num_beams=num_beams,
-                    min_length=min_length,
-                    max_length=max_length,
-                    early_stopping=early_stopping,
-                    **kwargs,
-                )
+        logger.info(f'Running summarizer on {len(dataset)} text sequences')
+        logger.info(f'Batch size = {mini_batch_size}')
 
-                for o in outputs:
-                    summaries.append(
-                        [
-                            self.tokenizer.decode(
-                                o,
-                                skip_special_tokens=True,
-                                clean_up_tokenization_spaces=False,
-                            )
-                        ].pop()
+        cb = GeneratorCallback(num_beams, min_length, max_length, early_stopping, **kwargs)
+
+        preds,_ = super().get_preds(dl=dl, cbs=[cb])
+
+        preds = apply(lambda x: x.squeeze(0), preds)
+
+        for o in preds:
+            summaries.append(
+                [
+                    self.tokenizer.decode(
+                        o,
+                        skip_special_tokens=True,
+                        clean_up_tokenization_spaces=False,
                     )
+                ].pop()
+            )
 
         return summaries
 

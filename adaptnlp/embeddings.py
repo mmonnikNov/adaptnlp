@@ -2,6 +2,7 @@ import logging
 from typing import List, Dict, Union
 from collections import defaultdict
 
+from fastcore.dispatch import typedispatch
 from flair.data import Sentence
 from flair.embeddings import (
     Embeddings,
@@ -104,6 +105,39 @@ FLAIR_PRETRAINED_MODEL_NAMES = {
     "ta-backward",
 }
 
+@typedispatch
+def _make_sentences(text:str, as_list=False) -> Union[List[Sentence], Sentence]:
+    return [Sentence(text)] if as_list else Sentence(text)
+
+@typedispatch
+def _make_sentences(text:list, as_list=False) -> Union[List[Sentence], Sentence]:
+    if all(isinstance(t,str) for t in text):
+        return [Sentence(t) for t in text]
+    elif all(isinstance(t, Sentence) for t in text):
+        return text
+
+@typedispatch
+def _make_sentences(text:Sentence, as_list=False) -> Union[List[Sentence], Sentence]:
+    return [text] if as_list else text
+
+def _get_embedding_model(model_name_or_path:str) -> Union[FlairEmbeddings, WordEmbeddings, TransformerWordEmbeddings, Sentence]:
+    "Load the proper `Embeddings` model from `model_name_or_path`"
+    if (
+        "flair" in model_name_or_path
+        or model_name_or_path in FLAIR_PRETRAINED_MODEL_NAMES
+    ):
+        return FlairEmbeddings(model_name_or_path)
+    else:
+        try:
+            return WordEmbeddings(model_name_or_path)
+        except ValueError:
+            try:
+                return TransformerWordEmbeddings(model_name_or_path)
+            except ValueError:
+                raise ValueError(
+                            f"Embeddings not found for the model key: {model_name_or_path}, check documentation or custom model path to verify specified model"
+                        )
+
 
 class EasyWordEmbeddings:
     """Word embeddings from the latest language models
@@ -126,38 +160,18 @@ class EasyWordEmbeddings:
     ) -> List[Sentence]:
         """Produces embeddings for text
 
-        * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
-        * **model_name_or_path** - The hosted model name key or model path
-        **return** - A list of Flair's `Sentence`s
+        **Parameters**:
+        * `text` - Text input, it can be a string or any of Flair's `Sentence` input formats
+        * `model_name_or_path` - The hosted model name key or model path
+
+        **Return**:
+        * A list of Flair's `Sentence`s
         """
         # Convert into sentences
-        if isinstance(text, str):
-            sentences = Sentence(text)
-        elif isinstance(text, list) and all(isinstance(t, str) for t in text):
-            sentences = [Sentence(t) for t in text]
-        else:
-            sentences = text
+        sentences = _make_sentences(text)
 
         # Load correct Embeddings module
-        if not self.models[model_name_or_path]:
-            if (
-                "flair" in model_name_or_path
-                or model_name_or_path in FLAIR_PRETRAINED_MODEL_NAMES
-            ):
-                self.models[model_name_or_path] = FlairEmbeddings(model_name_or_path)
-            else:
-                try:
-                    self.models[model_name_or_path] = WordEmbeddings(model_name_or_path)
-                except ValueError:
-                    try:
-                        self.models[model_name_or_path] = TransformerWordEmbeddings(
-                            model_name_or_path
-                        )
-                    except ValueError:
-                        raise ValueError(
-                            f"Embeddings not found for the model key: {model_name_or_path}, check documentation or custom model path to verify specified model"
-                        )
-                        return Sentence("")
+        self.models[model_name_or_path] = _get_embedding_model(model_name_or_path)
         embedding = self.models[model_name_or_path]
         return embedding.embed(sentences)
 
@@ -168,17 +182,15 @@ class EasyWordEmbeddings:
     ) -> List[Sentence]:
         """Embeds text with all embedding models loaded
 
-        * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
-        * **model_names_or_paths** -  A variable input of model names or paths to embed
-        **return** - A list of Flair's `Sentence`s
+        **Parameters**:
+        * `text` - Text input, it can be a string or any of Flair's `Sentence` input formats
+        * `model_names_or_paths` -  A variable input of model names or paths to embed
+
+        **Return**:
+        * A list of Flair's `Sentence`s
         """
         # Convert into sentences
-        if isinstance(text, str):
-            sentences = Sentence(text)
-        elif isinstance(text, list) and all(isinstance(t, str) for t in text):
-            sentences = [Sentence(t) for t in text]
-        else:
-            sentences = text
+        sentences = _make_sentences(text)
 
         if model_names_or_paths:
             for embedding_name in model_names_or_paths:
@@ -204,7 +216,7 @@ class EasyStackedEmbeddings:
 
     **Parameters:**
 
-    * **&ast;embeddings** - Non-keyword variable number of strings specifying the embeddings you want to stack
+    * `&ast;embeddings` - Non-keyword variable number of strings specifying the embeddings you want to stack
     """
 
     def __init__(self, *embeddings: str):
@@ -213,23 +225,7 @@ class EasyStackedEmbeddings:
 
         # Load correct Embeddings module
         for model_name_or_path in embeddings:
-            if (
-                "flair" in model_name_or_path
-                or model_name_or_path in FLAIR_PRETRAINED_MODEL_NAMES
-            ):
-                self.embedding_stack.append(FlairEmbeddings(model_name_or_path))
-            else:
-                try:
-                    self.embedding_stack.append(WordEmbeddings(model_name_or_path))
-                except ValueError:
-                    try:
-                        self.embedding_stack.append(
-                            TransformerWordEmbeddings(model_name_or_path)
-                        )
-                    except ValueError:
-                        raise ValueError(
-                            f"Embeddings not found for the model key: {model_name_or_path}, check documentation or custom model path to verify specified model"
-                        )
+            self.embedding_stack.append(_get_embedding_model(model_name_or_path))
 
         assert len(self.embedding_stack) != 0
         self.stacked_embeddings = StackedEmbeddings(embeddings=self.embedding_stack)
@@ -240,18 +236,14 @@ class EasyStackedEmbeddings:
     ) -> List[Sentence]:
         """Stacked embeddings
 
-        * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
-        **return** A list of Flair's `Sentence`s
+        **Parameters**:
+        * `text` - Text input, it can be a string or any of Flair's `Sentence` input formats
+
+        **Return**:
+        * A list of Flair's `Sentence`s
         """
         # Convert into sentences
-        if isinstance(text, str):
-            sentences = [Sentence(text)]
-        elif isinstance(text, list) and all(isinstance(t, str) for t in text):
-            sentences = [Sentence(t) for t in text]
-        elif isinstance(text, Sentence):
-            sentences = [text]
-        else:
-            sentences = text
+        sentences = _make_sentences(text, as_list=True)
 
         # Unlike flair embeddings modules, stacked embeddings do not return a list of sentences
         self.stacked_embeddings.embed(sentences)
@@ -269,11 +261,11 @@ class EasyDocumentEmbeddings:
 
     **Parameters:**
 
-    * **&ast;embeddings** - Non-keyword variable number of strings referring to model names or paths
-    * **methods** - A list of strings to specify which document embeddings to use i.e. ["rnn", "pool"] (avoids unncessary loading of models if only using one)
-    * **configs** - A dictionary of configurations for flair's rnn and pool document embeddings
+    * `&ast;embeddings` - Non-keyword variable number of strings referring to model names or paths
+    * `methods` - A list of strings to specify which document embeddings to use i.e. ["rnn", "pool"] (avoids unncessary loading of models if only using one)
+    * `configs` - A dictionary of configurations for flair's rnn and pool document embeddings
     ```python
-    >>>example_configs = {"pool_configs": {"fine_tune_mode": "linear", "pooling": "mean", },
+    >>> example_configs = {"pool_configs": {"fine_tune_mode": "linear", "pooling": "mean", },
     ...                   "rnn_configs": {"hidden_size": 512,
     ...                                   "rnn_layers": 1,
     ...                                   "reproject_words": True,
@@ -325,23 +317,7 @@ class EasyDocumentEmbeddings:
 
         # Load correct Embeddings module
         for model_name_or_path in embeddings:
-            if (
-                "flair" in model_name_or_path
-                or model_name_or_path in FLAIR_PRETRAINED_MODEL_NAMES
-            ):
-                self.embedding_stack.append(FlairEmbeddings(model_name_or_path))
-            else:
-                try:
-                    self.embedding_stack.append(WordEmbeddings(model_name_or_path))
-                except ValueError:
-                    try:
-                        self.embedding_stack.append(
-                            TransformerWordEmbeddings(model_name_or_path)
-                        )
-                    except ValueError:
-                        raise ValueError(
-                            f"Embeddings not found for the model key: {model_name_or_path}, check documentation or custom model path to verify specified model"
-                        )
+            self.embedding_stack.append(_get_embedding_model(model_name_or_path))
 
         assert len(self.embedding_stack) != 0
         if "pool" in methods:
@@ -359,20 +335,15 @@ class EasyDocumentEmbeddings:
         self,
         text: Union[List[Sentence], Sentence, List[str], str],
     ) -> List[Sentence]:
-        """Stacked embeddings
+        """Generate stacked embeddings with `DocumentPoolEmbeddings`
 
+        **Parameters**:
+        * `text` - Text input, it can be a string or any of Flair's `Sentence` input formats
 
-        * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
-        **return** - A list of Flair's `Sentence`s
+        **Return**:
+        * A list of Flair's `Sentence`s
         """
-        if isinstance(text, str):
-            sentences = [Sentence(text)]
-        elif isinstance(text, list) and all(isinstance(t, str) for t in text):
-            sentences = [Sentence(t) for t in text]
-        elif isinstance(text, Sentence):
-            sentences = [text]
-        else:
-            sentences = text
+        sentences = _make_sentences(text, as_list=True)
         self.pool_embeddings.embed(sentences)
         return sentences
 
@@ -380,18 +351,14 @@ class EasyDocumentEmbeddings:
         self,
         text: Union[List[Sentence], Sentence, List[str], str],
     ) -> List[Sentence]:
-        """Stacked embeddings
+        """Generate stacked embeddings with `DocumentRNNEmbeddings`
 
-        * **text** - Text input, it can be a string or any of Flair's `Sentence` input formats
-        **return** - A list of Flair's `Sentence`s
+        **Parameters**:
+        * `text` - Text input, it can be a string or any of Flair's `Sentence` input formats
+
+        **Return**:
+        * A list of Flair's `Sentence`s
         """
-        if isinstance(text, str):
-            sentences = [Sentence(text)]
-        elif isinstance(text, list) and all(isinstance(t, str) for t in text):
-            sentences = [Sentence(t) for t in text]
-        elif isinstance(text, Sentence):
-            sentences = [text]
-        else:
-            sentences = text
+        sentences = _make_sentences(text, as_list=True)
         self.rnn_embeddings.embed(sentences)
         return sentences

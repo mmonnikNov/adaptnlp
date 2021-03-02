@@ -5,7 +5,7 @@ from collections import defaultdict
 import numpy as np
 
 import torch
-from torch.utils.data import TensorDataset, DataLoader
+from torch.utils.data import TensorDataset
 
 from flair.data import Sentence
 from flair.models import SequenceTagger
@@ -19,9 +19,11 @@ from transformers import (
     AlbertForSequenceClassification,
 )
 
-from tqdm import tqdm
+from adaptnlp.model import AdaptiveModel, DataLoader
 
-from adaptnlp.model import AdaptiveModel
+from fastai_minima.utils import to_detach, apply, to_device
+
+from fastcore.basics import Self
 
 
 logger = logging.getLogger(__name__)
@@ -45,11 +47,10 @@ class TransformersTokenTagger(AdaptiveModel):
     def __init__(self, tokenizer: PreTrainedTokenizer, model: PreTrainedModel):
         # Load up model and tokenizer
         self.tokenizer = tokenizer
-        self.model = model
+        super().__init__()
 
-        # Setup cuda and automatic allocation of model
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.model.to(self.device)
+        # Sets the internal model
+        self.set_model(model)
 
     @classmethod
     def load(cls, model_name_or_path: str) -> AdaptiveModel:
@@ -81,37 +82,32 @@ class TransformersTokenTagger(AdaptiveModel):
             text = [text]
         results: List[Dict] = []
 
-        with torch.no_grad():
-            # Tokenize and get dataset
-            dataset = self._tokenize(text)
-            dataloader = DataLoader(dataset, batch_size=mini_batch_size)
+        dataset = self._tokenize(text)
+        dl = DataLoader(dataset, batch_size=mini_batch_size)
 
-            logger.info(f"Running prediction on {len(dataset)} text sequences")
-            logger.info(f"Batch size = {mini_batch_size}")
-            for batch in tqdm(dataloader, desc="Predicting text"):
-                self.model.eval()
-                batch = tuple(t.to(self.device) for t in batch)
+        logger.info(f'Running prediction on {len(dataset)} text sequences')
+        logger.info(f'Batch size = {mini_batch_size}')
 
-                if len(batch) == 3:
-                    inputs = {
-                        "input_ids": batch[0],
-                        "attention_mask": batch[1],
-                        "token_type_ids": batch[2],
-                    }
-                else:
-                    inputs = {"input_ids": batch[0], "attention_mask": batch[1]}
-                outputs = self.model(**inputs)
+        outputs,_ = super().get_preds(dl=dl)
 
-                # Iterate through batch for tagged token predictions
-                for idx, pred in enumerate(outputs[0]):
-                    entities = pred.cpu().detach().numpy()
-                    input_ids = inputs["input_ids"].cpu().numpy()[idx]
-                    tagged_entities = self._generate_tagged_entities(
-                        entities=entities,
-                        input_ids=input_ids,
-                        grouped_entities=grouped_entities,
-                    )
-                    results += tagged_entities
+        inputs = apply(to_device, [b for b in dl], device='cpu')
+        inputs = torch.cat(*inputs)
+        inputs = apply(Self.numpy(), inputs)
+
+        outputs = torch.cat([o['logits'] for o in outputs])
+        outputs = apply(to_detach, outputs, cpu=True)
+        outputs = apply(Self.numpy(), outputs)
+
+        # Iterate through batch for tagged token predictions
+        for idx, pred in enumerate(outputs):
+            entities = pred
+            input_ids = inputs[idx]
+            tagged_entities = self._generate_tagged_entities(
+                entities=entities,
+                input_ids=input_ids,
+                grouped_entities=grouped_entities
+            )
+            results += tagged_entities
 
         return results
 
