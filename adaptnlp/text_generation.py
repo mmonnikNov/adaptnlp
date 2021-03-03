@@ -3,7 +3,7 @@ from typing import List, Dict, Union
 from collections import defaultdict
 
 import torch
-from torch.utils.data import TensorDataset, DataLoader
+from torch.utils.data import TensorDataset
 
 from transformers import (
     AutoTokenizer,
@@ -12,9 +12,11 @@ from transformers import (
     PreTrainedModel,
 )
 
-from tqdm import tqdm
+from fastprogress.fastprogress import progress_bar
 
-from adaptnlp.model import AdaptiveModel
+from adaptnlp.model import AdaptiveModel, DataLoader
+
+from fastai_minima.utils import apply, default_device, to_device
 
 logger = logging.getLogger(__name__)
 
@@ -37,9 +39,12 @@ class TransformersTextGenerator(AdaptiveModel):
     def __init__(self, tokenizer: PreTrainedTokenizer, model: PreTrainedModel):
         # Load up model and tokenizer
         self.tokenizer = tokenizer
-        self.model = model
+        super().__init__()
 
-        # Setup cuda and automatic allocation of model
+        # Sets internal model
+        self.set_model(model)
+        
+         # Setup cuda and automatic allocation of model
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model.to(self.device)
 
@@ -79,22 +84,22 @@ class TransformersTextGenerator(AdaptiveModel):
             dataloader = DataLoader(dataset, batch_size=mini_batch_size)
             results = []
 
-            logger.info(f"Running text generator on {len(dataset)} text sequences")
-            logger.info(f"Batch size = {mini_batch_size}")
-            for batch in tqdm(dataloader, desc="Generating"):
+            logger.info(f'Running text generator on {len(dataset)} text sequences')
+            logger.info(f'Batch size = {mini_batch_size}')
+            for batch in progress_bar(dataloader):
                 self.model.eval()
-                batch = tuple(t.to(self.device) for t in batch)
+                batch = apply(to_device, batch)
 
                 if len(batch) == 3:
                     inputs = {
-                        "input_ids": batch[0],
-                        "attention_masks": batch[1],
-                        "token_type_ids": batch[2],
+                        'input_ids': batch[0],
+                        'attention_masks': batch[1],
+                        'token_type_ids': batch[2],
                     }
                 else:
                     inputs = {
-                        "input_ids": batch[0],
-                        "attention_masks": batch[1],
+                        'input_ids': batch[0],
+                        'attention_masks': batch[1],
                     }
                 # model.generate() does not have batch inference implemented yet
                 generated_text = self._batch_generate(

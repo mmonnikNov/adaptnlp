@@ -20,13 +20,73 @@ from transformers import (
 )
 from transformers.data.processors.squad import SquadResult
 
-from adaptnlp.model import AdaptiveModel
+from adaptnlp.model import AdaptiveModel, DataLoader
 from adaptnlp.transformers.squad_metrics import (
     compute_predictions_log_probs,
     compute_predictions_logits,
 )
 
+from fastcore.basics import risinstance, nested_attr, Self, patch
+
+from fastai_minima.callback.core import Callback
+from fastai_minima.utils import apply, to_detach
+
 logger = logging.getLogger(__name__)
+
+class QACallback(Callback):
+    "Basic Question Answering Data Callback"
+    order = -2
+    _qa_models = [XLMForQuestionAnswering, RobertaForQuestionAnswering, DistilBertForQuestionAnswering]
+
+    def __init__(self, xmodel_instances, features):
+        self.xmodel_instances = xmodel_instances
+        self.features = features
+
+    def before_batch(self):
+        "Adjusts `token_type_ids` if model is in `_qa_models`"
+        if risinstance(self._qa_models, self.learn.model): del self.learn.inputs["token_type_ids"]
+        if len(self.xb) > 3: self.example_indices = self.xb[3]
+
+        if isinstance(self.learn.model, self.xmodel_instances):
+            self.learn.inputs.update({'cls_index': self.xb[4], 'p_mask': self.xb[5]})
+            # for lang_id-sensitive xlm models
+            if nested_attr(self.learn.model, 'config.lang2id', False):
+                # Set language id as 0 for now
+                self.learn.inputs.update(
+                    {
+                        'langs': (
+                        torch.ones(self.xb[0].shape, dtype=torch.int64) * 0
+                        )
+                    }
+                )
+    def after_pred(self):
+        "Generate SquadResults"
+        for i, example_index in enumerate(self.example_indices):
+            eval_feature = self.features[example_index.item()]
+            unique_id = int(eval_feature.unique_id)
+
+            output = [self.pred[output][i] for output in self.pred]
+            output = apply(Self.numpy(), to_detach(output))
+
+            if isinstance(self.learn.model, self.xmodel_instances):
+                # Some models like the ones in `self.xmodel_instances` use 5 arguments for their predictions
+                start_logits = output[0]
+                start_top_index = output[1]
+                end_logits = output[2]
+                end_top_index = output[3]
+                cls_logits = output[4]
+
+                self.learn.pred = SquadResult(
+                    unique_id,
+                    start_logits,
+                    end_logits,
+                    start_top_index=start_top_index,
+                    end_top_index=end_top_index,
+                    cls_logits=cls_logits
+                )
+            else:
+                start_logits, end_logits = output
+                self.learn.pred = SquadResult(unique_id, start_logits, end_logits)
 
 
 class TransformersQuestionAnswering(AdaptiveModel):
@@ -42,12 +102,10 @@ class TransformersQuestionAnswering(AdaptiveModel):
     def __init__(self, tokenizer: PreTrainedTokenizer, model: PreTrainedModel):
         # Load up model and tokenizer
         self.tokenizer = tokenizer
-        self.model = model
+        super().__init__()
 
-        # Setup cuda and automatic allocation of model
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.model.to(self.device)
-
+        # Sets internal model
+        self.set_model(model)
         self.xmodel_instances = (XLNetForQuestionAnswering, XLMForQuestionAnswering)
 
     @classmethod
@@ -108,129 +166,59 @@ class TransformersQuestionAnswering(AdaptiveModel):
             doc_stride=doc_stride,
             max_query_length=max_query_length,
             is_training=False,
-            return_dataset="pt",
+            return_dataset='pt',
             threads=1,
         )
         all_results = []
 
-        with torch.no_grad():
+        dl = DataLoader(dataset, batch_size=mini_batch_size)
 
-            dataloader = DataLoader(dataset, batch_size=mini_batch_size)
+        cb = QACallback(self.xmodel_instances, features)
 
-            for batch in tqdm(dataloader, desc="Predicting answer"):
-                self.model.eval()
-                batch = tuple(t.to(self.device) for t in batch)
+        all_results, _ = super().get_preds(dl=dl, cbs=[cb])
 
-                inputs = {
-                    "input_ids": batch[0],
-                    "attention_mask": batch[1],
-                    "token_type_ids": batch[2],
-                }
-                example_indices = batch[3]
+        if isinstance(self.model, self.xmodel_instances):
+            start_n_top = (
+                self.model.config.start_n_top
+                if hasattr(self.model, 'config')
+                else self.model.module.config.start_n_top
+            )
+            end_n_top = (
+                self.model.config.end_n_top
+                if hasattr(self.model, 'config')
+                else self.model.module.config.end_n_top
+            )
 
-                if isinstance(
-                    self.model,
-                    (
-                        XLMForQuestionAnswering,
-                        RobertaForQuestionAnswering,
-                        DistilBertForQuestionAnswering,
-                        CamembertForQuestionAnswering,
-                    ),
-                ):
-                    del inputs["token_type_ids"]
+            answers, n_best = compute_predictions_log_probs(
+                examples,
+                features,
+                all_results,
+                n_best_size,
+                max_answer_length,
+                start_n_top,
+                end_n_top,
+                version_2_with_negative,
+                self.tokenizer,
+                verbose_logging,
+                **kwargs,
+            )
 
-                # XLNet and XLM use more arguments for their predictions
-                if isinstance(self.model, self.xmodel_instances):
-                    inputs.update({"cls_index": batch[4], "p_mask": batch[5]})
-                    # for lang_id-sensitive xlm models
-                    if hasattr(self.model, "config") and hasattr(
-                        self.model.config, "lang2id"
-                    ):
-                        # Set language id as 0 for now
-                        inputs.update(
-                            {
-                                "langs": (
-                                    torch.ones(batch[0].shape, dtype=torch.int64) * 0
-                                ).to(self.device)
-                            }
-                        )
-
-                outputs = self.model(**inputs)
-
-                # Iterate through and produce `SquadResults
-                for i, example_index in enumerate(example_indices):
-                    eval_feature = features[example_index.item()]
-                    unique_id = int(eval_feature.unique_id)
-
-                    output = [self.to_list(outputs[output][i]) for output in outputs]
-
-                    if isinstance(self.model, self.xmodel_instances):
-                        # Some models like the ones in `self.xmodel_instances` use 5 arguments for their predictions
-                        start_logits = output[0]
-                        start_top_index = output[1]
-                        end_logits = output[2]
-                        end_top_index = output[3]
-                        cls_logits = output[4]
-
-                        result = SquadResult(
-                            unique_id,
-                            start_logits,
-                            end_logits,
-                            start_top_index=start_top_index,
-                            end_top_index=end_top_index,
-                            cls_logits=cls_logits,
-                        )
-
-                    else:
-                        start_logits, end_logits = output
-                        result = SquadResult(unique_id, start_logits, end_logits)
-                    all_results.append(result)
-
-            if isinstance(self.model, self.xmodel_instances):
-                start_n_top = (
-                    self.model.config.start_n_top
-                    if hasattr(self.model, "config")
-                    else self.model.module.config.start_n_top
-                )
-                end_n_top = (
-                    self.model.config.end_n_top
-                    if hasattr(self.model, "config")
-                    else self.model.module.config.end_n_top
-                )
-
-                answers, n_best = compute_predictions_log_probs(
-                    examples,
-                    features,
-                    all_results,
-                    n_best_size,
-                    max_answer_length,
-                    start_n_top,
-                    end_n_top,
-                    version_2_with_negative,
-                    self.tokenizer,
-                    verbose_logging,
-                    **kwargs,
-                )
-
-            else:
-                answers, n_best = compute_predictions_logits(
-                    examples,
-                    features,
-                    all_results,
-                    n_best_size,
-                    max_answer_length,
-                    do_lower_case,
-                    verbose_logging,
-                    version_2_with_negative,
-                    null_score_diff_threshold,
-                    self.tokenizer,
-                    **kwargs,
-                )
+        else:
+            answers, n_best = compute_predictions_logits(
+                examples,
+                features,
+                all_results,
+                n_best_size,
+                max_answer_length,
+                do_lower_case,
+                verbose_logging,
+                version_2_with_negative,
+                null_score_diff_threshold,
+                self.tokenizer,
+                **kwargs,
+            )
 
         return answers, n_best
-
-    def to_list(self, tensor: torch.Tensor):
-        return tensor.detach().cpu().tolist()
 
     def _mini_squad_processor(
         self, query: List[str], context: List[str]
@@ -243,11 +231,11 @@ class TransformersQuestionAnswering(AdaptiveModel):
         """
         assert len(query) == len(context)
         examples = []
-        title = "qa"
+        title = 'qa'
         is_impossible = False
         answer_text = None
         start_position_character = None
-        answers = ["answer"]
+        answers = ['answer']
         for idx, (q, c) in enumerate(zip(query, context)):
             example = SquadExample(
                 qas_id=str(idx),
@@ -280,7 +268,7 @@ class EasyQuestionAnswering:
 
     ```python
     >>> qa = adaptnlp.EasyQuestionAnswering()
-    >>> qa.predict_qa(query="What is life?", context="Life is NLP.", n_best_size=5, mini_batch_size=1)
+    >>> qa.predict_qa(query='What is life?', context='Life is NLP.', n_best_size=5, mini_batch_size=1)
     ```
     """
 
@@ -293,7 +281,7 @@ class EasyQuestionAnswering:
         context: Union[List[str], str],
         n_best_size: int = 5,
         mini_batch_size: int = 32,
-        model_name_or_path: str = "bert-large-uncased-whole-word-masking-finetuned-squad",
+        model_name_or_path: str = 'bert-large-uncased-whole-word-masking-finetuned-squad',
         **kwargs,
     ) -> Tuple[Tuple[str, List[OrderedDict]], Tuple[OrderedDict, OrderedDict]]:
         """Predicts top_n answer spans of query in regards to context
@@ -314,10 +302,10 @@ class EasyQuestionAnswering:
                 )
         except OSError:
             logger.info(
-                f"{model_name_or_path} not a valid Transformers pre-trained QA model...check path or huggingface.co/models"
+                f'{model_name_or_path} not a valid Transformers pre-trained QA model...check path or huggingface.co/models'
             )
             raise ValueError(
-                f"{model_name_or_path} is not a valid path or model name from huggingface.co/models"
+                f'{model_name_or_path} is not a valid path or model name from huggingface.co/models'
             )
             return OrderedDict(), [OrderedDict()]
 
@@ -332,7 +320,7 @@ class EasyQuestionAnswering:
                 mini_batch_size=mini_batch_size,
                 **kwargs,
             )
-            return top_answer["0"], top_n_answers["0"]
+            return top_answer['0'], top_n_answers['0']
 
         return model.predict(
             query=query,

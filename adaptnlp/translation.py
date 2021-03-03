@@ -13,9 +13,12 @@ from transformers import (
     T5ForConditionalGeneration,
 )
 
-from tqdm import tqdm
-
 from adaptnlp.model import AdaptiveModel
+from adaptnlp.callback import GeneratorCallback
+
+from fastai_minima.utils import apply
+
+from fastcore.basics import Self
 
 logger = logging.getLogger(__name__)
 
@@ -26,8 +29,8 @@ class TransformersTranslator(AdaptiveModel):
 
     Usage:
     ```python
-    >>> translator = TransformersTranslator.load("transformers-translator-model")
-    >>> translator.predict(text="Example text", mini_batch_size=32)
+    >>> translator = TransformersTranslator.load('transformers-translator-model')
+    >>> translator.predict(text='Example text', mini_batch_size=32)
     ```
 
     **Parameters:**
@@ -39,11 +42,13 @@ class TransformersTranslator(AdaptiveModel):
     def __init__(self, tokenizer: PreTrainedTokenizer, model: PreTrainedModel):
         # Load up model and tokenizer
         self.tokenizer = tokenizer
-        self.model = model
-
-        # Setup cuda and automatic allocation of model
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.model.to(self.device)
+        super().__init__()
+        
+        # Sets internal model
+        self.set_model(model)
+        
+        # Set inputs to come in as `dict`
+        super().set_as_dict(True)
 
     @classmethod
     def load(cls, model_name_or_path: str) -> AdaptiveModel:
@@ -59,7 +64,7 @@ class TransformersTranslator(AdaptiveModel):
     def predict(
         self,
         text: Union[List[str], str],
-        t5_prefix: str = "translate English to German",
+        t5_prefix: str = 'translate English to German',
         mini_batch_size: int = 32,
         num_beams: int = 1,
         min_length: int = 0,
@@ -79,56 +84,38 @@ class TransformersTranslator(AdaptiveModel):
         * **early_stopping** - if set to True beam search is stopped when at least num_beams sentences finished per batch.
         * **&ast;&ast;kwargs**(Optional) - Optional arguments for the Transformers `PreTrainedModel.generate()` method
         """
-        with torch.no_grad():
+        
+        # Make all inputs lists
+        if isinstance(text, str):
+            text = [text]
+        
+        # T5 requires 'translate: ' precursor text for pre-trained translator
+        if isinstance(self.model, T5ForConditionalGeneration):
+            text = [f'{t5_prefix}: {t}' for t in text]
+            
+        dataset = self._tokenize(text)
+        dl = DataLoader(dataset, batch_size=mini_batch_size)
+        translations = []
+        
+        logger.info(f'Running translator on {len(dataset)} text sequences')
+        logger.info(f'Batch size = {mini_batch_size}')
+        
+        cb = GeneratorCallback(num_beams, min_length, max_length, early_stopping, **kwargs)
+        
+        preds,_ = super().get_preds(dl=dl, cbs=[cb])
+        
+        preds = apply(Self.squeeze(0), preds)
 
-            # Make all inputs lists
-            if isinstance(text, str):
-                text = [text]
-
-            # T5 requires "translate: " precursor text for pre-trained translator
-            if isinstance(self.model, T5ForConditionalGeneration):
-                text = [f"{t5_prefix}: {t}" for t in text]
-
-            dataset = self._tokenize(text)
-            dataloader = DataLoader(dataset, batch_size=mini_batch_size)
-            translations = []
-
-            logger.info(f"Running translator on {len(dataset)} text sequences")
-            logger.info(f"Batch size = {mini_batch_size}")
-            for batch in tqdm(dataloader, desc="Translating"):
-                self.model.eval()
-                batch = tuple(t.to(self.device) for t in batch)
-
-                if len(batch) == 3:
-                    inputs = {
-                        "input_ids": batch[0],
-                        "attention_masks": batch[1],
-                        "token_type_ids": batch[2],
-                    }
-                else:
-                    inputs = {
-                        "input_ids": batch[0],
-                        "attention_masks": batch[1],
-                    }
-                outputs = self.model.generate(
-                    inputs["input_ids"],
-                    num_beams=num_beams,
-                    min_length=min_length,
-                    max_length=max_length,
-                    early_stopping=early_stopping,
-                    **kwargs,
-                )
-
-                for o in outputs:
-                    translations.append(
-                        [
-                            self.tokenizer.decode(
-                                o,
-                                skip_special_tokens=True,
-                                clean_up_tokenization_spaces=False,
-                            )
-                        ].pop()
+        for o in preds:
+            translations.append(
+                [
+                    self.tokenizer.decode(
+                        o,
+                        skip_special_tokens=True,
+                        clean_up_tokenization_spaces=False,
                     )
+                ].pop()
+            )
 
         return translations
 
@@ -137,16 +124,16 @@ class TransformersTranslator(AdaptiveModel):
 
         tokenized_text = self.tokenizer.batch_encode_plus(
             text,
-            return_tensors="pt",
+            return_tensors='pt',
             max_length=512,
-            padding="max_length",
+            padding='max_length',
             add_special_tokens=True,
         )
 
         # Bart doesn't use `token_type_ids`
         dataset = TensorDataset(
-            tokenized_text["input_ids"],
-            tokenized_text["attention_mask"],
+            tokenized_text['input_ids'],
+            tokenized_text['attention_mask'],
         )
         return dataset
 
