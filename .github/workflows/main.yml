@@ -1,15 +1,25 @@
 name: CI
 on: [push, pull_request]
+
+defaults:
+  run:
+    shell: bash
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  test_inference:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu]
+        py: [3.6, 3.7, 3.8]
+    runs-on: ${{ matrix.os }}-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-python@v1
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v1
       with:
-        python-version: '3.8'
-        architecture: 'x64'
-    - name: Install the library
+        python-version: ${{ matrix.py }}
+    - name: Setup Environment
       run: |
         pip install -qr requirements_dev.txt
         pip install -qe .
