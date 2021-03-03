@@ -11,8 +11,8 @@ jobs:
         architecture: 'x64'
     - name: Install the library
       run: |
-        pip install -r requirements_dev.txt
-        pip install -e .
+        pip install -qr requirements_dev.txt
+        pip install -qe .
     - name: Run tests
       run: |
         pytest tests/test_question_answering.py
