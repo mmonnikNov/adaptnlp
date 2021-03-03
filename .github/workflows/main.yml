@@ -15,4 +15,10 @@ jobs:
         pip install -e .
     - name: Run tests
       run: |
-        pytest tests
+        pytest tests/test_question_answering.py
+        pytest tests/test_sequence_classifier.py
+        pytest tests/test_summarizer.py
+        pytest tests/test_text_generation.py
+        pytest tests/test_token_tagger.py
+        pytest tests/test_trained_embeddings.py
+        pytest tests/test_translator.py
